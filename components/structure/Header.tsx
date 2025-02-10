@@ -20,8 +20,7 @@ const Header = async () => {
           <Avatar>
             <AvatarImage
               src={
-                user.user_metadata?.avatar_url ||
-                'https://github.com/shadcn.png'
+                user.user_metadata?.avatar_url || '/images/circle-gradient.svg'
               }
               alt={user.email || ''}
             />
