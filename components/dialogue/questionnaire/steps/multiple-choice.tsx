@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Choice } from '@/components/common/Choice';
 import { Heading, HeadingSmall } from '@/components/common/Typography';
 import Column from '@/components/structure/Column';
+import { parseBoldText } from '@/utils/text';
 
 interface MultipleChoiceStepProps {
   step: MultipleChoiceStepType;
@@ -47,7 +48,7 @@ export function MultipleChoiceStep({
 
   return (
     <Column>
-      {step.question && <Heading>{step.question}</Heading>}
+      {step.question && <Heading>{parseBoldText(step.question)}</Heading>}
       {step.instruction && <HeadingSmall>{step.instruction}</HeadingSmall>}
       {step.choices.map(choice => (
         <Choice

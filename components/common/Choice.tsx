@@ -29,8 +29,10 @@ export function Choice({ choice, onChange, next, type, checked }: ChoiceProps) {
     <div
       key={choice.id}
       className={`relative flex items-center justify-between rounded-xl p-4 cursor-pointer text-primary-foreground transition-colors ${
-        checked ? 'bg-primary' : 'bg-secondary'
-      } ${checked ? 'hover:bg-secondary hover:bg-opacity-50' : ''}`}
+        checked
+          ? 'bg-primary/75'
+          : 'bg-secondary/75 hover:bg-secondary hover:bg-opacity-50'
+      }`}
     >
       <div className='absolute inset-0 z-10' onClick={handleClick} />
       {type === 'radio' ? (

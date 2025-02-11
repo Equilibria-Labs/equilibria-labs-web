@@ -19,7 +19,7 @@ export default function SleepReportWelcome() {
     <>
       <HeadingSmall>The Sleep Lab</HeadingSmall>
       <HeadingLarge className='text-center'>
-        I'm Equilibria, you can call me Libby.
+        I&apos;m Equilibria, you can call me Libby.
       </HeadingLarge>
       <Heading>
         Spend 2 mins answering a few questions to get a personalized sleep
