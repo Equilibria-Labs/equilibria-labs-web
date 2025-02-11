@@ -19,8 +19,8 @@ export function MessageStep({ step, next }: MessageStepProps) {
       {step.title && (
         <HeadingLarge className='text-center'>{step.title}</HeadingLarge>
       )}
-      {step.heading && <Heading>{step.heading}</Heading>}
-      {step.subheading && <HeadingSmall>{step.subheading}</HeadingSmall>}
+      {step.question && <Heading>{step.question}</Heading>}
+      {step.instruction && <HeadingSmall>{step.instruction}</HeadingSmall>}
       {step.message && <BodyText>{step.message}</BodyText>}
       {step.imageUrl && (
         <div className='relative w-full overflow-hidden'>
