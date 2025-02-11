@@ -1,9 +1,9 @@
-export default async function Layout({
+import HeaderBodyAndNavLayout from '@/components/layouts/HeaderBodyAndNav';
+
+export default function AuthPageLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="max-w-7xl flex flex-col gap-12 items-start">{children}</div>
-  );
+  return <HeaderBodyAndNavLayout>{children}</HeaderBodyAndNavLayout>;
 }
