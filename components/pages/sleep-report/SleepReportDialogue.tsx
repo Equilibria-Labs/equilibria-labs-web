@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Questionnaire } from '../questionnaire/questionnaire';
-import { welcomeConfig } from '@/config/welcome';
+import { Questionnaire } from '../../dialogue/questionnaire/questionnaire';
+import { sleepReportDialogueConfig } from '@/config/sleep-report-dialogue';
 
 export default function Welcome() {
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
@@ -22,7 +22,7 @@ export default function Welcome() {
 
   return (
     <Questionnaire
-      steps={welcomeConfig.steps}
+      steps={sleepReportDialogueConfig.steps}
       onCompleteAction={handleComplete}
       onStepComplete={handleStepComplete}
       answers={answers}

@@ -2,13 +2,15 @@ export interface BaseStep {
   id: string;
   type: string;
   title?: string;
-  heading?: string;
-  subheading?: string;
+  question?: string;
+  instruction?: string;
+  description?: string;
 }
 
 export interface Choice {
   id: string;
   text: string;
+  value?: string | number;
 }
 
 export interface MultipleChoiceStep extends BaseStep {
@@ -32,7 +34,6 @@ export interface EducationalStep extends BaseStep {
 
 export interface MessageStep extends BaseStep {
   type: 'message';
-  title: string;
   message: string;
   imageUrl?: string;
 }

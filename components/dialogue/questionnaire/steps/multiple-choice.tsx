@@ -1,9 +1,11 @@
 // import { useState, useEffect } from 'react';
 import { useState } from 'react';
-import { MultipleChoiceStep as MultipleChoiceStepType } from '../../../types/questionnaire';
-import { Button } from '../../../components/ui/button';
-import { Choice } from '../../../components/common/Choice';
-import { Heading } from '../../../components/common/Typography';
+import { MultipleChoiceStep as MultipleChoiceStepType } from '@/types/questionnaire';
+import { Button } from '@/components/ui/button';
+import { Choice } from '@/components/common/Choice';
+import { Heading, HeadingSmall } from '@/components/common/Typography';
+import Column from '@/components/structure/Column';
+import { parseBoldText } from '@/utils/text';
 
 interface MultipleChoiceStepProps {
   step: MultipleChoiceStepType;
@@ -45,23 +47,19 @@ export function MultipleChoiceStep({
       selectedOptions.length <= (step.maxSelections || step.choices.length));
 
   return (
-    <div className='space-y-6'>
-      <div className='space-y-2'>
-        {step.title && <Heading>{step.title}</Heading>}
-      </div>
-
-      <div className='space-y-3'>
-        {step.choices.map(choice => (
-          <Choice
-            key={choice.id}
-            choice={choice}
-            onChange={handleToggle}
-            next={next}
-            type='checkbox'
-            checked={selectedOptions.includes(choice.id)}
-          />
-        ))}
-      </div>
+    <Column>
+      {step.question && <Heading>{parseBoldText(step.question)}</Heading>}
+      {step.instruction && <HeadingSmall>{step.instruction}</HeadingSmall>}
+      {step.choices.map(choice => (
+        <Choice
+          key={choice.id}
+          choice={choice}
+          onChange={handleToggle}
+          next={next}
+          type='checkbox'
+          checked={selectedOptions.includes(choice.id)}
+        />
+      ))}
 
       {!isValid && (
         <p className='text-sm text-red-400'>
@@ -79,6 +77,6 @@ export function MultipleChoiceStep({
       >
         Continue
       </Button>
-    </div>
+    </Column>
   );
 }

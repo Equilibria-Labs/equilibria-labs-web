@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Questionnaire } from '@/components/questionnaire/questionnaire';
+import { Questionnaire } from '@/components/dialogue/questionnaire/questionnaire';
 import { onboardingConfig } from '@/config/onboarding';
 
 export default function Onboarding() {

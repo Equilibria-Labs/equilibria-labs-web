@@ -1,10 +1,6 @@
 import { Fraunces, Outfit } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import './globals.css';
-import Header from '@/components/structure/Header';
-import SunriseHeader from '@/components/graphics/SunriseHeader';
-import Body from '@/components/structure/Body';
-import BottomNav from '@/components/structure/BottomNav';
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -19,7 +15,7 @@ export const metadata = {
 const fraunces = Fraunces({
   display: 'swap',
   subsets: ['latin'],
-  weight: ['600'],
+  weight: ['400', '700'],
   variable: '--font-fraunces',
 });
 
@@ -49,13 +45,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className='min-h-screen flex flex-col items-center'>
-            <div className='flex-1 w-full flex flex-col items-center'>
-              <SunriseHeader>
-                <Header />
-              </SunriseHeader>
-              <Body>{children}</Body>
-              <BottomNav />
-            </div>
+            {children}
           </main>
         </ThemeProvider>
       </body>

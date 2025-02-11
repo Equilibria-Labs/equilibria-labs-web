@@ -1,6 +1,5 @@
 import HeaderBodyAndNavLayout from '@/components/layouts/HeaderBodyAndNavLayout';
-
-export default function AuthPageLayout({
+export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;
