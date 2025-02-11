@@ -18,6 +18,7 @@ export default function SunriseHeader({ children }: PropsWithChildren) {
             backgroundPosition: 'center calc(100% + 30px)',
             backgroundSize: '80px 80px',
             opacity: 0.8,
+            pointerEvents: 'none',
           }}
         />
         <div>{children}</div>

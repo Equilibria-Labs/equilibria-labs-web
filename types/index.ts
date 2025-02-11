@@ -13,5 +13,4 @@ export type {
 } from './questionnaire';
 
 export type { OnboardingConfig } from './onboarding';
-export type { WelcomeConfig } from './welcome';
 export type { User } from './user';
