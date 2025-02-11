@@ -1,4 +1,4 @@
-import HeaderBodyAndNavLayout from '@/components/layouts/HeaderBodyAndNav';
+import HeaderBodyAndNavLayout from '@/components/layouts/HeaderBodyAndNavLayout';
 export default function MainLayout({
   children,
 }: {
