@@ -3,12 +3,10 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { LabelText } from '@/components/common/Typography';
 import { Check } from 'lucide-react';
+import { Choice as ChoiceType } from '@/types';
 
 interface ChoiceProps {
-  choice: {
-    id: string;
-    text: string;
-  };
+  choice: ChoiceType;
   onChange: (value: string) => void;
   next: () => void;
   type: 'radio' | 'checkbox';
@@ -18,16 +16,16 @@ interface ChoiceProps {
 export function Choice({ choice, onChange, next, type, checked }: ChoiceProps) {
   const handleClick = async () => {
     if (type === 'checkbox') {
-      await onChange(choice.id);
+      await onChange(choice.choiceId);
     } else if (type === 'radio') {
-      await onChange(choice.id);
+      await onChange(choice.choiceId);
       next();
     }
   };
 
   return (
     <div
-      key={choice.id}
+      key={choice.choiceId}
       className={`relative flex items-center justify-between rounded-xl p-4 cursor-pointer text-primary-foreground transition-colors ${
         checked
           ? 'bg-primary/75'
@@ -36,16 +34,23 @@ export function Choice({ choice, onChange, next, type, checked }: ChoiceProps) {
     >
       <div className='absolute inset-0 z-10' onClick={handleClick} />
       {type === 'radio' ? (
-        <RadioGroupItem value={choice.id} id={choice.id} className='sr-only' />
+        <RadioGroupItem
+          value={choice.value}
+          id={choice.choiceId}
+          className='sr-only'
+        />
       ) : (
         <Checkbox
-          id={choice.id}
+          id={choice.choiceId}
           checked={checked}
-          onCheckedChange={() => onChange(choice.id)}
+          onCheckedChange={() => onChange(choice.choiceId)}
           className='hidden' // Hide the checkbox
         />
       )}
-      <Label htmlFor={choice.id} className='flex-1 cursor-pointer text-lg'>
+      <Label
+        htmlFor={choice.choiceId}
+        className='flex-1 cursor-pointer text-lg'
+      >
         <LabelText>{choice.text}</LabelText>
       </Label>
       {checked && <Check className='w-6 h-6 text-white' aria-hidden='true' />}

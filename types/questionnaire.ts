@@ -1,5 +1,5 @@
 export interface BaseStep {
-  id: string;
+  stepId: string;
   type: string;
   title?: string;
   question?: string;
@@ -7,20 +7,24 @@ export interface BaseStep {
   description?: string;
 }
 
+export interface QuestionStep extends BaseStep {
+  questionId: string;
+}
+
 export interface Choice {
-  id: string;
+  choiceId: string;
   text: string;
   value?: string | number;
 }
 
-export interface MultipleChoiceStep extends BaseStep {
+export interface MultipleChoiceStep extends QuestionStep {
   type: 'multiple-choice-required' | 'multiple-choice-optional';
   choices: Choice[];
   minSelections?: number;
   maxSelections?: number;
 }
 
-export interface SingleChoiceStep extends BaseStep {
+export interface SingleChoiceStep extends QuestionStep {
   type: 'single-choice';
   choices: Choice[];
 }
@@ -61,4 +65,18 @@ export type Step =
 export type QuestionnaireState = {
   currentStepIndex: number;
   answers: Record<string, string[]>;
+};
+
+export type QuestionnaireConfig = {
+  dialogueId: string;
+  version: string;
+  steps: Step[];
+  formulaString: string;
+  resultsBands: {
+    min: number;
+    max: number;
+    textTechnical: string;
+    textFriendly: string;
+    description: string;
+  }[];
 };

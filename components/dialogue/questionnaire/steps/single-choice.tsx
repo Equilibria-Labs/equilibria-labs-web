@@ -31,7 +31,7 @@ export function SingleChoiceStep({
       >
         {step.choices.map(choice => (
           <Choice
-            key={choice.id}
+            key={choice.choiceId}
             choice={choice}
             onChange={onChange}
             next={next}

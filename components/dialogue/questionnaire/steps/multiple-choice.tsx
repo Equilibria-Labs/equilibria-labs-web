@@ -52,12 +52,12 @@ export function MultipleChoiceStep({
       {step.instruction && <HeadingSmall>{step.instruction}</HeadingSmall>}
       {step.choices.map(choice => (
         <Choice
-          key={choice.id}
+          key={choice.choiceId}
           choice={choice}
           onChange={handleToggle}
           next={next}
           type='checkbox'
-          checked={selectedOptions.includes(choice.id)}
+          checked={selectedOptions.includes(choice.choiceId)}
         />
       ))}
 

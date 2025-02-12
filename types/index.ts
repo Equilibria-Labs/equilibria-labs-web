@@ -10,6 +10,7 @@ export type {
   ResultsStep,
   Step,
   QuestionnaireState,
+  QuestionnaireConfig,
 } from './questionnaire';
 
 export type { OnboardingConfig } from './onboarding';
