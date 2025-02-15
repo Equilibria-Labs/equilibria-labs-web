@@ -3,15 +3,33 @@ import { ChevronDown } from 'lucide-react';
 import Row from '@/components/structure/Row';
 import { Heading } from '@/components/common/Typography';
 import Box from '@/components/structure/Box';
+import { ResultsBand } from '@/types/questionnaire';
+import Column from '@/components/structure/Column';
+import { Sun, Cloud, CloudRain, CloudLightning } from 'lucide-react';
+
+const IconMap = {
+  sun: Sun,
+  cloud: Cloud,
+  rain: CloudRain,
+  lightning: CloudLightning,
+} as const;
+
+type IconName = keyof typeof IconMap;
+
+interface IconProps {
+  name: string | undefined;
+}
+
+const Icon: React.FC<IconProps> = ({ name }) => {
+  const IconComponent =
+    name && name in IconMap ? IconMap[name as IconName] : Cloud; // Default to Cloud if no icon specified or invalid icon name
+  return <IconComponent className='w-6 h-6' />;
+};
 
 interface WeatherHeatmapResultsProps {
   score: number;
   maxScore: number;
-  bands: {
-    min: number;
-    max: number;
-    textFriendly: string;
-  }[];
+  bands: ResultsBand[];
 }
 
 const SeverityIndicator: React.FC<WeatherHeatmapResultsProps> = ({
@@ -60,9 +78,12 @@ const SeverityIndicator: React.FC<WeatherHeatmapResultsProps> = ({
         {bands.map((band, index) => (
           <div
             key={index}
-            className='p-2 rounded-lg bg-background/10 text-background text-xs text-center'
+            className='px-2 py-4 rounded-lg bg-background/10 text-background text-xs text-center'
           >
-            {band.textFriendly}
+            <Column justifyItems='center' hasSmallGap>
+              <Icon name={band.iconName} />
+              {band.textFriendly}
+            </Column>
           </div>
         ))}
       </Row>
