@@ -21,7 +21,8 @@ export default function Column({
 }: ColumnProps) {
   return (
     <div
-      className={`flex flex-col ${getGapClass(hasLargeGap, hasNoGap)} max-w-5xl ${className}`}
+      data-component='Column'
+      className={`grid grid-cols-1 ${getGapClass(hasLargeGap, hasNoGap)} w-full max-w-5xl ${className}`}
     >
       {children}
     </div>

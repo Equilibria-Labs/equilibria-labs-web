@@ -1,6 +1,9 @@
 // import { useState, useEffect } from 'react';
 import { useState } from 'react';
-import { MultipleChoiceStep as MultipleChoiceStepType } from '@/types/questionnaire';
+import {
+  MultipleChoiceStep as MultipleChoiceStepType,
+  ChoiceValue,
+} from '@/types/questionnaire';
 import { Button } from '@/components/ui/button';
 import { Choice } from '@/components/common/Choice';
 import { Heading, HeadingSmall } from '@/components/common/Typography';
@@ -9,8 +12,8 @@ import { parseBoldText } from '@/utils/text';
 
 interface MultipleChoiceStepProps {
   step: MultipleChoiceStepType;
-  initialValue: string[];
-  onChange: (value: string[]) => void;
+  initialValue: ChoiceValue[];
+  onChange: (value: ChoiceValue[]) => void;
   next: () => void;
 }
 
@@ -21,19 +24,19 @@ export function MultipleChoiceStep({
   next,
 }: MultipleChoiceStepProps) {
   const [selectedOptions, setSelectedOptions] =
-    useState<string[]>(initialValue);
+    useState<ChoiceValue[]>(initialValue);
 
   // useEffect(() => {
   //   onChange(selectedOptions)
   // }, [selectedOptions, onChange])
 
-  const handleToggle = (choiceId: string) => {
+  const handleToggle = (choiceId: ChoiceValue) => {
     const newSelection =
       choiceId === 'none'
         ? selectedOptions.includes('none')
           ? []
           : ['none']
-        : selectedOptions.includes(choiceId)
+        : selectedOptions.includes(choiceId?.toString() || '')
           ? selectedOptions.filter(id => id !== choiceId)
           : [...selectedOptions.filter(id => id !== 'none'), choiceId];
 
@@ -52,12 +55,12 @@ export function MultipleChoiceStep({
       {step.instruction && <HeadingSmall>{step.instruction}</HeadingSmall>}
       {step.choices.map(choice => (
         <Choice
-          key={choice.id}
+          key={choice.choiceId}
           choice={choice}
           onChange={handleToggle}
           next={next}
           type='checkbox'
-          checked={selectedOptions.includes(choice.id)}
+          checked={selectedOptions.includes(choice.choiceId)}
         />
       ))}
 

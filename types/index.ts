@@ -8,8 +8,11 @@ export type {
   MessageStep,
   ResultsIssue,
   ResultsStep,
+  WeatherHeatmapResults,
   Step,
-  QuestionnaireState,
+  QuestionnaireConfig,
+  ChoiceValue,
+  Answer,
 } from './questionnaire';
 
 export type { OnboardingConfig } from './onboarding';

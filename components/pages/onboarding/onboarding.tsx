@@ -1,31 +1,18 @@
 'use client';
 
-import { useState } from 'react';
 import { Questionnaire } from '@/components/dialogue/questionnaire/questionnaire';
 import { onboardingConfig } from '@/config/onboarding';
+import { Answer } from '@/types';
 
 export default function Onboarding() {
-  const [answers, setAnswers] = useState<Record<string, string[]>>({});
-
-  const handleComplete = (newAnswers: Record<string, string[]>) => {
-    setAnswers(newAnswers);
-    console.log('Questionnaire completed:', newAnswers);
-  };
-
-  const handleStepComplete = (stepId: string, answer: string[]) => {
-    const updatedAnswers = {
-      ...answers,
-      [stepId]: answer,
-    };
-    setAnswers(updatedAnswers);
+  const handleComplete = (answers: Answer[]) => {
+    console.log('Questionnaire completed:', answers);
   };
 
   return (
     <Questionnaire
-      steps={onboardingConfig.steps}
+      config={onboardingConfig}
       onCompleteAction={handleComplete}
-      onStepComplete={handleStepComplete}
-      answers={answers}
     />
   );
 }

@@ -13,7 +13,10 @@ const Header = async () => {
   } = await supabase.auth.getUser();
 
   return (
-    <header className='px-4 py-2 max-w-maxWidth mx-auto'>
+    <header
+      data-component='Header'
+      className='px-4 py-2 max-w-maxWidth mx-auto'
+    >
       <Row isFullWidth justify='space-between' align='center'>
         <Logo />
         {user ? (
