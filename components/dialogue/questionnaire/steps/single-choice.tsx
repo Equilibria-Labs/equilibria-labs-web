@@ -4,11 +4,12 @@ import { Choice } from '@/components/common/Choice';
 import { Heading, HeadingSmall } from '@/components/common/Typography';
 import Column from '@/components/structure/Column';
 import { parseBoldText } from '@/utils/text';
+import { ChoiceValue } from '@/types';
 
 interface SingleChoiceStepProps {
   step: SingleChoiceStepType;
-  value: string[];
-  onChange: (value: string) => void;
+  value: ChoiceValue[];
+  onChange: (value: ChoiceValue) => void;
   next: () => void;
 }
 
@@ -25,7 +26,7 @@ export function SingleChoiceStep({
         {step.instruction && <HeadingSmall>{step.instruction}</HeadingSmall>}
       </Column>
       <RadioGroup
-        value={value[0]}
+        value={value[0]?.toString() || ''}
         onValueChange={onChange}
         className='space-y-3'
       >

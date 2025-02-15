@@ -3,11 +3,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { LabelText } from '@/components/common/Typography';
 import { Check } from 'lucide-react';
-import { Choice as ChoiceType } from '@/types';
+import { Choice as ChoiceType, ChoiceValue } from '@/types';
 
 interface ChoiceProps {
   choice: ChoiceType;
-  onChange: (value: string) => void;
+  onChange: (value: ChoiceValue) => void;
   next: () => void;
   type: 'radio' | 'checkbox';
   checked?: boolean; // Optional prop for checkbox
@@ -16,9 +16,9 @@ interface ChoiceProps {
 export function Choice({ choice, onChange, next, type, checked }: ChoiceProps) {
   const handleClick = async () => {
     if (type === 'checkbox') {
-      await onChange(choice.choiceId);
+      await onChange(choice.value);
     } else if (type === 'radio') {
-      await onChange(choice.choiceId);
+      await onChange(choice.value);
       next();
     }
   };
@@ -35,7 +35,7 @@ export function Choice({ choice, onChange, next, type, checked }: ChoiceProps) {
       <div className='absolute inset-0 z-10' onClick={handleClick} />
       {type === 'radio' ? (
         <RadioGroupItem
-          value={choice.value}
+          value={String(choice.value ?? '')}
           id={choice.choiceId}
           className='sr-only'
         />
@@ -43,7 +43,7 @@ export function Choice({ choice, onChange, next, type, checked }: ChoiceProps) {
         <Checkbox
           id={choice.choiceId}
           checked={checked}
-          onCheckedChange={() => onChange(choice.choiceId)}
+          onCheckedChange={() => onChange(choice.value)}
           className='hidden' // Hide the checkbox
         />
       )}

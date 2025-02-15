@@ -1,66 +1,77 @@
 'use client';
 
-// import { useState, useEffect } from 'react';
 import { useState } from 'react';
-import { Step, QuestionnaireState } from '../../../types';
+import {
+  QuestionnaireState,
+  QuestionnaireConfig,
+  ChoiceValue,
+  ResultsStep,
+} from '@/types';
 import { SingleChoiceStep } from './steps/single-choice';
 import { MultipleChoiceStep } from './steps/multiple-choice';
 import { MessageStep } from './steps/message';
 import { EducationalStep } from './steps/educational';
-import { ResultsStep } from './steps/results';
-// import { Button } from '@/components/ui/button';
+import { SpeedDialResultsStep } from './resultsSteps/speed-dial-results';
+
+// Map result types to their components
+const ResultsComponents = {
+  'speed-dial-results': SpeedDialResultsStep,
+} as const;
 
 interface QuestionnaireProps {
-  steps: Step[];
-  onCompleteAction: (answers: Record<string, string[]>) => void;
-  onStepComplete: (stepId: string, answer: string[]) => void;
-  answers: Record<string, string[]>;
-  shouldShowProgress?: boolean;
+  config: QuestionnaireConfig;
+  onCompleteAction: (answers: Record<string, ChoiceValue[]>) => void;
 }
 
 export function Questionnaire({
-  steps,
+  config,
   onCompleteAction,
-  shouldShowProgress = true,
 }: QuestionnaireProps) {
   const [state, setState] = useState<QuestionnaireState>({
     currentStepIndex: 0,
     answers: {},
   });
 
-  const currentStep = steps[state.currentStepIndex];
+  const currentStep = config.steps[state.currentStepIndex];
 
   const handleNext = () => {
-    if (state.currentStepIndex < steps.length - 1) {
+    const nextStepIndex = state.currentStepIndex + 1;
+
+    // Move to next step if it exists
+    if (nextStepIndex < config.steps.length) {
       setState(prev => ({
         ...prev,
-        currentStepIndex: prev.currentStepIndex + 1,
+        currentStepIndex: nextStepIndex,
       }));
-    } else {
-      // If it's the last step, move to the results
-      const resultsStep = steps.findIndex(step => step.type === 'results');
-      if (resultsStep !== -1) {
-        setState(prev => ({ ...prev, currentStepIndex: resultsStep }));
-      } else {
-        onCompleteAction(state.answers);
-      }
+      return;
+    }
+
+    // Always update the step index when we've completed all steps
+    setState(prev => ({
+      ...prev,
+      currentStepIndex: nextStepIndex,
+    }));
+
+    // Call onCompleteAction if no results
+    if (!config.results) {
+      onCompleteAction(state.answers);
     }
   };
 
-  // const handleBack = () => {
-  //   if (state.currentStepIndex > 0) {
-  //     setState(prev => ({
-  //       ...prev,
-  //       currentStepIndex: prev.currentStepIndex - 1,
-  //     }));
-  //   }
-  // };
-
-  const handleAnswer = (stepId: string, answer: string[]) => {
+  const handleAnswer = (questionId: string, answer: ChoiceValue[]) => {
     setState(prev => ({
       ...prev,
-      answers: { ...prev.answers, [stepId]: answer },
+      answers: { ...prev.answers, [questionId]: answer },
     }));
+  };
+
+  const renderResults = (results: ResultsStep) => {
+    const ResultsComponent = ResultsComponents[results.type];
+    if (!ResultsComponent) {
+      console.warn(`No component found for results type: ${results.type}`);
+      return null;
+    }
+    return <ResultsComponent step={results} answers={state.answers} />;
   };
 
   const renderStep = () => {
@@ -69,8 +80,8 @@ export function Questionnaire({
         return (
           <SingleChoiceStep
             step={currentStep}
-            value={state.answers[currentStep.id] || []}
-            onChange={value => handleAnswer(currentStep.id, [value])}
+            value={state.answers[currentStep.questionId] || []}
+            onChange={value => handleAnswer(currentStep.questionId, [value])}
             next={handleNext}
           />
         );
@@ -79,8 +90,8 @@ export function Questionnaire({
         return (
           <MultipleChoiceStep
             step={currentStep}
-            initialValue={state.answers[currentStep.id] || []}
-            onChange={value => handleAnswer(currentStep.id, value)}
+            initialValue={state.answers[currentStep.questionId] || []}
+            onChange={value => handleAnswer(currentStep.questionId, value)}
             next={handleNext}
           />
         );
@@ -88,27 +99,29 @@ export function Questionnaire({
         return <MessageStep step={currentStep} next={handleNext} />;
       case 'educational':
         return <EducationalStep step={currentStep} next={handleNext} />;
-      case 'results':
-        return <ResultsStep step={currentStep} answers={state.answers} />;
       default:
         return null;
     }
   };
 
+  const isComplete = state.currentStepIndex >= config.steps.length;
+
   return (
     <>
-      {shouldShowProgress && currentStep.type !== 'results' && (
+      {config.shouldShowProgress && !isComplete && (
         <div className='mb-6 h-1 rounded-full'>
           <div
             className='h-full rounded-full transition-all duration-300'
             style={{
-              width: `${((state.currentStepIndex + 1) / (steps.length - 1)) * 100}%`,
+              width: `${((state.currentStepIndex + 1) / config.steps.length) * 100}%`,
             }}
           />
         </div>
       )}
 
-      {renderStep()}
+      {isComplete && config.results
+        ? renderResults(config.results)
+        : renderStep()}
     </>
   );
 }

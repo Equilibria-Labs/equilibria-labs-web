@@ -1,10 +1,13 @@
-import { ResultsStep as ResultsStepType } from '../../../../types/questionnaire';
-import { Button } from '../../../ui/button';
+import {
+  ResultsStep as ResultsStepType,
+  ChoiceValue,
+} from '@/types/questionnaire';
+import { Button } from '@/components/ui/button';
 import { Clock, Calendar, Brain, Moon, AlertCircle } from 'lucide-react';
 
-interface ResultsStepProps {
+interface SpeedDialResultsStepProps {
   step: ResultsStepType;
-  answers: Record<string, string[]>;
+  answers: Record<string, ChoiceValue[]>;
 }
 
 const icons = {
@@ -15,7 +18,7 @@ const icons = {
   alert: AlertCircle,
 };
 
-function calculateResults(answers: Record<string, string[]>): {
+function calculateResults(answers: Record<string, ChoiceValue[]>): {
   score: number;
   issues: { icon: string; text: string }[];
 } {
@@ -49,7 +52,10 @@ function calculateResults(answers: Record<string, string[]>): {
   return { score: Math.max(score, 0), issues };
 }
 
-export function ResultsStep({ step, answers }: ResultsStepProps) {
+export function SpeedDialResultsStep({
+  step,
+  answers,
+}: SpeedDialResultsStepProps) {
   const { score, issues } = calculateResults(answers);
   console.log(step);
   console.log(answers);

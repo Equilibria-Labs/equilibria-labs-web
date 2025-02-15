@@ -11,10 +11,12 @@ export interface QuestionStep extends BaseStep {
   questionId: string;
 }
 
+export type ChoiceValue = string | number | undefined;
+
 export interface Choice {
   choiceId: string;
   text: string;
-  value?: string | number;
+  value?: ChoiceValue;
 }
 
 export interface MultipleChoiceStep extends QuestionStep {
@@ -47,13 +49,29 @@ export interface ResultsIssue {
   text: string;
 }
 
-export interface ResultsStep extends BaseStep {
-  type: 'results';
+export interface ResultsBand {
+  min: number;
+  max: number;
+  textTechnical: string;
+  textFriendly: string;
+  description: string;
+}
+
+export interface BaseResultsStep extends BaseStep {
+  type: 'speed-dial-results' | 'results';
   title: string;
+}
+
+export interface SpeedDialResultsStep extends BaseResultsStep {
+  type: 'speed-dial-results';
   score: number;
   issues: ResultsIssue[];
   recommendation: string;
+  resultsBands: ResultsBand[];
+  formulaString: string;
 }
+
+export type ResultsStep = SpeedDialResultsStep;
 
 export type Step =
   | MultipleChoiceStep
@@ -64,19 +82,13 @@ export type Step =
 
 export type QuestionnaireState = {
   currentStepIndex: number;
-  answers: Record<string, string[]>;
+  answers: Record<string, ChoiceValue[]>;
 };
 
 export type QuestionnaireConfig = {
   dialogueId: string;
   version: string;
   steps: Step[];
-  formulaString: string;
-  resultsBands: {
-    min: number;
-    max: number;
-    textTechnical: string;
-    textFriendly: string;
-    description: string;
-  }[];
+  shouldShowProgress: boolean;
+  results: SpeedDialResultsStep;
 };
