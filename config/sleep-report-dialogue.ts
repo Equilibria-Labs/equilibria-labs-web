@@ -24,9 +24,9 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
       {
         min: 8,
         max: 14,
-        textTechnical: 'Subthreshold insomnia',
-        textFriendly: 'Subthreshold insomnia',
-        description: 'Subthreshold insomnia',
+        textTechnical: 'Sub-threshold insomnia',
+        textFriendly: 'Sub-threshold insomnia',
+        description: 'Sub-threshold insomnia',
       },
       {
         min: 15,
