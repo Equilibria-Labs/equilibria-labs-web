@@ -10,9 +10,9 @@ export type {
   ResultsStep,
   SpeedDialResultsStep,
   Step,
-  QuestionnaireState,
   QuestionnaireConfig,
   ChoiceValue,
+  Answer,
 } from './questionnaire';
 
 export type { OnboardingConfig } from './onboarding';

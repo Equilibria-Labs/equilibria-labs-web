@@ -2,10 +2,10 @@
 
 import { Questionnaire } from '@/components/dialogue/questionnaire/questionnaire';
 import { sleepReportDialogueConfig } from '@/config/sleep-report-dialogue';
-import { ChoiceValue } from '@/types';
+import { Answer } from '@/types';
 
 export default function SleepReportDialogue() {
-  const handleComplete = (answers: Record<string, ChoiceValue[]>) => {
+  const handleComplete = (answers: Answer[]) => {
     console.log('Questionnaire completed:', answers);
   };
 

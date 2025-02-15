@@ -80,10 +80,7 @@ export type Step =
   | MessageStep
   | ResultsStep;
 
-export type QuestionnaireState = {
-  currentStepIndex: number;
-  answers: Record<string, ChoiceValue[]>;
-};
+export type Answer = Record<string, ChoiceValue[]>;
 
 export type QuestionnaireConfig = {
   dialogueId: string;

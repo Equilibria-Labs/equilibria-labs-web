@@ -1,12 +1,11 @@
 'use client';
 
-import { useState } from 'react';
 import { Questionnaire } from '@/components/dialogue/questionnaire/questionnaire';
 import { onboardingConfig } from '@/config/onboarding';
-import { ChoiceValue } from '@/types';
+import { Answer } from '@/types';
 
 export default function Onboarding() {
-  const handleComplete = (answers: Record<string, ChoiceValue[]>) => {
+  const handleComplete = (answers: Answer[]) => {
     console.log('Questionnaire completed:', answers);
   };
 

@@ -1,12 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  QuestionnaireState,
-  QuestionnaireConfig,
-  ChoiceValue,
-  ResultsStep,
-} from '@/types';
+import { QuestionnaireConfig, ChoiceValue, ResultsStep, Answer } from '@/types';
 import { SingleChoiceStep } from './steps/single-choice';
 import { MultipleChoiceStep } from './steps/multiple-choice';
 import { MessageStep } from './steps/message';
@@ -20,49 +15,43 @@ const ResultsComponents = {
 
 interface QuestionnaireProps {
   config: QuestionnaireConfig;
-  onCompleteAction: (answers: Record<string, ChoiceValue[]>) => void;
+  onCompleteAction: (answers: Answer[]) => void;
 }
 
 export function Questionnaire({
   config,
   onCompleteAction,
 }: QuestionnaireProps) {
-  const [state, setState] = useState<QuestionnaireState>({
-    currentStepIndex: 0,
-    answers: {},
-  });
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [answers, setAnswers] = useState<Answer[]>([{}]);
+  const [results, setResults] = useState<Record<string, any>>({});
 
-  const currentStep = config.steps[state.currentStepIndex];
+  const currentStep = config.steps[currentStepIndex];
 
   const handleNext = () => {
-    const nextStepIndex = state.currentStepIndex + 1;
+    const nextStepIndex = currentStepIndex + 1;
 
     // Move to next step if it exists
     if (nextStepIndex < config.steps.length) {
-      setState(prev => ({
-        ...prev,
-        currentStepIndex: nextStepIndex,
-      }));
+      setCurrentStepIndex(nextStepIndex);
       return;
     }
 
-    // Always update the step index when we've completed all steps
-    setState(prev => ({
-      ...prev,
-      currentStepIndex: nextStepIndex,
-    }));
+    // Update step index when we've completed all steps
+    setCurrentStepIndex(nextStepIndex);
 
     // Call onCompleteAction if no results
     if (!config.results) {
-      onCompleteAction(state.answers);
+      onCompleteAction(answers);
     }
   };
 
   const handleAnswer = (questionId: string, answer: ChoiceValue[]) => {
-    setState(prev => ({
-      ...prev,
-      answers: { ...prev.answers, [questionId]: answer },
-    }));
+    setAnswers((prev: Answer[]) => {
+      const newAnswers = [...prev];
+      newAnswers[0] = { ...newAnswers[0], [questionId]: answer };
+      return newAnswers;
+    });
   };
 
   const renderResults = (results: ResultsStep) => {
@@ -71,7 +60,7 @@ export function Questionnaire({
       console.warn(`No component found for results type: ${results.type}`);
       return null;
     }
-    return <ResultsComponent step={results} answers={state.answers} />;
+    return <ResultsComponent step={results} answers={answers[0]} />;
   };
 
   const renderStep = () => {
@@ -80,7 +69,7 @@ export function Questionnaire({
         return (
           <SingleChoiceStep
             step={currentStep}
-            value={state.answers[currentStep.questionId] || []}
+            value={answers[0][currentStep.questionId] || []}
             onChange={value => handleAnswer(currentStep.questionId, [value])}
             next={handleNext}
           />
@@ -90,7 +79,7 @@ export function Questionnaire({
         return (
           <MultipleChoiceStep
             step={currentStep}
-            initialValue={state.answers[currentStep.questionId] || []}
+            initialValue={answers[0][currentStep.questionId] || []}
             onChange={value => handleAnswer(currentStep.questionId, value)}
             next={handleNext}
           />
@@ -104,7 +93,7 @@ export function Questionnaire({
     }
   };
 
-  const isComplete = state.currentStepIndex >= config.steps.length;
+  const isComplete = currentStepIndex >= config.steps.length;
 
   return (
     <>
@@ -113,7 +102,7 @@ export function Questionnaire({
           <div
             className='h-full rounded-full transition-all duration-300'
             style={{
-              width: `${((state.currentStepIndex + 1) / config.steps.length) * 100}%`,
+              width: `${((currentStepIndex + 1) / config.steps.length) * 100}%`,
             }}
           />
         </div>
