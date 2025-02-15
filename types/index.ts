@@ -8,7 +8,7 @@ export type {
   MessageStep,
   ResultsIssue,
   ResultsStep,
-  SpeedDialResultsStep,
+  WeatherHeatmapResults,
   Step,
   QuestionnaireConfig,
   ChoiceValue,

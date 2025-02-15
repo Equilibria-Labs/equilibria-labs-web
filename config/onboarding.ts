@@ -6,9 +6,10 @@ export const onboardingConfig: QuestionnaireConfig = {
   shouldShowProgress: true,
   results: {
     stepId: 'results',
-    type: 'speed-dial-results',
+    type: 'weather-heatmap-results',
     title: 'Your Sleep Quality',
     score: 38,
+    maxScore: 100,
     resultsBands: [],
     formulaString: '',
     issues: [

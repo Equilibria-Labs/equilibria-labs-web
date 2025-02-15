@@ -1,5 +1,10 @@
 export default function Body({ children }: { children: React.ReactNode }) {
   return (
-    <div className='flex flex-col gap-8 max-w-maxWidth p-4'>{children}</div>
+    <div
+      data-component='Body'
+      className='flex flex-col gap-8 max-w-maxWidth p-4 w-full'
+    >
+      {children}
+    </div>
   );
 }

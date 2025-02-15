@@ -58,20 +58,21 @@ export interface ResultsBand {
 }
 
 export interface BaseResultsStep extends BaseStep {
-  type: 'speed-dial-results' | 'results';
+  type: 'weather-heatmap-results' | 'results';
   title: string;
 }
 
-export interface SpeedDialResultsStep extends BaseResultsStep {
-  type: 'speed-dial-results';
+export interface WeatherHeatmapResults extends BaseResultsStep {
+  type: 'weather-heatmap-results';
   score: number;
+  maxScore: number;
   issues: ResultsIssue[];
   recommendation: string;
   resultsBands: ResultsBand[];
   formulaString: string;
 }
 
-export type ResultsStep = SpeedDialResultsStep;
+export type ResultsStep = WeatherHeatmapResults;
 
 export type Step =
   | MultipleChoiceStep
@@ -90,5 +91,5 @@ export type QuestionnaireConfig = {
   version: string;
   steps: Step[];
   shouldShowProgress: boolean;
-  results: SpeedDialResultsStep;
+  results: WeatherHeatmapResults;
 };

@@ -6,11 +6,11 @@ import { SingleChoiceStep } from './steps/single-choice';
 import { MultipleChoiceStep } from './steps/multiple-choice';
 import { MessageStep } from './steps/message';
 import { EducationalStep } from './steps/educational';
-import { SpeedDialResultsStep } from './resultsSteps/speed-dial-results';
+import WeatherHeatmapResults from './resultsSteps/weather-heatmap-results';
 
 // Map result types to their components
 const ResultsComponents = {
-  'speed-dial-results': SpeedDialResultsStep,
+  'weather-heatmap-results': WeatherHeatmapResults,
 } as const;
 
 interface QuestionnaireProps {

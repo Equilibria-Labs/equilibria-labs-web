@@ -7,9 +7,10 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
   results: {
     formulaString: 'q1a + q1b + q1c + q2 + q3 + q4 + q5',
     stepId: 'results',
-    type: 'speed-dial-results',
+    type: 'weather-heatmap-results',
     title: 'Your Sleep Report',
     score: 0,
+    maxScore: 28,
     issues: [],
     recommendation: '',
     resultsBands: [
