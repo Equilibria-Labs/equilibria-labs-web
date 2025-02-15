@@ -5,7 +5,7 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
   version: '1.1',
   shouldShowProgress: true,
   results: {
-    formulaString: '1a + 1b + 1c + 2 + 3 + 4 + 5',
+    formulaString: 'q1a + q1b + q1c + q2 + q3 + q4 + q5',
     stepId: 'results',
     type: 'speed-dial-results',
     title: 'Your Sleep Report',
