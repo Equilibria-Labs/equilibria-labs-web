@@ -3,6 +3,8 @@ import { Answer, QuestionnaireConfig } from '@/types/questionnaire';
 import { getScoreFromAnswersWithFormula } from '../helpers/getScoreFromAnswersWithFormula';
 import { ChevronDown } from 'lucide-react';
 import Column from '@/components/structure/Column';
+import Row from '@/components/structure/Row';
+
 interface WeatherHeatmapResultsProps {
   answers: Answer[];
   config: QuestionnaireConfig;
@@ -19,6 +21,20 @@ const SeverityIndicator: React.FC<WeatherHeatmapResultsProps> = ({
   );
   const position = (score / config.results.maxScore) * 100;
 
+  // Calculate total gap space (2% between each band)
+  const totalGaps = (config.results.resultsBands.length - 1) * 2;
+  const availableSpace = 100 - totalGaps;
+
+  // Calculate grid template columns based on band ranges
+  const gridColumns = config.results.resultsBands
+    .map(band => {
+      const bandRange = band.max - band.min;
+      const totalRange = config.results.maxScore;
+      const width = (bandRange / totalRange) * availableSpace;
+      return `${width}%`;
+    })
+    .join(' ');
+
   return (
     <Column>
       {/* Indicator label */}
@@ -31,7 +47,24 @@ const SeverityIndicator: React.FC<WeatherHeatmapResultsProps> = ({
       </div>
 
       {/* Gradient bar */}
-      <div className='h-2 rounded-full bg-gradient-to-r from-[#00ff00] via-yellow-400 via-orange-500 to-red-600' />
+      <div className='h-2 rounded-full bg-gradient-to-r from-[#00ff00] via-yellow-400 via-orange-500 to-red-600 mb-4' />
+
+      {/* Result band boxes */}
+      <Row
+        gridTemplateColumns={gridColumns}
+        gapInPercent={2}
+        hasNoGap
+        isFullWidth
+      >
+        {config.results.resultsBands.map((band, index) => (
+          <div
+            key={index}
+            className='p-2 rounded-lg bg-gray-800 text-white text-xs text-center'
+          >
+            {band.textFriendly}
+          </div>
+        ))}
+      </Row>
     </Column>
   );
 };
