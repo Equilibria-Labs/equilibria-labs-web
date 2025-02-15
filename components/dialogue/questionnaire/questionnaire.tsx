@@ -23,8 +23,7 @@ export function Questionnaire({
   onCompleteAction,
 }: QuestionnaireProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [answers, setAnswers] = useState<Answer[]>([{}]);
-  const [results, setResults] = useState<Record<string, any>>({});
+  const [answers, setAnswers] = useState<Answer[]>([]);
 
   const currentStep = config.steps[currentStepIndex];
 
@@ -48,9 +47,8 @@ export function Questionnaire({
 
   const handleAnswer = (questionId: string, answer: ChoiceValue[]) => {
     setAnswers((prev: Answer[]) => {
-      const newAnswers = [...prev];
-      newAnswers[0] = { ...newAnswers[0], [questionId]: answer };
-      return newAnswers;
+      const newAnswer: Answer = { questionId, value: answer };
+      return [...prev, newAnswer];
     });
   };
 
@@ -60,7 +58,7 @@ export function Questionnaire({
       console.warn(`No component found for results type: ${results.type}`);
       return null;
     }
-    return <ResultsComponent step={results} answers={answers[0]} />;
+    return <ResultsComponent answers={answers} config={config} />;
   };
 
   const renderStep = () => {
@@ -69,8 +67,16 @@ export function Questionnaire({
         return (
           <SingleChoiceStep
             step={currentStep}
-            value={answers[0][currentStep.questionId] || []}
-            onChange={value => handleAnswer(currentStep.questionId, [value])}
+            value={
+              answers.find(a => a.questionId === currentStep.questionId)
+                ?.value || []
+            }
+            onChange={value =>
+              handleAnswer(
+                currentStep.questionId,
+                value !== undefined ? [value] : []
+              )
+            }
             next={handleNext}
           />
         );
@@ -79,7 +85,10 @@ export function Questionnaire({
         return (
           <MultipleChoiceStep
             step={currentStep}
-            initialValue={answers[0][currentStep.questionId] || []}
+            initialValue={
+              answers.find(a => a.questionId === currentStep.questionId)
+                ?.value || []
+            }
             onChange={value => handleAnswer(currentStep.questionId, value)}
             next={handleNext}
           />

@@ -8,22 +8,25 @@ export class FormulaError extends Error {
 }
 
 /**
- * Evaluates a formula string using values from answers.
+ * Evaluates a formula string using values from answer set.
  * Formula string can contain:
- * - Question IDs (must start with 'q', e.g. 'q1', 'q2a')
+ * - Question IDs (with or without 'q' prefix, e.g. 'q1', '1', 'q2a', '2a')
  * - Numeric literals (e.g. '3', '4.5')
  * - Basic arithmetic operators (+, -, *, /)
- * Example formula: "q1a + q1b + 3 * q2 + 4"
+ * Example formula: "1a + 1b + 3 * 2 + 4"
  *
- * @param answers Record of question IDs to their selected choice values
+ * @param answers Array of answers mapping question IDs to their selected choice values
  * @param formulaString String representing the calculation formula
  * @returns The calculated result
  * @throws {FormulaError} If the formula contains invalid tokens or syntax
  */
-export function calculateResults(
-  answers: Answer,
+export function getScoreFromAnswersWithFormula(
+  answers: Answer[],
   formulaString: string
 ): number {
+  // If no answers provided, return 0
+  if (!answers.length) return 0;
+
   // Split formula into tokens (operators and question IDs)
   const tokens = formulaString
     .split(/([+\-*/])/)
@@ -32,13 +35,20 @@ export function calculateResults(
 
   // Validate formula tokens
   const validOperators = ['+', '-', '*', '/'];
-  const validTokenPattern = /^(q\w+|\d+(\.\d+)?|[+\-*/])$/;
+  const validTokenPattern = /^(q\d+[a-zA-Z]*|\d+(\.\d+)?|[+\-*/])$/;
+  const validQuestionIdPattern = /^q\d+[a-zA-Z]*$/;
+  const validNumberPattern = /^\d+(\.\d+)?$/;
 
   for (const token of tokens) {
-    if (!validTokenPattern.test(token)) {
-      throw new FormulaError(
-        `Invalid token "${token}" in formula. Tokens must be operators (+,-,*,/), question IDs starting with 'q', or numbers.`
-      );
+    if (!validOperators.includes(token)) {
+      if (
+        !validQuestionIdPattern.test(token) &&
+        !validNumberPattern.test(token)
+      ) {
+        throw new FormulaError(
+          `Invalid token "${token}" in formula. Must be a valid question ID (starting with 'q') or numeric value.`
+        );
+      }
     }
   }
 
@@ -51,10 +61,17 @@ export function calculateResults(
       operators.push(token);
     } else {
       let value: number;
-      if (token.startsWith('q')) {
-        const questionId = token;
-        const answerValues = answers[questionId] || [];
-        value = Number(answerValues[0] ?? 0);
+      if (validQuestionIdPattern.test(token)) {
+        const answer = answers.find(a => a.questionId === token);
+        const answerValues = answer?.value || [0];
+
+        if (typeof answerValues[0] !== 'number') {
+          throw new FormulaError(
+            `Invalid answer value for question "${token}". Answer must be numeric.`
+          );
+        }
+
+        value = answerValues[0];
       } else {
         value = Number(token);
       }
