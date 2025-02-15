@@ -3,7 +3,7 @@ import {
   getScoreFromAnswersWithFormula,
   FormulaError,
 } from './getScoreFromAnswersWithFormula';
-import type { Answer, ChoiceValue } from '@/types';
+import type { Answer } from '@/types';
 
 // Add Jest types
 import '@testing-library/jest-dom';

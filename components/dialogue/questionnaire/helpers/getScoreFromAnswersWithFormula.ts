@@ -35,7 +35,6 @@ export function getScoreFromAnswersWithFormula(
 
   // Validate formula tokens
   const validOperators = ['+', '-', '*', '/'];
-  const validTokenPattern = /^(q\d+[a-zA-Z]*|\d+(\.\d+)?|[+\-*/])$/;
   const validQuestionIdPattern = /^q\d+[a-zA-Z]*$/;
   const validNumberPattern = /^\d+(\.\d+)?$/;
 

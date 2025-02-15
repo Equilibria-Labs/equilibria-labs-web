@@ -46,7 +46,7 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
   steps: [
     {
       stepId: 'question-1a',
-      questionId: '1a',
+      questionId: 'q1a',
       description: 'How difficult is it for you to fall asleep?',
       type: 'single-choice',
       question: 'How difficult is it for you to *fall asleep*?',
@@ -69,7 +69,7 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
     },
     {
       stepId: 'question-1b',
-      questionId: '1b',
+      questionId: 'q1b',
       description: 'How difficult is it for you to stay asleep?',
       type: 'single-choice',
       question: 'How difficult is it for you to *stay asleep*?',
@@ -92,7 +92,7 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
     },
     {
       stepId: 'question-1c',
-      questionId: '1c',
+      questionId: 'q1c',
       description: 'How severe are problems waking too early?',
       type: 'single-choice',
       question: 'How severe are problems *waking too early*?',
@@ -107,7 +107,7 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
     },
     {
       stepId: 'question-2',
-      questionId: '2',
+      questionId: 'q2',
       description:
         'How satisfied/dissatisfied are you with your currentsleep pattern?',
       instruction: 'In the past 2 weeks',
@@ -128,7 +128,7 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
     },
     {
       stepId: 'question-3',
-      questionId: '3',
+      questionId: 'q3',
       description:
         'How much does your sleep problem interfere with your daily functioning?',
       type: 'single-choice',
@@ -145,7 +145,7 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
     },
     {
       stepId: 'question-4',
-      questionId: '4',
+      questionId: 'q4',
       type: 'single-choice',
       question:
         'How *noticeable* to others do you think your sleep problem is?',
@@ -164,7 +164,7 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
     },
     {
       stepId: 'question-5',
-      questionId: '5',
+      questionId: 'q5',
       type: 'single-choice',
       question:
         'How *worried/distressed* are you about your current sleep problem?',
