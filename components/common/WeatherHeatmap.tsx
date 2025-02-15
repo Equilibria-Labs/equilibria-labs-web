@@ -37,10 +37,10 @@ const SeverityIndicator: React.FC<WeatherHeatmapResultsProps> = ({
     .join(' ');
 
   return (
-    <Box level='1' isInverted>
+    <Box hasNoBg>
       {/* Indicator label */}
       <div
-        className='flex flex-col items-center mb-2 w-full'
+        className='flex flex-col items-center w-full'
         style={{ marginLeft: `${position}%`, transform: 'translateX(-50%)' }}
       >
         <Heading>You</Heading>

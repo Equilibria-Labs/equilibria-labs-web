@@ -7,6 +7,7 @@ import { MultipleChoiceStep } from './steps/multiple-choice';
 import { MessageStep } from './steps/message';
 import { EducationalStep } from './steps/educational';
 import WeatherHeatmapResults from './resultsSteps/weather-heatmap-results';
+import { ProgressBar } from '@/components/common/ProgressBar';
 
 // Map result types to their components
 const ResultsComponents = {
@@ -107,14 +108,10 @@ export function Questionnaire({
   return (
     <>
       {config.shouldShowProgress && !isComplete && (
-        <div className='mb-6 h-1 rounded-full'>
-          <div
-            className='h-full rounded-full transition-all duration-300'
-            style={{
-              width: `${((currentStepIndex + 1) / config.steps.length) * 100}%`,
-            }}
-          />
-        </div>
+        <ProgressBar
+          currentStepIndex={currentStepIndex}
+          totalSteps={config.steps.length}
+        />
       )}
 
       {isComplete && config.results
