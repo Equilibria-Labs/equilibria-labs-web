@@ -72,7 +72,7 @@ const config: Config = {
         bold: '600',
       },
       fontSize: {
-        title: '40px',
+        title: '50px',
         'heading-lg': '32px',
         heading: '24px',
         'body-lg': '18px',

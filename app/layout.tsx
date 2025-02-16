@@ -1,5 +1,6 @@
 import { Fraunces, Outfit } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
+import SplashScreen from '@/components/structure/SplashScreen';
 import './globals.css';
 
 const defaultUrl = process.env.VERCEL_URL
@@ -44,6 +45,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <SplashScreen />
           <main className='min-h-screen flex flex-col items-center'>
             {children}
           </main>
