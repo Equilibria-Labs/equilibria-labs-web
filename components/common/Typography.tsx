@@ -35,6 +35,15 @@ export const HeadingSmall: React.FC<TypographyProps> = ({
   </h4>
 );
 
+export const ButtonText: React.FC<TypographyProps> = ({
+  children,
+  className = '',
+}) => (
+  <label className={`font-body text-body font-bold ${className}`}>
+    {children}
+  </label>
+);
+
 export const LabelText: React.FC<TypographyProps> = ({
   children,
   className = '',

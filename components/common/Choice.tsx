@@ -1,7 +1,7 @@
 import { RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { LabelText } from '@/components/common/Typography';
+import { ButtonText } from '@/components/common/Typography';
 import { Check } from 'lucide-react';
 import { Choice as ChoiceType, ChoiceValue } from '@/types';
 
@@ -51,7 +51,7 @@ export function Choice({ choice, onChange, next, type, checked }: ChoiceProps) {
         htmlFor={choice.choiceId}
         className='flex-1 cursor-pointer text-lg'
       >
-        <LabelText>{choice.text}</LabelText>
+        <ButtonText>{choice.text}</ButtonText>
       </Label>
       {checked && <Check className='w-6 h-6 text-white' aria-hidden='true' />}
     </div>
