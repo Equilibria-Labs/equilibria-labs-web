@@ -3,10 +3,12 @@ import {
   Heading,
   HeadingLarge,
   BodyText,
+  HeadingSmall,
 } from '@/components/common/Typography';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Box from '@/components/structure/Box';
+import List, { ListItem } from '@/components/common/List';
 
 export const metadata: Metadata = {
   title: 'The Sleep Lab | Equilibria',
@@ -18,18 +20,31 @@ export default function SleepReportWelcome() {
   return (
     <Box>
       <HeadingLarge className='text-center'>
-        I&apos;m Equilibria, you can call me Libby.
+        Start Your Journey to Restful Sleep
       </HeadingLarge>
-      <Heading>
-        Spend 2 mins answering a few questions to get a personalized sleep
-        report
-      </Heading>
+      <HeadingSmall>
+        CBT-I has been shown to be more effective than sleep medications in the
+        long term, with fewer side effects and a lower likelihood of relapse.
+      </HeadingSmall>
       <BodyText>
-        My free sleep report will make recommendations based on evidence-based
-        sleep science and is personalised by AI.
+        Our gold standard, personalised sleep training program takes just 10
+        minutes per day, with most users seeing a significant improvement within
+        2 weeks
       </BodyText>
+
+      <BodyText>
+        Chronic sleep problems significantly impact both mental and physical
+        health. Improving sleep quality and quantity has been proven to help
+        improve;
+      </BodyText>
+      <List>
+        <ListItem>anxiety, depression and stress</ListItem>
+        <ListItem>heart disease, diabetes, immune function</ListItem>
+        <ListItem>sex. Lol</ListItem>
+        <ListItem>heart disease</ListItem>
+      </List>
       <Link href='/sleep-report'>
-        <Button className='lg w-full'>Take the sleep test</Button>
+        <Button className='lg w-full'>Get started today</Button>
       </Link>
     </Box>
   );
