@@ -36,13 +36,15 @@ const SeverityIndicator: React.FC<WeatherHeatmapResultsProps> = ({
         maxScore={config.results.maxScore}
         bands={config.results.resultsBands}
       />
-      <Heading>If you don't do this you'll have a bad outcome</Heading>
+      <Heading>
+        If you don&apos;t do this you&apos;ll have a bad outcome
+      </Heading>
       <BodyText>
         This method is based on evidence-based sleep science and is personalised
         by AI.
       </BodyText>
       <Link href='/sleep-report'>
-        <Button className='lg w-full'>Let's understand your sleep</Button>
+        <Button className='lg w-full'>Let&apos;s understand your sleep</Button>
       </Link>
     </Column>
   );

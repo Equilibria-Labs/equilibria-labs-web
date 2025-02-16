@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { BodyText, Heading, Title } from '@/components/common/Typography';
+import { BodyText, Title } from '@/components/common/Typography';
 import EquilibriaIcon from '@/components/common/EquilibriaIcon';
 
 export default function SplashScreen() {
