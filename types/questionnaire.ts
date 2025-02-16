@@ -1,5 +1,5 @@
 export interface BaseStep {
-  id: string;
+  stepId: string;
   type: string;
   title?: string;
   question?: string;
@@ -7,20 +7,26 @@ export interface BaseStep {
   description?: string;
 }
 
-export interface Choice {
-  id: string;
-  text: string;
-  value?: string | number;
+export interface QuestionStep extends BaseStep {
+  questionId: string;
 }
 
-export interface MultipleChoiceStep extends BaseStep {
+export type ChoiceValue = string | number | undefined;
+
+export interface Choice {
+  choiceId: string;
+  text: string;
+  value?: ChoiceValue;
+}
+
+export interface MultipleChoiceStep extends QuestionStep {
   type: 'multiple-choice-required' | 'multiple-choice-optional';
   choices: Choice[];
   minSelections?: number;
   maxSelections?: number;
 }
 
-export interface SingleChoiceStep extends BaseStep {
+export interface SingleChoiceStep extends QuestionStep {
   type: 'single-choice';
   choices: Choice[];
 }
@@ -43,13 +49,31 @@ export interface ResultsIssue {
   text: string;
 }
 
-export interface ResultsStep extends BaseStep {
-  type: 'results';
+export interface ResultsBand {
+  min: number;
+  max: number;
+  textTechnical?: string;
+  textFriendly?: string;
+  description?: string;
+  iconName?: 'sun' | 'cloud' | 'rain' | 'lightning';
+}
+
+export interface BaseResultsStep extends BaseStep {
+  type: 'weather-heatmap-results' | 'results';
   title: string;
+}
+
+export interface WeatherHeatmapResults extends BaseResultsStep {
+  type: 'weather-heatmap-results';
   score: number;
+  maxScore: number;
   issues: ResultsIssue[];
   recommendation: string;
+  resultsBands: ResultsBand[];
+  formulaString: string;
 }
+
+export type ResultsStep = WeatherHeatmapResults;
 
 export type Step =
   | MultipleChoiceStep
@@ -58,7 +82,15 @@ export type Step =
   | MessageStep
   | ResultsStep;
 
-export type QuestionnaireState = {
-  currentStepIndex: number;
-  answers: Record<string, string[]>;
+export type Answer = {
+  questionId: string;
+  value: ChoiceValue[];
+};
+
+export type QuestionnaireConfig = {
+  dialogueId: string;
+  version: string;
+  steps: Step[];
+  shouldShowProgress: boolean;
+  results: WeatherHeatmapResults;
 };

@@ -12,6 +12,8 @@ interface RowProps {
     | 'space-between'
     | 'space-around';
   align?: 'flex-start' | 'center' | 'flex-end';
+  gridTemplateColumns?: string;
+  gapInPercent?: number;
 }
 
 export default function Row({
@@ -21,6 +23,8 @@ export default function Row({
   isFullWidth = false,
   justify = 'flex-start',
   align = 'flex-start',
+  gridTemplateColumns = '',
+  gapInPercent,
 }: RowProps) {
   return (
     <div
@@ -30,6 +34,8 @@ export default function Row({
       style={{
         justifyContent: justify,
         alignItems: align,
+        gridTemplateColumns,
+        gap: gapInPercent ? `${gapInPercent}%` : 'inherit',
       }}
     >
       {children}

@@ -111,6 +111,9 @@ const config: Config = {
     },
   },
   plugins: [],
+  corePlugins: {
+    justifyItems: true, // Enable justify-items utilities
+  },
 };
 
 export default config;

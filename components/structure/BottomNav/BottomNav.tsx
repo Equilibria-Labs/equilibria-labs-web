@@ -22,10 +22,14 @@ export default function BottomNav({
   );
 
   return (
-    <nav className='fixed bottom-0 left-0 right-0 bg-foreground text-background'>
+    <nav
+      data-component='BottomNav'
+      className='fixed bottom-0 left-0 right-0 bg-background text-foreground'
+    >
       <div className='flex justify-around items-center p-4  max-w-maxWidth mx-auto'>
         {items.map(item => (
           <BottomNavItem
+            data-component='BottomNavItem'
             key={item.label}
             icon={item.icon}
             label={item.label}
