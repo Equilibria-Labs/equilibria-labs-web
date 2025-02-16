@@ -3,10 +3,12 @@ import {
   Heading,
   HeadingLarge,
   BodyText,
+  HeadingSmall,
 } from '@/components/common/Typography';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Box from '@/components/structure/Box';
+import List, { ListItem } from '@/components/common/List';
 
 export const metadata: Metadata = {
   title: 'The Sleep Lab | Equilibria',
@@ -16,20 +18,35 @@ export const metadata: Metadata = {
 
 export default function SleepReportWelcome() {
   return (
-    <Box>
-      <HeadingLarge className='text-center'>
-        I&apos;m Equilibria, you can call me Libby.
-      </HeadingLarge>
-      <Heading>
-        Spend 2 mins answering a few questions to get a personalized sleep
-        report
+    <Box shouldRise>
+      <HeadingLarge className='text-center'>Unlock Better Sleep</HeadingLarge>
+      <Heading className='text-secondary text-center'>
+        Clinically Proven Techniques to Break the Cycle of Insomnia and Restore
+        Your Sleep.
       </Heading>
+      <HeadingSmall>
+        Join Thousands of Happy Sleepers. Claim Your Free Sleep Assessment! Take
+        your First Step Towards Better Sleep
+      </HeadingSmall>
+
       <BodyText>
-        My free sleep report will make recommendations based on evidence-based
-        sleep science and is personalised by AI.
+        No more tossing and turning. No more pills. Break the insomnia cycle.
       </BodyText>
+      <List>
+        <ListItem>lower anxiety, stress and depression </ListItem>
+        <ListItem>Wake up feeling refreshed and energised.</ListItem>
+        <ListItem>better immune function</ListItem>
+
+        <ListItem>
+          Feel immediate difference in your mood, productivity, and overall
+          well-being
+        </ListItem>
+        <ListItem>
+          Improve your sleep habits with personalized, science-backed methods
+        </ListItem>
+      </List>
       <Link href='/sleep-report'>
-        <Button className='lg w-full'>Take the sleep test</Button>
+        <Button className='lg w-full'>Get started today</Button>
       </Link>
     </Box>
   );

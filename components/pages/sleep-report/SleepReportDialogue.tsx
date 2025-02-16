@@ -10,7 +10,7 @@ export default function SleepReportDialogue() {
   };
 
   return (
-    <Box>
+    <Box shouldRise>
       <Questionnaire
         config={sleepReportDialogueConfig}
         onCompleteAction={handleComplete}
