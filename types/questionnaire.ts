@@ -52,9 +52,10 @@ export interface ResultsIssue {
 export interface ResultsBand {
   min: number;
   max: number;
-  textTechnical: string;
-  textFriendly: string;
-  description: string;
+  textTechnical?: string;
+  textFriendly?: string;
+  description?: string;
+  iconName?: 'sun' | 'cloud' | 'rain' | 'lightning';
 }
 
 export interface BaseResultsStep extends BaseStep {

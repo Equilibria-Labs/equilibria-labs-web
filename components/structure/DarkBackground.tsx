@@ -6,7 +6,7 @@ export default function DarkBackground({
   return (
     <div
       data-component='DarkBackground'
-      className='bg-foreground text-background min-h-screen w-full flex items-center justify-center'
+      className='bg-background text-foreground min-h-screen w-full flex justify-center pt-16'
     >
       {children}
     </div>
