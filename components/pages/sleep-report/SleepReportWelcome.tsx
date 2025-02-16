@@ -20,7 +20,7 @@ export default function SleepReportWelcome() {
   return (
     <Box>
       <HeadingLarge className='text-center'>Unlock Better Sleep</HeadingLarge>
-      <Heading>
+      <Heading className='text-secondary text-center'>
         Clinically Proven Techniques to Break the Cycle of Insomnia and Restore
         Your Sleep.
       </Heading>

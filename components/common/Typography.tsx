@@ -56,13 +56,6 @@ export const BodyText: React.FC<TypographyProps> = ({
   className = '',
 }) => <p className={`font-body text-body ${className}`}>{children}</p>;
 
-export const ButtonText: React.FC<TypographyProps> = ({
-  children,
-  className = '',
-}) => (
-  <span className={`font-button text-button ${className}`}>{children}</span>
-);
-
 export const InputText: React.FC<TypographyProps> = ({
   children,
   className = '',

@@ -77,6 +77,7 @@ const config: Config = {
         heading: '24px',
         'body-lg': '18px',
         'body-md': '14px',
+        button: '16px',
       },
       lineHeight: {
         title: '50px',
@@ -84,6 +85,7 @@ const config: Config = {
         heading: '32px',
         'body-lg': '24px',
         'body-md': '18px',
+        button: '16px',
       },
       spacing: {
         '1': '4px',
