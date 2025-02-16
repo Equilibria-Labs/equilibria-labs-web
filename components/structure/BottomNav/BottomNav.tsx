@@ -24,7 +24,7 @@ export default function BottomNav({
   return (
     <nav
       data-component='BottomNav'
-      className='fixed bottom-0 left-0 right-0 bg-foreground text-background'
+      className='fixed bottom-0 left-0 right-0 bg-background text-foreground'
     >
       <div className='flex justify-around items-center p-4  max-w-maxWidth mx-auto'>
         {items.map(item => (

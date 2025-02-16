@@ -35,7 +35,8 @@ export default function Column({
         hasLargeGap,
         hasNoGap,
         hasSmallGap
-      )} ${justifyItems && `justify-items-${justifyItems}`} w-full max-w-5xl ${className}`}
+      )} w-full max-w-5xl ${className}`}
+      style={justifyItems ? { justifyItems: justifyItems } : {}}
     >
       {children}
     </div>

@@ -78,7 +78,7 @@ const SeverityIndicator: React.FC<WeatherHeatmapResultsProps> = ({
         {bands.map((band, index) => (
           <div
             key={index}
-            className='px-2 py-4 rounded-lg bg-background/10 text-background text-xs text-center'
+            className='px-2 py-4 rounded-lg bg-foreground/10 text-foreground text-xs text-center'
           >
             <Column justifyItems='center' hasSmallGap>
               <Icon name={band.iconName} />

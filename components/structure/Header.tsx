@@ -18,7 +18,7 @@ const Header = async () => {
       className='px-4 py-2 max-w-maxWidth mx-auto'
     >
       <Row isFullWidth justify='space-between' align='center'>
-        <Logo />
+        {/* <Logo /> */}
         {user ? (
           <Avatar>
             <AvatarImage

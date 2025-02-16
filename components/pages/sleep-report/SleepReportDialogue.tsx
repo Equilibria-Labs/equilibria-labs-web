@@ -10,7 +10,7 @@ export default function SleepReportDialogue() {
   };
 
   return (
-    <Box isInverted>
+    <Box>
       <Questionnaire
         config={sleepReportDialogueConfig}
         onCompleteAction={handleComplete}

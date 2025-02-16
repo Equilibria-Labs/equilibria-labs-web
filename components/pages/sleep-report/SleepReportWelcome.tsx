@@ -7,6 +7,7 @@ import {
 } from '@/components/common/Typography';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Box from '@/components/structure/Box';
 
 export const metadata: Metadata = {
   title: 'The Sleep Lab | Equilibria',
@@ -16,8 +17,7 @@ export const metadata: Metadata = {
 
 export default function SleepReportWelcome() {
   return (
-    <>
-      <HeadingSmall>The Sleep Lab</HeadingSmall>
+    <Box>
       <HeadingLarge className='text-center'>
         I&apos;m Equilibria, you can call me Libby.
       </HeadingLarge>
@@ -32,6 +32,6 @@ export default function SleepReportWelcome() {
       <Link href='/sleep-report'>
         <Button className='lg w-full'>Take the sleep test</Button>
       </Link>
-    </>
+    </Box>
   );
 }

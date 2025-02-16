@@ -13,7 +13,6 @@ interface BoxProps {
   align?: 'flex-start' | 'center' | 'flex-end';
   level?: '1' | '2' | '3';
   isInverted?: boolean;
-  hasBottomArrow?: boolean;
   hasNoBg?: boolean;
   style?: React.CSSProperties;
   display?: 'flex' | 'grid' | 'block' | 'inline-block';
@@ -27,13 +26,12 @@ export default function Box({
   align = 'flex-start',
   level = '1',
   isInverted = false,
-  hasBottomArrow = false,
   hasNoBg = false,
   style = {},
   display = 'flex',
 }: BoxProps) {
   const getBgColor = () => {
-    if (hasNoBg || !level) return '';
+    if (hasNoBg) return '';
 
     let opacity: string;
     switch (level) {
@@ -55,13 +53,10 @@ export default function Box({
 
   return (
     <div
+      data-component='Box'
       className={`${display} rounded-lg p-4 relative ${
         isFullWidth ? 'w-full' : ''
-      } ${getBgColor()} ${className} ${
-        hasBottomArrow
-          ? 'after:content-[""] after:absolute after:left-1/2 after:-bottom-2 after:w-0 after:h-0 after:-translate-x-1/2 after:border-8 after:border-transparent after:border-t-foreground/10 dark:after:border-t-background/10'
-          : ''
-      }`}
+      } ${getBgColor()} ${className}`}
       style={{
         justifyContent: justify,
         alignItems: align,
