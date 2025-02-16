@@ -50,7 +50,7 @@ export function MultipleChoiceStep({
       selectedOptions.length <= (step.maxSelections || step.choices.length));
 
   return (
-    <Column>
+    <Column hasLargeGap>
       {step.question && <Heading>{parseBoldText(step.question)}</Heading>}
       {step.instruction && <HeadingSmall>{step.instruction}</HeadingSmall>}
       {step.choices.map(choice => (
