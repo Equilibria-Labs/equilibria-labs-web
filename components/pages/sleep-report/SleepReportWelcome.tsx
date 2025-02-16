@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import {
-  HeadingSmall,
   Heading,
   HeadingLarge,
   BodyText,
