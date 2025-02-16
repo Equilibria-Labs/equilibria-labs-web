@@ -69,6 +69,7 @@ const config: Config = {
       },
       fontWeight: {
         semibold: '600',
+        bold: '600',
       },
       fontSize: {
         title: '40px',

@@ -19,29 +19,31 @@ export const metadata: Metadata = {
 export default function SleepReportWelcome() {
   return (
     <Box>
-      <HeadingLarge className='text-center'>
-        Start Your Journey to Restful Sleep
-      </HeadingLarge>
+      <HeadingLarge className='text-center'>Unlock Better Sleep</HeadingLarge>
+      <Heading>
+        Clinically Proven Techniques to Break the Cycle of Insomnia and Restore
+        Your Sleep.
+      </Heading>
       <HeadingSmall>
-        CBT-I has been shown to be more effective than sleep medications in the
-        long term, with fewer side effects and a lower likelihood of relapse.
+        Join Thousands of Happy Sleepers. Claim Your Free Sleep Assessment! Take
+        your First Step Towards Better Sleep
       </HeadingSmall>
-      <BodyText>
-        Our gold standard, personalised sleep training program takes just 10
-        minutes per day, with most users seeing a significant improvement within
-        2 weeks
-      </BodyText>
 
       <BodyText>
-        Chronic sleep problems significantly impact both mental and physical
-        health. Improving sleep quality and quantity has been proven to help
-        improve;
+        No more tossing and turning. No more pills. Break the insomnia cycle.
       </BodyText>
       <List>
-        <ListItem>anxiety, depression and stress</ListItem>
-        <ListItem>heart disease, diabetes, immune function</ListItem>
-        <ListItem>sex. Lol</ListItem>
-        <ListItem>heart disease</ListItem>
+        <ListItem>lower anxiety, stress and depression </ListItem>
+        <ListItem>Wake up feeling refreshed and energised.</ListItem>
+        <ListItem>better immune function</ListItem>
+
+        <ListItem>
+          Feel immediate difference in your mood, productivity, and overall
+          well-being
+        </ListItem>
+        <ListItem>
+          Improve your sleep habits with personalized, science-backed methods
+        </ListItem>
       </List>
       <Link href='/sleep-report'>
         <Button className='lg w-full'>Get started today</Button>

@@ -22,7 +22,7 @@ const fraunces = Fraunces({
 const outfit = Outfit({
   display: 'swap',
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['200', '600'],
   variable: '--font-outfit',
 });
 
