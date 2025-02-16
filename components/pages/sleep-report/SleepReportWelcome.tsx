@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function SleepReportWelcome() {
   return (
-    <Box>
+    <Box shouldRise>
       <HeadingLarge className='text-center'>Unlock Better Sleep</HeadingLarge>
       <Heading className='text-secondary text-center'>
         Clinically Proven Techniques to Break the Cycle of Insomnia and Restore

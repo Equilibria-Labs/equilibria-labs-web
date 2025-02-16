@@ -12,7 +12,7 @@ const OceanDivider: React.FC = () => {
         viewBox='0 0 390 43'
       >
         <g clipPath='url(#a)'>
-          <path fill='#FF6F00' d='M-56-11h462v34H-56z' />
+          <path fill='#FD8A14' d='M-56-11h462v34H-56z' />
           <path
             fillRule='evenodd'
             clipRule='evenodd'

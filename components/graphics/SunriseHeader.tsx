@@ -7,7 +7,7 @@ export default function SunriseHeader({ children }: PropsWithChildren) {
       <div
         className='w-full relative h-[theme(spacing.headerHeightMobile)] md:h-[theme(spacing.headerHeightDesktop)]'
         style={{
-          background: 'linear-gradient(to bottom, #F8D247 0%, #FF6F00 60%)',
+          background: 'linear-gradient(to bottom, #F8D247 0%, #FD8A14 100%)',
         }}
       >
         <div

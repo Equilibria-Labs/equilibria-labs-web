@@ -16,6 +16,7 @@ interface BoxProps {
   hasNoBg?: boolean;
   style?: React.CSSProperties;
   display?: 'flex' | 'grid' | 'block' | 'inline-block';
+  shouldRise?: boolean;
 }
 
 export default function Box({
@@ -29,6 +30,7 @@ export default function Box({
   hasNoBg = false,
   style = {},
   display = 'flex',
+  shouldRise = false,
 }: BoxProps) {
   const getBgColor = () => {
     if (hasNoBg) return '';
@@ -56,7 +58,9 @@ export default function Box({
       data-component='Box'
       className={`${display} rounded-lg p-4 relative ${
         isFullWidth ? 'w-full' : ''
-      } ${getBgColor()} ${className}`}
+      } ${getBgColor()} ${
+        shouldRise ? 'animate-[rise_0.3s_ease-out]' : ''
+      } ${className}`}
       style={{
         justifyContent: justify,
         alignItems: align,
