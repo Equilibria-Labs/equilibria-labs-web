@@ -128,4 +128,48 @@ describe('getScoreFromAnswersWithFormula', () => {
     const answers: Answer[] = [];
     expect(getScoreFromAnswersWithFormula(answers, 'q1 + q2')).toBe(0);
   });
+
+  describe('parentheses handling', () => {
+    it('should correctly evaluate formulas with parentheses', () => {
+      const answers: Answer[] = [
+        { questionId: 'q1a', value: [1] },
+        { questionId: 'q1b', value: [2] },
+        { questionId: 'q1c', value: [3] },
+      ];
+
+      // Test basic parentheses
+      expect(getScoreFromAnswersWithFormula(answers, '(q1a + q1b) * 2')).toBe(
+        6
+      );
+
+      // Test nested parentheses
+      expect(
+        getScoreFromAnswersWithFormula(answers, '(q1a + q1b) * (q1c + 1)')
+      ).toBe(12);
+
+      // Test decimal multiplication (using toBeCloseTo for floating point comparison)
+      expect(
+        getScoreFromAnswersWithFormula(answers, '(q1a + q1b + q1c) * 0.6')
+      ).toBeCloseTo(3.6, 10);
+    });
+
+    it('should handle decimal multipliers correctly', () => {
+      const answers: Answer[] = [{ questionId: 'q1', value: [10] }];
+
+      expect(getScoreFromAnswersWithFormula(answers, 'q1 * 0.6')).toBe(6);
+      expect(getScoreFromAnswersWithFormula(answers, '(q1) * 0.6')).toBe(6);
+    });
+
+    it('should throw error for mismatched parentheses', () => {
+      const answers: Answer[] = [{ questionId: 'q1', value: [1] }];
+
+      expect(() => {
+        getScoreFromAnswersWithFormula(answers, '(q1 + 2');
+      }).toThrow(FormulaError);
+
+      expect(() => {
+        getScoreFromAnswersWithFormula(answers, 'q1 + 2)');
+      }).toThrow(FormulaError);
+    });
+  });
 });

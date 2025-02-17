@@ -1,7 +1,7 @@
 import type React from 'react';
 import { ChevronDown } from 'lucide-react';
 import Row from '@/components/structure/Row';
-import { Heading } from '@/components/common/Typography';
+import { Heading, BodyText } from '@/components/common/Typography';
 import Box from '@/components/structure/Box';
 import { ResultsBand } from '@/types/questionnaire';
 import Column from '@/components/structure/Column';
@@ -30,12 +30,16 @@ interface WeatherHeatmapResultsProps {
   score: number;
   maxScore: number;
   bands: ResultsBand[];
+  arrowLabel?: string;
+  arrowSubLabel?: string;
 }
 
 const SeverityIndicator: React.FC<WeatherHeatmapResultsProps> = ({
   score,
   maxScore,
   bands,
+  arrowLabel,
+  arrowSubLabel,
 }) => {
   const position = (score / maxScore) * 100;
 
@@ -58,10 +62,11 @@ const SeverityIndicator: React.FC<WeatherHeatmapResultsProps> = ({
     <Box hasNoBg>
       {/* Indicator label */}
       <div
-        className='flex flex-col items-center w-full'
+        className='flex flex-col items-center w-full transition-all duration-500 ease-in-out'
         style={{ marginLeft: `${position}%`, transform: 'translateX(-50%)' }}
       >
-        <Heading>You</Heading>
+        <Heading>{arrowLabel}</Heading>
+        {arrowSubLabel && <BodyText>{arrowSubLabel}</BodyText>}
         <ChevronDown className='w-8 h-8 text-white' strokeWidth={3} />
       </div>
 

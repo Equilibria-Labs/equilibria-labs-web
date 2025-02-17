@@ -4,24 +4,24 @@ export const onboardingConfig: QuestionnaireConfig = {
   dialogueId: 'onboarding',
   version: '1',
   shouldShowProgress: true,
-  results: {
-    stepId: 'results',
-    type: 'weather-heatmap-results',
-    title: 'Your Sleep Quality',
-    score: 38,
-    maxScore: 100,
-    resultsBands: [],
-    formulaString: '',
-    issues: [
-      { icon: 'clock', text: 'You only get 6 hours of sleep per night' },
-      { icon: 'moon', text: 'You often wake up in middle of the night' },
-      { icon: 'calendar', text: "You've struggled with sleep for a year" },
-      { icon: 'brain', text: 'Poor sleep sometimes affects your mood' },
-      { icon: 'alert', text: 'Racing thoughts sometimes keep you up' },
-    ],
-    recommendation:
-      'Based on your sleep profile, we are confident that your sleep issues can be solved in a lasting way!',
-  },
+  resultsSteps: [
+    {
+      stepId: 'results',
+      type: 'weather-heatmap-results',
+      title: 'Your Sleep Quality',
+      score: 38,
+      maxScore: 100,
+      resultsBands: [],
+      formulaString: '',
+      issues: [
+        { icon: 'clock', text: 'You only get 6 hours of sleep per night' },
+        { icon: 'moon', text: 'You often wake up in middle of the night' },
+        { icon: 'calendar', text: "You've struggled with sleep for a year" },
+        { icon: 'brain', text: 'Poor sleep sometimes affects your mood' },
+        { icon: 'alert', text: 'Racing thoughts sometimes keep you up' },
+      ],
+    },
+  ],
   steps: [
     {
       stepId: 'intro',
