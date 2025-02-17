@@ -9,11 +9,6 @@ import { EducationalStep } from './steps/educational';
 import WeatherHeatmapResults from './resultsSteps/weather-heatmap-results';
 import { ProgressBar } from '@/components/common/ProgressBar';
 
-// Map result types to their components
-const ResultsComponents = {
-  'weather-heatmap-results': WeatherHeatmapResults,
-} as const;
-
 interface QuestionnaireProps {
   config: QuestionnaireConfig;
   onCompleteAction: (answers: Answer[]) => void;
@@ -26,24 +21,20 @@ export function Questionnaire({
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
 
-  const currentStep = config.steps[currentStepIndex];
+  console.log(currentStepIndex);
 
   const handleNext = () => {
     const nextStepIndex = currentStepIndex + 1;
+    const allSteps = [...config.steps, ...config.resultsSteps];
 
     // Move to next step if it exists
-    if (nextStepIndex < config.steps.length) {
+    if (nextStepIndex < allSteps.length) {
       setCurrentStepIndex(nextStepIndex);
       return;
     }
 
-    // Update step index when we've completed all steps
-    setCurrentStepIndex(nextStepIndex);
-
-    // Call onCompleteAction if no results
-    if (!config.results) {
-      onCompleteAction(answers);
-    }
+    // Call onCompleteAction when we've completed all steps including results
+    onCompleteAction(answers);
   };
 
   const handleAnswer = (questionId: string, answer: ChoiceValue[]) => {
@@ -53,30 +44,23 @@ export function Questionnaire({
     });
   };
 
-  const renderResults = (results: ResultsStep) => {
-    const ResultsComponent = ResultsComponents[results.type];
-    if (!ResultsComponent) {
-      console.warn(`No component found for results type: ${results.type}`);
-      return null;
-    }
-    return <ResultsComponent answers={answers} config={config} />;
-  };
-
   const renderStep = () => {
-    switch (currentStep.type) {
+    const allSteps = [...config.steps, ...config.resultsSteps];
+    const step = allSteps[currentStepIndex];
+
+    if (!step) return null;
+
+    // Handle all step types in the switch statement
+    switch (step.type) {
       case 'single-choice':
         return (
           <SingleChoiceStep
-            step={currentStep}
+            step={step}
             value={
-              answers.find(a => a.questionId === currentStep.questionId)
-                ?.value || []
+              answers.find(a => a.questionId === step.questionId)?.value || []
             }
             onChange={value =>
-              handleAnswer(
-                currentStep.questionId,
-                value !== undefined ? [value] : []
-              )
+              handleAnswer(step.questionId, value !== undefined ? [value] : [])
             }
             next={handleNext}
           />
@@ -85,38 +69,44 @@ export function Questionnaire({
       case 'multiple-choice-optional':
         return (
           <MultipleChoiceStep
-            step={currentStep}
+            step={step}
             initialValue={
-              answers.find(a => a.questionId === currentStep.questionId)
-                ?.value || []
+              answers.find(a => a.questionId === step.questionId)?.value || []
             }
-            onChange={value => handleAnswer(currentStep.questionId, value)}
+            onChange={value => handleAnswer(step.questionId, value)}
             next={handleNext}
           />
         );
       case 'message':
-        return <MessageStep step={currentStep} next={handleNext} />;
+        return <MessageStep step={step} next={handleNext} />;
       case 'educational':
-        return <EducationalStep step={currentStep} next={handleNext} />;
+        return <EducationalStep step={step} next={handleNext} />;
+      case 'weather-heatmap-results':
+        return (
+          <WeatherHeatmapResults
+            step={step}
+            next={handleNext}
+            answers={answers}
+          />
+        );
       default:
         return null;
     }
   };
 
-  const isComplete = currentStepIndex >= config.steps.length;
+  const isComplete =
+    currentStepIndex >= [...config.steps, ...config.resultsSteps].length;
 
   return (
     <>
       {config.shouldShowProgress && !isComplete && (
         <ProgressBar
           currentStepIndex={currentStepIndex}
-          totalSteps={config.steps.length}
+          totalSteps={[...config.steps, ...config.resultsSteps].length}
         />
       )}
 
-      {isComplete && config.results
-        ? renderResults(config.results)
-        : renderStep()}
+      {renderStep()}
     </>
   );
 }

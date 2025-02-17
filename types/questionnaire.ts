@@ -55,22 +55,26 @@ export interface ResultsBand {
   textTechnical?: string;
   textFriendly?: string;
   description?: string;
+  sourceId?: string;
   iconName?: 'sun' | 'cloud' | 'rain' | 'lightning';
 }
 
 export interface BaseResultsStep extends BaseStep {
-  type: 'weather-heatmap-results' | 'results';
+  type: 'weather-heatmap-results';
   title: string;
 }
 
 export interface WeatherHeatmapResults extends BaseResultsStep {
-  type: 'weather-heatmap-results';
   score: number;
   maxScore: number;
   issues: ResultsIssue[];
-  recommendation: string;
   resultsBands: ResultsBand[];
   formulaString: string;
+  title: string;
+  heading: string;
+  text: string;
+  buttonText: string;
+  buttonLink?: string;
 }
 
 export type ResultsStep = WeatherHeatmapResults;
@@ -90,7 +94,7 @@ export type Answer = {
 export type QuestionnaireConfig = {
   dialogueId: string;
   version: string;
-  steps: Step[];
   shouldShowProgress: boolean;
-  results: WeatherHeatmapResults;
+  steps: Step[];
+  resultsSteps: ResultsStep[];
 };
