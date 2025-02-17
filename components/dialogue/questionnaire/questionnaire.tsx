@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { QuestionnaireConfig, ChoiceValue, ResultsStep, Answer } from '@/types';
+import { QuestionnaireConfig, ChoiceValue, Answer } from '@/types';
 import { SingleChoiceStep } from './steps/single-choice';
 import { MultipleChoiceStep } from './steps/multiple-choice';
 import { MessageStep } from './steps/message';

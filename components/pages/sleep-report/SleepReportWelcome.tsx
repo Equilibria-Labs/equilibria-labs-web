@@ -47,7 +47,7 @@ export default function SleepReportWelcome() {
         </ListItem>
       </List>
       <Link href='/sleep-report'>
-        <Button className='lg w-full'>What's your sleep score?</Button>
+        <Button className='lg w-full'>{`What's your sleep score?`}</Button>
       </Link>
       <SmallText className='text-center'>Takes 1 minute to complete</SmallText>
     </Box>
