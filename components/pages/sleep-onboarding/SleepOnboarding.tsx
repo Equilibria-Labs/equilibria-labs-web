@@ -3,6 +3,7 @@
 import { Questionnaire } from '@/components/dialogue/questionnaire/questionnaire';
 import { onboardingConfig } from '@/config/onboarding';
 import { Answer } from '@/types';
+import Box from '@/components/structure/Box';
 
 export default function Onboarding() {
   const handleComplete = (answers: Answer[]) => {
@@ -10,9 +11,11 @@ export default function Onboarding() {
   };
 
   return (
-    <Questionnaire
-      config={onboardingConfig}
-      onCompleteAction={handleComplete}
-    />
+    <Box shouldRise>
+      <Questionnaire
+        config={onboardingConfig}
+        onCompleteAction={handleComplete}
+      />
+    </Box>
   );
 }
