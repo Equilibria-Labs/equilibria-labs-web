@@ -4,6 +4,7 @@ import {
   HeadingLarge,
   BodyText,
   HeadingSmall,
+  SmallText,
 } from '@/components/common/Typography';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -46,8 +47,9 @@ export default function SleepReportWelcome() {
         </ListItem>
       </List>
       <Link href='/sleep-report'>
-        <Button className='lg w-full'>Get started today</Button>
+        <Button className='lg w-full'>What's your sleep score?</Button>
       </Link>
+      <SmallText className='text-center'>Takes 1 minute to complete</SmallText>
     </Box>
   );
 }

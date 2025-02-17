@@ -21,8 +21,6 @@ export function Questionnaire({
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
 
-  console.log(currentStepIndex);
-
   const handleNext = () => {
     const nextStepIndex = currentStepIndex + 1;
     const allSteps = [...config.steps, ...config.resultsSteps];

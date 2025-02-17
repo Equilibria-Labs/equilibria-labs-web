@@ -13,7 +13,8 @@ export class FormulaError extends Error {
  * - Question IDs (with or without 'q' prefix, e.g. 'q1', '1', 'q2a', '2a')
  * - Numeric literals (e.g. '3', '4.5')
  * - Basic arithmetic operators (+, -, *, /)
- * Example formula: "1a + 1b + 3 * 2 + 4"
+ * - Parentheses for grouping
+ * Example formula: "(1a + 1b + 2) * 0.6"
  *
  * @param answers Array of answers mapping question IDs to their selected choice values
  * @param formulaString String representing the calculation formula
@@ -27,14 +28,21 @@ export function getScoreFromAnswersWithFormula(
   // If no answers provided, return 0
   if (!answers.length) return 0;
 
-  // Split formula into tokens (operators and question IDs)
+  // Count parentheses to ensure they match
+  const openCount = (formulaString.match(/\(/g) || []).length;
+  const closeCount = (formulaString.match(/\)/g) || []).length;
+  if (openCount !== closeCount) {
+    throw new FormulaError('Mismatched parentheses in formula');
+  }
+
+  // Split formula into tokens (operators, parentheses, and question IDs)
   const tokens = formulaString
-    .split(/([+\-*/])/)
+    .split(/([+\-*/()])/g)
     .map(token => token.trim())
     .filter(token => token.length > 0);
 
   // Validate formula tokens
-  const validOperators = ['+', '-', '*', '/'];
+  const validOperators = ['+', '-', '*', '/', '(', ')'];
   const validQuestionIdPattern = /^q\d+[a-zA-Z]*$/;
   const validNumberPattern = /^\d+(\.\d+)?$/;
 
@@ -51,16 +59,49 @@ export function getScoreFromAnswersWithFormula(
     }
   }
 
-  // Convert tokens to values
+  // Convert tokens to values and evaluate
+  const result = evaluateExpression(tokens, 0, answers);
+  if (result.nextIndex < tokens.length) {
+    throw new FormulaError('Invalid formula structure');
+  }
+  return result.value;
+}
+
+interface EvaluationResult {
+  value: number;
+  nextIndex: number;
+}
+
+function evaluateExpression(
+  tokens: string[],
+  startIndex: number,
+  answers: Answer[]
+): EvaluationResult {
   const values: number[] = [];
   const operators: string[] = [];
+  let i = startIndex;
 
-  for (const token of tokens) {
-    if (validOperators.includes(token)) {
+  while (i < tokens.length) {
+    const token = tokens[i];
+
+    if (token === '(') {
+      // Recursively evaluate sub-expression
+      const subResult = evaluateExpression(tokens, i + 1, answers);
+      values.push(subResult.value);
+      i = subResult.nextIndex;
+    } else if (token === ')') {
+      // End of sub-expression
+      return {
+        value: calculateResult(values, operators),
+        nextIndex: i + 1,
+      };
+    } else if (['+', '-', '*', '/'].includes(token)) {
       operators.push(token);
+      i++;
     } else {
+      // Convert token to value
       let value: number;
-      if (validQuestionIdPattern.test(token)) {
+      if (/^q\d+[a-zA-Z]*$/.test(token)) {
         const answer = answers.find(a => a.questionId === token);
         const answerValues = answer?.value || [0];
 
@@ -81,9 +122,17 @@ export function getScoreFromAnswersWithFormula(
         );
       }
       values.push(value);
+      i++;
     }
   }
 
+  return {
+    value: calculateResult(values, operators),
+    nextIndex: i,
+  };
+}
+
+function calculateResult(values: number[], operators: string[]): number {
   // First pass: handle multiplication and division
   let i = 0;
   while (i < operators.length) {
@@ -101,7 +150,6 @@ export function getScoreFromAnswersWithFormula(
         result = left / right;
       }
 
-      // Replace the two values with their result
       values.splice(i, 2, result);
       operators.splice(i, 1);
     } else {

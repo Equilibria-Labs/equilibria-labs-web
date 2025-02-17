@@ -1,16 +1,13 @@
 import type React from 'react';
 
-import {
-  Heading,
-  HeadingLarge,
-  BodyText,
-} from '@/components/common/Typography';
+import { Heading, BodyText } from '@/components/common/Typography';
 import { Answer, ResultsStep } from '@/types/questionnaire';
 import { getScoreFromAnswersWithFormula } from '../helpers/getScoreFromAnswersWithFormula';
 import Column from '@/components/structure/Column';
 import WeatherHeatmap from '@/components/common/WeatherHeatmap';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { parseBoldText } from '@/utils/text';
 
 interface Props {
   answers: Answer[];
@@ -20,17 +17,33 @@ interface Props {
 
 const WeatherHeatmapResults: React.FC<Props> = ({ answers, step, next }) => {
   const score = getScoreFromAnswersWithFormula(answers, step.formulaString);
+  const resultsBand = step.resultsBands.find(
+    band => score >= band.min && score <= band.max
+  );
 
   return (
-    <Column>
-      <HeadingLarge className='text-center'>{step.title}</HeadingLarge>
+    <Column hasLargeGap>
       <WeatherHeatmap
         score={score}
         maxScore={step.maxScore}
         bands={step.resultsBands}
+        arrowLabel={step.arrowLabel}
+        arrowSubLabel={step.arrowSubLabel}
       />
-      <Heading>{step.heading}</Heading>
-      <BodyText>{step.text}</BodyText>
+
+      {(step.heading || resultsBand?.textFriendly) && (
+        <Heading className='text-center'>
+          {step.heading ||
+            parseBoldText(
+              `Your answers indicate *${resultsBand?.textFriendly}*`
+            )}
+        </Heading>
+      )}
+      {(step.text || resultsBand?.description) && (
+        <BodyText className='text-center'>
+          {step.text || resultsBand?.description}
+        </BodyText>
+      )}
       {step.buttonLink ? (
         <Link href={step.buttonLink}>
           <Button className='lg w-full'>{step.buttonText}</Button>
@@ -38,7 +51,7 @@ const WeatherHeatmapResults: React.FC<Props> = ({ answers, step, next }) => {
       ) : (
         next && (
           <Button className='lg w-full' onClick={next}>
-            {step.buttonText}
+            {resultsBand?.buttonText || step.buttonText}
           </Button>
         )
       )}

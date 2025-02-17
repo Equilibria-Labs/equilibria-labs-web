@@ -55,25 +55,26 @@ export interface ResultsBand {
   textTechnical?: string;
   textFriendly?: string;
   description?: string;
+  buttonText?: string;
   sourceId?: string;
   iconName?: 'sun' | 'cloud' | 'rain' | 'lightning';
 }
 
 export interface BaseResultsStep extends BaseStep {
   type: 'weather-heatmap-results';
-  title: string;
 }
 
 export interface WeatherHeatmapResults extends BaseResultsStep {
+  arrowLabel?: string;
+  arrowSubLabel?: string;
   score: number;
   maxScore: number;
   issues: ResultsIssue[];
   resultsBands: ResultsBand[];
   formulaString: string;
-  title: string;
-  heading: string;
-  text: string;
-  buttonText: string;
+  heading?: string;
+  text?: string;
+  buttonText?: string;
   buttonLink?: string;
 }
 
