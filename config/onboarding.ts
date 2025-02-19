@@ -1,5 +1,7 @@
 import { QuestionnaireConfig } from '../types';
 
+// TODO: Replace PSQI questions with brief PSQI questions with values from https://www.goodmedicine.org.uk/files/assessment,%20pittsburgh%20psqi.pdf
+
 export const onboardingConfig: QuestionnaireConfig = {
   dialogueId: 'onboarding',
   version: '1',
@@ -26,27 +28,31 @@ export const onboardingConfig: QuestionnaireConfig = {
     {
       stepId: 'intro',
       type: 'message',
-      question: 'Learn how to sleep again',
-      message:
-        'Get more deep sleep without pills using techniques from Stanford Sleep Clinic',
-      imageUrl: '/placeholder.svg?height=300&width=600',
+      question: 'CBT for Insomnia',
+      message: 'CBT for Insomnia has a 99% success rate for most people',
+      reference: null,
     },
     {
       stepId: 'sleep-goals',
       questionId: 'sleep-goals',
       type: 'multiple-choice-required',
-      question: 'Pick your sleep goals',
+      question: 'What are your sleep goals?',
       instruction: '(Select all that apply)',
       choices: [
         {
           choiceId: 'fall-asleep',
           value: 'fall-asleep',
-          text: 'Fall asleep faster',
+          text: 'Fall asleep quicker',
         },
         {
           choiceId: 'sleep-through',
           value: 'sleep-through',
           text: 'Sleep through the night',
+        },
+        {
+          choiceId: 'reduce-waking-up-early',
+          value: 'reduce-waking-up-early',
+          text: 'Reduce waking up too early',
         },
         {
           choiceId: 'deep-sleep',
@@ -55,6 +61,7 @@ export const onboardingConfig: QuestionnaireConfig = {
         },
       ],
       minSelections: 1,
+      reference: 'cbt-i',
     },
     {
       stepId: 'age-group',
@@ -71,6 +78,7 @@ export const onboardingConfig: QuestionnaireConfig = {
         { choiceId: '60s', value: '60s', text: '60s' },
         { choiceId: '70-plus', value: '70-plus', text: '70s or over' },
       ],
+      reference: 'cbt-i',
     },
     {
       stepId: 'wake-up-frequency',
@@ -90,6 +98,7 @@ export const onboardingConfig: QuestionnaireConfig = {
           text: 'Once a week or less',
         },
       ],
+      reference: 'PSQI',
     },
     {
       stepId: 'bathroom-wakeup',
@@ -101,6 +110,7 @@ export const onboardingConfig: QuestionnaireConfig = {
         { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
         { choiceId: 'never', value: 'never', text: 'Never' },
       ],
+      reference: 'PSQI',
     },
     {
       stepId: 'fall-back-asleep',
@@ -113,6 +123,7 @@ export const onboardingConfig: QuestionnaireConfig = {
         { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
         { choiceId: 'never', value: 'never', text: 'Never' },
       ],
+      reference: 'PSQI',
     },
     {
       stepId: 'awake-in-bed',
@@ -138,6 +149,7 @@ export const onboardingConfig: QuestionnaireConfig = {
           text: 'Over 2 hours',
         },
       ],
+      reference: 'PSQI',
     },
     {
       stepId: 'interrupted-sleep',
@@ -145,7 +157,7 @@ export const onboardingConfig: QuestionnaireConfig = {
       question: 'Interrupted sleep is exhausting.',
       message:
         'Our tailored approach helps you get the deep, uninterrupted sleep you deserve.',
-      imageUrl: '/placeholder.svg?height=300&width=600',
+      reference: null,
     },
     {
       stepId: 'sleep-hours',
@@ -161,23 +173,12 @@ export const onboardingConfig: QuestionnaireConfig = {
         { choiceId: '8', value: '8', text: '8 hours' },
         { choiceId: '9', value: '9', text: '9 hours or more' },
       ],
-    },
-    {
-      stepId: 'sleep-worry',
-      questionId: 'sleep-worry',
-      type: 'single-choice',
-      question: "Do you worry about how much sleep you're getting?",
-      instruction: 'Good to know!',
-      choices: [
-        { choiceId: 'often', value: 'often', text: 'Often' },
-        { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
-        { choiceId: 'never', value: 'never', text: 'Never' },
-      ],
+      reference: 'PSQI',
     },
     {
       stepId: 'sleep-myth',
       type: 'educational',
-      fact: "You may have heard that all adults need 8 hours of sleep nightly, but it's a myth.",
+      fact: 'Sleep Myth #1: Taking a nap will help your insomnia symptoms.',
       explanation:
         "Everyone's sleep needs are different, and the quality of your sleep often matters more than the quantity. We'll help you discover what works best for you.",
       reference: '1',
@@ -192,6 +193,7 @@ export const onboardingConfig: QuestionnaireConfig = {
         { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
         { choiceId: 'never', value: 'never', text: 'Never' },
       ],
+      reference: null,
     },
     {
       stepId: 'sleep-issues',
@@ -661,8 +663,8 @@ export const onboardingConfig: QuestionnaireConfig = {
       ],
     },
     {
-      stepId: 'sleep-source',
-      questionId: 'sleep-source',
+      stepId: 'sleep-reference',
+      questionId: 'sleep-reference',
       type: 'single-choice',
       question: 'Where did you first hear about Sleep Reset?',
       choices: [
