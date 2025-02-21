@@ -1,6 +1,6 @@
 import { QuestionnaireConfig } from '@/types';
 
-export const sleepReportDialogueConfig: QuestionnaireConfig = {
+export const sleepIsiConfig: QuestionnaireConfig = {
   dialogueId: 'isi',
   version: '1.1',
   shouldShowProgress: true,

@@ -46,7 +46,7 @@ export default function SleepReportWelcome() {
           Improve your sleep habits with personalized, science-backed methods
         </ListItem>
       </List>
-      <Link href='/sleep-report'>
+      <Link href='/sleep-isi'>
         <Button className='lg w-full'>{`What's your sleep score?`}</Button>
       </Link>
       <SmallText className='text-center'>Takes 1 minute to complete</SmallText>

@@ -1,7 +1,7 @@
 'use client';
 
 import { Questionnaire } from '@/components/dialogue/questionnaire/questionnaire';
-import { sleepReportDialogueConfig } from '@/config/sleep-report-dialogue';
+import { sleepIsiConfig } from '@/config/sleep-isi';
 import { Answer } from '@/types';
 import Box from '@/components/structure/Box';
 export default function SleepReportDialogue() {
@@ -12,7 +12,7 @@ export default function SleepReportDialogue() {
   return (
     <Box shouldRise>
       <Questionnaire
-        config={sleepReportDialogueConfig}
+        config={sleepIsiConfig}
         onCompleteAction={handleComplete}
       />
     </Box>
