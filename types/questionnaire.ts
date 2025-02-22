@@ -5,6 +5,7 @@ export interface BaseStep {
   question?: string;
   instruction?: string;
   description?: string;
+  reference?: string | null;
 }
 
 export interface QuestionStep extends BaseStep {
@@ -35,7 +36,6 @@ export interface EducationalStep extends BaseStep {
   type: 'educational';
   fact: string;
   explanation: string;
-  reference: string;
 }
 
 export interface MessageStep extends BaseStep {
@@ -94,6 +94,7 @@ export type Answer = {
 
 export type QuestionnaireConfig = {
   dialogueId: string;
+  title: string;
   version: string;
   shouldShowProgress: boolean;
   steps: Step[];

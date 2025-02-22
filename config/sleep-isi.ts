@@ -1,12 +1,14 @@
 import { QuestionnaireConfig } from '@/types';
 
-export const sleepReportDialogueConfig: QuestionnaireConfig = {
+export const sleepIsiConfig: QuestionnaireConfig = {
   dialogueId: 'isi',
+  title: 'Sleep Disruption',
   version: '1.1',
   shouldShowProgress: true,
   resultsSteps: [
     {
-      formulaString: 'q1a + q1b + q1c + q2 + q3 + q4 + q5',
+      formulaString:
+        'fall-asleep + stay-asleep + waking-too-early + sleep-satisfaction + daily-functioning + noticeable-to-others + sleep-worry',
       stepId: 'results',
       type: 'weather-heatmap-results',
       arrowLabel: 'You',
@@ -62,7 +64,8 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
       ],
     },
     {
-      formulaString: '(q1a + q1b + q1c + q2 + q3 + q4 + q5) * 0.6',
+      formulaString:
+        '(fall-asleep + stay-asleep + waking-too-early + sleep-satisfaction + daily-functioning + noticeable-to-others + sleep-worry) * 0.6',
       stepId: 'forecast',
       type: 'weather-heatmap-results',
       arrowLabel: 'You',
@@ -72,9 +75,7 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
       issues: [],
       heading: 'CBT for Insomnia is clinically proven to improve sleep',
       text: 'People following this program typically see a 30% - 50% improvement in their sleep quality after 2 weeks.',
-      buttonText: 'Book a free online consultation',
-      buttonLink:
-        'https://www.equilibrialabs.com/booking-calendar/free-initial-consultation',
+      buttonText: 'Check your sleep quality',
       resultsBands: [
         {
           min: 0,
@@ -113,8 +114,8 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
   ],
   steps: [
     {
-      stepId: 'question-1a',
-      questionId: 'q1a',
+      stepId: 'fall-asleep',
+      questionId: 'fall-asleep',
       description: 'How difficult is it for you to fall asleep?',
       type: 'single-choice',
       question: 'How difficult is it for you to *fall asleep*?',
@@ -136,8 +137,8 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
       ],
     },
     {
-      stepId: 'question-1b',
-      questionId: 'q1b',
+      stepId: 'stay-asleep',
+      questionId: 'stay-asleep',
       description: 'How difficult is it for you to stay asleep?',
       type: 'single-choice',
       question: 'How difficult is it for you to *stay asleep*?',
@@ -159,8 +160,8 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
       ],
     },
     {
-      stepId: 'question-1c',
-      questionId: 'q1c',
+      stepId: 'waking-too-early',
+      questionId: 'waking-too-early',
       description: 'How severe are problems waking too early?',
       type: 'single-choice',
       question: 'How severe are problems *waking too early*?',
@@ -174,8 +175,8 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
       ],
     },
     {
-      stepId: 'question-2',
-      questionId: 'q2',
+      stepId: 'sleep-satisfaction',
+      questionId: 'sleep-satisfaction',
       description:
         'How satisfied/dissatisfied are you with your currentsleep pattern?',
       instruction: 'In the past 2 weeks',
@@ -195,8 +196,8 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
       ],
     },
     {
-      stepId: 'question-3',
-      questionId: 'q3',
+      stepId: 'daily-functioning',
+      questionId: 'daily-functioning',
       description:
         'How much does your sleep problem interfere with your daily functioning?',
       type: 'single-choice',
@@ -212,8 +213,8 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
       ],
     },
     {
-      stepId: 'question-4',
-      questionId: 'q4',
+      stepId: 'noticeable-to-others',
+      questionId: 'noticeable-to-others',
       type: 'single-choice',
       question:
         'How *noticeable* to others do you think your sleep problem is?',
@@ -231,8 +232,8 @@ export const sleepReportDialogueConfig: QuestionnaireConfig = {
       ],
     },
     {
-      stepId: 'question-5',
-      questionId: 'q5',
+      stepId: 'sleep-worry',
+      questionId: 'sleep-worry',
       type: 'single-choice',
       question:
         'How *worried/distressed* are you about your current sleep problem?',
