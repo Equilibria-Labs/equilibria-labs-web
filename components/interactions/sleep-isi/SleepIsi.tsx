@@ -13,11 +13,9 @@ export default function SleepReportDialogue({
   onCompleteAction,
 }: SleepReportDialogueProps) {
   return (
-    <Box shouldRise>
-      <Questionnaire
-        config={sleepIsiConfig}
-        onCompleteAction={onCompleteAction}
-      />
-    </Box>
+    <Questionnaire
+      config={sleepIsiConfig}
+      onCompleteAction={onCompleteAction}
+    />
   );
 }

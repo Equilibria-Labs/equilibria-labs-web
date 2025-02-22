@@ -8,6 +8,9 @@ import { MessageStep } from './steps/message';
 import { EducationalStep } from './steps/educational';
 import WeatherHeatmapResults from './resultsSteps/weather-heatmap-results';
 import { ProgressBar } from '@/components/common/ProgressBar';
+import { BodyText } from '@/components/common/Typography';
+import Column from '@/components/structure/Column';
+import Box from '@/components/structure/Box';
 
 interface QuestionnaireProps {
   config: QuestionnaireConfig;
@@ -96,15 +99,15 @@ export function Questionnaire({
     currentStepIndex >= [...config.steps, ...config.resultsSteps].length;
 
   return (
-    <>
+    <Column hasSmallGap>
+      <BodyText>{config.title}</BodyText>
       {config.shouldShowProgress && !isComplete && (
         <ProgressBar
           currentStepIndex={currentStepIndex}
           totalSteps={[...config.steps, ...config.resultsSteps].length}
         />
       )}
-
-      {renderStep()}
-    </>
+      <Box shouldRise>{renderStep()}</Box>
+    </Column>
   );
 }

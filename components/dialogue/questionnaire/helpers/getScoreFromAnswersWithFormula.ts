@@ -10,11 +10,11 @@ export class FormulaError extends Error {
 /**
  * Evaluates a formula string using values from answer set.
  * Formula string can contain:
- * - Question IDs (with or without 'q' prefix, e.g. 'q1', '1', 'q2a', '2a')
+ * - Question IDs (e.g. 'sleep-worry', 'anxiety-level')
  * - Numeric literals (e.g. '3', '4.5')
  * - Basic arithmetic operators (+, -, *, /)
  * - Parentheses for grouping
- * Example formula: "(1a + 1b + 2) * 0.6"
+ * Example formula: "(sleep-worry + anxiety-level) * 0.6"
  *
  * @param answers Array of answers mapping question IDs to their selected choice values
  * @param formulaString String representing the calculation formula
@@ -43,7 +43,7 @@ export function getScoreFromAnswersWithFormula(
 
   // Validate formula tokens
   const validOperators = ['+', '-', '*', '/', '(', ')'];
-  const validQuestionIdPattern = /^q\d+[a-zA-Z]*$/;
+  const validQuestionIdPattern = /^[a-zA-Z][\w-]*$/;
   const validNumberPattern = /^\d+(\.\d+)?$/;
 
   for (const token of tokens) {
@@ -53,7 +53,7 @@ export function getScoreFromAnswersWithFormula(
         !validNumberPattern.test(token)
       ) {
         throw new FormulaError(
-          `Invalid token "${token}" in formula. Must be a valid question ID (starting with 'q') or numeric value.`
+          `Invalid token "${token}" in formula. Must be a valid question ID (e.g. 'sleep-worry') or numeric value.`
         );
       }
     }
@@ -101,7 +101,7 @@ function evaluateExpression(
     } else {
       // Convert token to value
       let value: number;
-      if (/^q\d+[a-zA-Z]*$/.test(token)) {
+      if (/^[a-zA-Z][\w-]*$/.test(token)) {
         const answer = answers.find(a => a.questionId === token);
         const answerValues = answer?.value || [0];
 

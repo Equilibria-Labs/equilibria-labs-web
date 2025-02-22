@@ -75,5 +75,5 @@ export default function SleepReport() {
     }
   };
 
-  return <Box shouldRise>{renderSectionContent()}</Box>;
+  return renderSectionContent();
 }

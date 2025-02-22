@@ -94,6 +94,7 @@ export type Answer = {
 
 export type QuestionnaireConfig = {
   dialogueId: string;
+  title: string;
   version: string;
   shouldShowProgress: boolean;
   steps: Step[];
