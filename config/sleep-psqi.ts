@@ -47,8 +47,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'subjective-sleep-quality',
       questionId: 'subjective-sleep-quality',
       type: 'single-choice',
-      question:
-        'During the past month, how would you rate your sleep quality overall?',
+      question: 'How would you rate your sleep quality overall?',
+      instruction: 'During the past month',
       choices: [
         { choiceId: 'very-good', text: 'Very good', value: 0 },
         { choiceId: 'fairly-good', text: 'Fairly good', value: 1 },
@@ -61,7 +61,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       questionId: 'sleep-latency-time',
       type: 'single-choice',
       question:
-        'During the past month, how long (in minutes) has it typically taken you to fall asleep?',
+        'How long (in minutes) has it typically taken you to fall asleep?',
+      instruction: 'During the past month',
       choices: [
         { choiceId: '0-15', text: '0-15 minutes', value: 0 },
         { choiceId: '16-30', text: '16-30 minutes', value: 1 },
@@ -73,8 +74,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'sleep-latency-frequency',
       questionId: 'sleep-latency-frequency',
       type: 'single-choice',
-      question:
-        'During the past month, how often have you had trouble falling asleep?',
+      question: 'How often have you had trouble falling asleep?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -94,8 +95,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'sleep-duration',
       questionId: 'sleep-duration',
       type: 'single-choice',
-      question:
-        'During the past month, how many hours of actual sleep did you get at night?',
+      question: 'How many hours of actual sleep did you get at night?',
+      instruction: 'During the past month',
       choices: [
         { choiceId: 'more-than-7', text: 'More than 7 hours', value: 0 },
         { choiceId: '6-7', text: '6-7 hours', value: 1 },
@@ -107,8 +108,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'sleep-efficiency',
       questionId: 'sleep-efficiency',
       type: 'single-choice',
-      question:
-        'During the past month, how often have you had trouble staying asleep?',
+      question: 'How often have you had trouble staying asleep?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -130,7 +131,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       questionId: 'wake-middle-night',
       type: 'single-choice',
       question:
-        'During the past month, how often have you had trouble waking up in the middle of the night or early morning?',
+        'How often have you had trouble waking up in the middle of the night or early morning?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -150,8 +152,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'bathroom',
       questionId: 'bathroom',
       type: 'single-choice',
-      question:
-        'During the past month, how often have you had to get up to use the bathroom?',
+      question: 'How often have you had to get up to use the bathroom?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -171,8 +173,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'breathing',
       questionId: 'breathing',
       type: 'single-choice',
-      question:
-        'During the past month, how often have you had trouble breathing?',
+      question: 'How often have you had trouble breathing?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -192,8 +194,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'cough-snore',
       questionId: 'cough-snore',
       type: 'single-choice',
-      question:
-        'During the past month, how often have you coughed or snored loudly?',
+      question: 'How often have you coughed or snored loudly?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -213,7 +215,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'too-cold',
       questionId: 'too-cold',
       type: 'single-choice',
-      question: 'During the past month, how often have you felt too cold?',
+      question: 'How often have you felt too cold?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -233,7 +236,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'too-hot',
       questionId: 'too-hot',
       type: 'single-choice',
-      question: 'During the past month, how often have you felt too hot?',
+      question: 'How often have you felt too hot?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -253,7 +257,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'bad-dreams',
       questionId: 'bad-dreams',
       type: 'single-choice',
-      question: 'During the past month, how often have you had bad dreams?',
+      question: 'How often have you had bad dreams?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -273,7 +278,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'pain',
       questionId: 'pain',
       type: 'single-choice',
-      question: 'During the past month, how often have you had pain?',
+      question: 'How often have you had pain?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -294,7 +300,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       questionId: 'other-reasons',
       type: 'single-choice',
       question:
-        'During the past month, how often have you had other reasons that have troubled your sleep?',
+        'How often have you had other reasons that have troubled your sleep?',
+      instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
@@ -336,7 +343,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       questionId: 'daytime-alertness',
       type: 'single-choice',
       question:
-        'During the past month, how much of a problem has it been for you to stay awake while driving, eating meals, or engaging in social activity?',
+        'How much of a problem has it been for you to stay awake while driving, eating meals, or engaging in social activity?',
+      instruction: 'During the past month',
       choices: [
         { choiceId: 'no-problem', text: 'No problem at all', value: 0 },
         { choiceId: 'slight', text: 'Only a slight problem', value: 1 },
@@ -349,7 +357,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       questionId: 'daytime-function',
       type: 'single-choice',
       question:
-        'During the past month, how much of a problem has it been for you to keep up enthusiasm to get things done?',
+        'How much of a problem has it been for you to keep up enthusiasm to get things done?',
+      instruction: 'During the past month',
       choices: [
         { choiceId: 'no-problem', text: 'No problem at all', value: 0 },
         { choiceId: 'slight', text: 'Only a slight problem', value: 1 },
