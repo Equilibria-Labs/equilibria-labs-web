@@ -1,3 +1,5 @@
+import { ChoiceIconName } from '@/components/common/Choice';
+
 export interface BaseStep {
   stepId: string;
   type: string;
@@ -18,6 +20,7 @@ export interface Choice {
   choiceId: string;
   text: string;
   value?: ChoiceValue;
+  iconName?: ChoiceIconName;
 }
 
 export interface MultipleChoiceStep extends QuestionStep {

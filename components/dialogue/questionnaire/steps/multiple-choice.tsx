@@ -6,7 +6,7 @@ import {
 } from '@/types/questionnaire';
 import { Button } from '@/components/ui/button';
 import { Choice } from '@/components/common/Choice';
-import { Heading, HeadingSmall } from '@/components/common/Typography';
+import { BodyText, Heading } from '@/components/common/Typography';
 import Column from '@/components/structure/Column';
 import { parseBoldText } from '@/utils/text';
 
@@ -52,7 +52,7 @@ export function MultipleChoiceStep({
   return (
     <Column hasLargeGap>
       {step.question && <Heading>{parseBoldText(step.question)}</Heading>}
-      {step.instruction && <HeadingSmall>{step.instruction}</HeadingSmall>}
+      {step.instruction && <BodyText>{step.instruction}</BodyText>}
       {step.choices.map(choice => (
         <Choice
           key={choice.choiceId}
@@ -61,6 +61,7 @@ export function MultipleChoiceStep({
           next={next}
           type='checkbox'
           checked={selectedOptions.includes(choice.choiceId)}
+          iconName={choice.iconName}
         />
       ))}
 
