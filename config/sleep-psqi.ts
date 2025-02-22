@@ -8,7 +8,7 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
   resultsSteps: [
     {
       formulaString:
-        'subjective-sleep-quality + sleep-latency + sleep-duration + sleep-efficiency + sleep-disturbances + sleep-medications + daytime-dysfunction',
+        'subjective-sleep-quality + min(sleep-latency-time + sleep-latency-frequency, 3) + sleep-efficiency + min(bathroom + breathing + cough-snore + too-cold + too-hot + bad-dreams + pain + other-reasons, 3) + sleep-medications + min(avg(wake-middle-night + bathroom + breathing + cough-snore + too-cold + too-hot + bad-dreams + pain + other-reasons), 3) + min(daytime-alertness + daytime-function, 3)',
       stepId: 'results',
       type: 'weather-heatmap-results',
       arrowLabel: 'You',
