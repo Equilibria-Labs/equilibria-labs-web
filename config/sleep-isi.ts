@@ -73,8 +73,6 @@ export const sleepIsiConfig: QuestionnaireConfig = {
       heading: 'CBT for Insomnia is clinically proven to improve sleep',
       text: 'People following this program typically see a 30% - 50% improvement in their sleep quality after 2 weeks.',
       buttonText: 'Book a free online consultation',
-      buttonLink:
-        'https://www.equilibrialabs.com/booking-calendar/free-initial-consultation',
       resultsBands: [
         {
           min: 0,

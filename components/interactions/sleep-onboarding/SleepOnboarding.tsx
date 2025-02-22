@@ -5,16 +5,16 @@ import { onboardingConfig } from '@/config/onboarding';
 import { Answer } from '@/types';
 import Box from '@/components/structure/Box';
 
-export default function Onboarding() {
-  const handleComplete = (answers: Answer[]) => {
-    console.log('Questionnaire completed:', answers);
-  };
+interface OnboardingProps {
+  onCompleteAction: (answers: Answer[]) => void;
+}
 
+export default function Onboarding({ onCompleteAction }: OnboardingProps) {
   return (
     <Box shouldRise>
       <Questionnaire
         config={onboardingConfig}
-        onCompleteAction={handleComplete}
+        onCompleteAction={onCompleteAction}
       />
     </Box>
   );
