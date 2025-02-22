@@ -1,14 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import Box from '@/components/structure/Box';
 import SleepISI from '@/components/interactions/sleep-isi/SleepIsi';
-import SleepOnboarding from '@/components/interactions/sleep-onboarding/SleepOnboarding';
 import SleepSummary from '@/components/interactions/sleep-summary/SleepSummary';
 import { Answer } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import SleepPsqi from '@/components/interactions/sleep-psqi/SleepPsqi';
 
-type SectionType = 'isi' | 'onboarding' | 'summary';
+type SectionType = 'isi' | 'psqi' | 'summary';
 
 interface SectionConfig {
   sectionId: SectionType;
@@ -19,7 +18,7 @@ const SLEEP_REPORT_SECTIONS: SectionConfig[] = [
     sectionId: 'isi',
   },
   {
-    sectionId: 'onboarding',
+    sectionId: 'psqi',
   },
   {
     sectionId: 'summary',
@@ -60,9 +59,9 @@ export default function SleepReport() {
             onCompleteAction={answers => handleSectionComplete('isi', answers)}
           />
         );
-      case 'onboarding':
+      case 'psqi':
         return (
-          <SleepOnboarding
+          <SleepPsqi
             onCompleteAction={answers =>
               handleSectionComplete('onboarding', answers)
             }
@@ -75,5 +74,5 @@ export default function SleepReport() {
     }
   };
 
-  return <Box shouldRise>{renderSectionContent()}</Box>;
+  return renderSectionContent();
 }

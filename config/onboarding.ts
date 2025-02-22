@@ -1,9 +1,8 @@
-import { QuestionnaireConfig } from '../types';
-
-// TODO: Replace PSQI questions with brief PSQI questions with values from https://www.goodmedicine.org.uk/files/assessment,%20pittsburgh%20psqi.pdf
+import { QuestionnaireConfig } from '@/types';
 
 export const onboardingConfig: QuestionnaireConfig = {
   dialogueId: 'onboarding',
+  title: 'Onboarding',
   version: '1',
   shouldShowProgress: true,
   resultsSteps: [
