@@ -1,7 +1,7 @@
 import { SingleChoiceStep as SingleChoiceStepType } from '@/types/questionnaire';
 import { RadioGroup } from '@/components/ui/radio-group';
 import { Choice } from '@/components/common/Choice';
-import { Heading, HeadingSmall } from '@/components/common/Typography';
+import { BodyText, Heading } from '@/components/common/Typography';
 import Column from '@/components/structure/Column';
 import { parseBoldText } from '@/utils/text';
 import { ChoiceValue } from '@/types';
@@ -23,7 +23,7 @@ export function SingleChoiceStep({
     <Column hasLargeGap>
       <Column hasNoGap>
         {step.question && <Heading>{parseBoldText(step.question)}</Heading>}
-        {step.instruction && <HeadingSmall>{step.instruction}</HeadingSmall>}
+        {step.instruction && <BodyText>{step.instruction}</BodyText>}
       </Column>
       <RadioGroup
         value={value[0]?.toString() || ''}
@@ -37,6 +37,7 @@ export function SingleChoiceStep({
             onChange={onChange}
             next={next}
             type='radio'
+            iconName={choice.iconName}
           />
         ))}
       </RadioGroup>
