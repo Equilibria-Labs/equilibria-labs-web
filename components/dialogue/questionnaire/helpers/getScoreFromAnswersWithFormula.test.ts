@@ -233,4 +233,173 @@ describe('getScoreFromAnswersWithFormula', () => {
       }).toThrow(FormulaError);
     });
   });
+
+  describe('min function handling', () => {
+    it('should correctly evaluate min function with two arguments', () => {
+      const answers: Answer[] = [
+        { questionId: 'score-a', value: [5] },
+        { questionId: 'score-b', value: [3] },
+      ];
+
+      expect(
+        getScoreFromAnswersWithFormula(answers, 'min(score-a, score-b)')
+      ).toBe(3);
+      expect(getScoreFromAnswersWithFormula(answers, 'min(score-a, 2)')).toBe(
+        2
+      );
+      expect(getScoreFromAnswersWithFormula(answers, 'min(6, score-b)')).toBe(
+        3
+      );
+      expect(getScoreFromAnswersWithFormula(answers, 'min(5, 3)')).toBe(3);
+    });
+
+    it('should handle min function with expressions', () => {
+      const answers: Answer[] = [
+        { questionId: 'score-a', value: [2] },
+        { questionId: 'score-b', value: [3] },
+        { questionId: 'score-c', value: [4] },
+      ];
+
+      expect(
+        getScoreFromAnswersWithFormula(
+          answers,
+          'min(score-a + score-b, score-c)'
+        )
+      ).toBe(4);
+      expect(
+        getScoreFromAnswersWithFormula(
+          answers,
+          'min(score-a + score-b + score-c, 6)'
+        )
+      ).toBe(6);
+    });
+
+    it('should handle complex formulas with min function', () => {
+      const answers: Answer[] = [
+        { questionId: 'item1', value: [1] },
+        { questionId: 'item2', value: [2] },
+        { questionId: 'item3', value: [3] },
+      ];
+
+      // Test sum of items capped at 3
+      expect(
+        getScoreFromAnswersWithFormula(answers, 'min(item1 + item2 + item3, 3)')
+      ).toBe(3);
+
+      // Test multiple min functions in one formula
+      expect(
+        getScoreFromAnswersWithFormula(
+          answers,
+          'min(item1 + item2, 2) + min(item2 + item3, 3)'
+        )
+      ).toBe(5);
+
+      // Test min function and parentheses together
+      expect(
+        getScoreFromAnswersWithFormula(
+          answers,
+          '(item1 + item2) * 2 + min(item2 + item3, 3)'
+        )
+      ).toBe(9); // (1 + 2) * 2 + min(2 + 3, 3) = 6 + 3 = 9
+
+      // Test nested expressions with both min and parentheses
+      expect(
+        getScoreFromAnswersWithFormula(
+          answers,
+          'min((item1 + item2) * 2, 5) + (item3 * 2)'
+        )
+      ).toBe(11); // min((1 + 2) * 2, 5) + (3 * 2) = 5 + 6 = 11
+    });
+
+    it('should throw error for invalid min function syntax', () => {
+      const answers: Answer[] = [{ questionId: 'score', value: [1] }];
+
+      expect(() => {
+        getScoreFromAnswersWithFormula(answers, 'min(score, )');
+      }).toThrow(FormulaError);
+
+      expect(() => {
+        getScoreFromAnswersWithFormula(answers, 'min(score)');
+      }).toThrow(FormulaError);
+
+      expect(() => {
+        getScoreFromAnswersWithFormula(answers, 'min score, 3)');
+      }).toThrow(FormulaError);
+    });
+  });
+
+  describe('avg function handling', () => {
+    it('should correctly calculate average of multiple values', () => {
+      const answers: Answer[] = [
+        { questionId: 'item1', value: [2] },
+        { questionId: 'item2', value: [4] },
+        { questionId: 'item3', value: [6] },
+      ];
+
+      expect(
+        getScoreFromAnswersWithFormula(answers, 'avg(item1 + item2 + item3)')
+      ).toBe(4); // (2 + 4 + 6) / 3 = 4
+
+      expect(
+        getScoreFromAnswersWithFormula(answers, 'avg(item1 + item2)')
+      ).toBe(3); // (2 + 4) / 2 = 3
+    });
+
+    it('should handle avg function with expressions', () => {
+      const answers: Answer[] = [
+        { questionId: 'score1', value: [1] },
+        { questionId: 'score2', value: [2] },
+        { questionId: 'score3', value: [3] },
+      ];
+
+      expect(
+        getScoreFromAnswersWithFormula(
+          answers,
+          'min(avg(score1 + score2 + score3), 2)'
+        )
+      ).toBe(2); // min((1 + 2 + 3) / 3, 2) = min(2, 2) = 2
+    });
+
+    it('should handle zero values correctly in average', () => {
+      const answers: Answer[] = [
+        { questionId: 'val1', value: [0] },
+        { questionId: 'val2', value: [4] },
+        { questionId: 'val3', value: [8] },
+      ];
+
+      expect(
+        getScoreFromAnswersWithFormula(answers, 'avg(val1 + val2 + val3)')
+      ).toBe(6); // (4 + 8) / 2 = 6 (ignoring zero values)
+    });
+
+    it('should handle missing values correctly in average', () => {
+      const answers: Answer[] = [
+        { questionId: 'present1', value: [3] },
+        { questionId: 'present2', value: [6] },
+      ];
+
+      expect(
+        getScoreFromAnswersWithFormula(
+          answers,
+          'avg(present1 + missing1 + present2)'
+        )
+      ).toBe(4.5); // (3 + 6) / 2 = 4.5 (ignoring missing value)
+    });
+
+    it('should throw error for invalid avg function syntax', () => {
+      const answers: Answer[] = [{ questionId: 'score', value: [1] }];
+
+      expect(() => {
+        getScoreFromAnswersWithFormula(answers, 'avg(,)');
+      }).toThrow(FormulaError);
+
+      expect(() => {
+        getScoreFromAnswersWithFormula(answers, 'avg()');
+      }).toThrow(FormulaError);
+
+      expect(() => {
+        getScoreFromAnswersWithFormula(answers, 'avg score)');
+      }).toThrow(FormulaError);
+    });
+  });
 });
