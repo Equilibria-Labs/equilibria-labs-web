@@ -37,6 +37,7 @@ export function SingleChoiceStep({
             onChange={onChange}
             next={next}
             type='radio'
+            iconName={choice.iconName}
           />
         ))}
       </RadioGroup>

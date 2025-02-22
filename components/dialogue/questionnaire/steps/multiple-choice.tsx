@@ -61,6 +61,7 @@ export function MultipleChoiceStep({
           next={next}
           type='checkbox'
           checked={selectedOptions.includes(choice.choiceId)}
+          iconName={choice.iconName}
         />
       ))}
 
