@@ -39,7 +39,7 @@ export function getScoreFromAnswersWithFormula(
   // Split formula into tokens (functions, operators, parentheses, and question IDs)
   const tokens = formulaString
     .split(
-      /(\bavg\b|\bmin\b|\+|\-|\*|\/|\(|\)|,|\b\d*\.?\d+\b|[a-zA-Z][\w-]*|\S)/
+      /(\bavg\b|\bmin\b|\+|-|\*|\/|\(|\)|,|\b\d*\.?\d+\b|[a-zA-Z][\w-]*|\S)/
     )
     .map(token => token.trim())
     .filter(token => token.length > 0);
@@ -50,8 +50,8 @@ export function getScoreFromAnswersWithFormula(
   const validNumberPattern = /^-?\d*\.?\d+$/;
 
   // Pre-validate function syntax
-  let parenStack = [];
-  let functionStack = [];
+  const parenStack = [];
+  const functionStack = [];
   let lastToken = '';
 
   for (let i = 0; i < tokens.length; i++) {
@@ -94,7 +94,7 @@ export function getScoreFromAnswersWithFormula(
         if (currentFunction?.type === 'min') {
           // Check if we have exactly one comma at this level
           let hasComma = false;
-          let start = parenStack[parenStack.length - 1];
+          const start = parenStack[parenStack.length - 1];
           for (let j = start + 1; j < i; j++) {
             if (tokens[j] === ',') {
               if (hasComma) {
