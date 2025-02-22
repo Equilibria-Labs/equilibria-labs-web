@@ -1,8 +1,8 @@
 import { QuestionnaireConfig } from '@/types';
 
-export const sleepIsiConfig: QuestionnaireConfig = {
-  dialogueId: 'isi',
-  title: 'Sleep disruption',
+export const sleepPsqiConfig: QuestionnaireConfig = {
+  dialogueId: 'psqi',
+  title: 'Sleep quality',
   version: '1.1',
   shouldShowProgress: true,
   resultsSteps: [
