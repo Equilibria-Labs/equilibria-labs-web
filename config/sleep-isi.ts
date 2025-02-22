@@ -2,7 +2,7 @@ import { QuestionnaireConfig } from '@/types';
 
 export const sleepIsiConfig: QuestionnaireConfig = {
   dialogueId: 'isi',
-  title: 'Sleep disruption',
+  title: 'Sleep Disruption',
   version: '1.1',
   shouldShowProgress: true,
   resultsSteps: [

@@ -1,7 +1,7 @@
 'use client';
 
 import { Questionnaire } from '@/components/dialogue/questionnaire/questionnaire';
-import { sleepIsiConfig } from '@/config/sleep-isi';
+import { sleepPsqiConfig } from '@/config/sleep-psqi';
 import { Answer } from '@/types';
 
 interface SleepReportDialogueProps {
@@ -13,7 +13,7 @@ export default function SleepReportDialogue({
 }: SleepReportDialogueProps) {
   return (
     <Questionnaire
-      config={sleepIsiConfig}
+      config={sleepPsqiConfig}
       onCompleteAction={onCompleteAction}
     />
   );
