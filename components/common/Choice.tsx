@@ -4,7 +4,6 @@ import { Label } from '@/components/ui/label';
 import { ButtonText } from '@/components/common/Typography';
 import {
   Check,
-  LucideIcon,
   Clock1,
   Clock2,
   Clock3,
