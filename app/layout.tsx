@@ -41,8 +41,13 @@ export default function RootLayout({
       <body className='bg-background text-foreground'>
         <ThemeProvider
           attribute='class'
-          defaultTheme='system'
-          enableSystem
+          value={{
+            'theme-1': 'theme-1',
+            'theme-2': 'theme-2',
+            'theme-3': 'theme-3',
+            'theme-4': 'theme-4',
+          }}
+          defaultTheme='theme-1'
           disableTransitionOnChange
         >
           <SplashScreen />

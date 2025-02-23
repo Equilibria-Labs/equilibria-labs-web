@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTheme } from 'next-themes';
 import { QuestionnaireConfig, ChoiceValue, Answer } from '@/types';
 import { SingleChoiceStep } from './steps/single-choice';
 import { MultipleChoiceStep } from './steps/multiple-choice';
@@ -11,6 +12,7 @@ import { ProgressBar } from '@/components/common/ProgressBar';
 import { BodyText } from '@/components/common/Typography';
 import Column from '@/components/structure/Column';
 import Box from '@/components/structure/Box';
+import { ThemeSwitcher } from '@/components/account/theme-switcher';
 
 interface QuestionnaireProps {
   config: QuestionnaireConfig;
@@ -23,10 +25,15 @@ export function Questionnaire({
 }: QuestionnaireProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
+  const { setTheme } = useTheme();
 
   const handleNext = () => {
     const nextStepIndex = currentStepIndex + 1;
     const allSteps = [...config.steps, ...config.resultsSteps];
+
+    // Cycle through themes based on step index
+    const themeNumber = (nextStepIndex % 4) + 1; // We have theme-1 through theme-4
+    setTheme(`theme-${themeNumber}`);
 
     // Move to next step if it exists
     if (nextStepIndex < allSteps.length) {
@@ -108,6 +115,7 @@ export function Questionnaire({
         />
       )}
       <Box shouldRise>{renderStep()}</Box>
+      <ThemeSwitcher />
     </Column>
   );
 }
