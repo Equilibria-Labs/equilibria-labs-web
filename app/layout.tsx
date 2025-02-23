@@ -48,7 +48,6 @@ export default function RootLayout({
             'theme-4': 'theme-4',
           }}
           defaultTheme='theme-1'
-          disableTransitionOnChange
         >
           <SplashScreen />
           <main className='min-h-screen flex flex-col items-center'>

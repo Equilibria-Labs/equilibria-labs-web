@@ -115,7 +115,6 @@ export function Questionnaire({
         />
       )}
       <Box shouldRise>{renderStep()}</Box>
-      <ThemeSwitcher />
     </Column>
   );
 }

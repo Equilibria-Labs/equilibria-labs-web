@@ -41,6 +41,23 @@
     --chart-5: 27 87% 67%;
   }
 
+  /* Add transitions for theme changes */
+  :root,
+  [class^="theme-"] {
+    transition-property: background-color, color, border-color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+  }
+
+  /* Apply transitions to elements that use CSS variables */
+  *,
+  *::before,
+  *::after {
+    transition: background-color 0.3s ease-in-out,
+                color 0.3s ease-in-out,
+                border-color 0.3s ease-in-out;
+  }
+
   .theme-1 {
     --background: 164 69% 14%;
     --primary: 344 71% 13%;
