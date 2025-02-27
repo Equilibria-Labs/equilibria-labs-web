@@ -162,10 +162,10 @@ export function Choice({
   return (
     <div
       key={choice.choiceId}
-      className={`relative flex items-center justify-between rounded-xl p-4 cursor-pointer text-primary-foreground transition-colors ${
+      className={`relative flex items-center justify-between rounded-xl p-4 cursor-pointer transition-colors ${
         checked
-          ? 'bg-primary/75'
-          : 'bg-secondary/75 hover:bg-secondary hover:bg-opacity-50'
+          ? 'bg-primary/75 text-primary-foreground'
+          : 'bg-secondary/75 text-secondary-foreground hover:bg-secondary hover:bg-opacity-50'
       }`}
     >
       <div className='absolute inset-0 z-10' onClick={handleClick} />

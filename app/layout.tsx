@@ -41,9 +41,13 @@ export default function RootLayout({
       <body className='bg-background text-foreground'>
         <ThemeProvider
           attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange
+          value={{
+            'theme-1': 'theme-1',
+            'theme-2': 'theme-2',
+            'theme-3': 'theme-3',
+            'theme-4': 'theme-4',
+          }}
+          defaultTheme='theme-1'
         >
           <SplashScreen />
           <main className='min-h-screen flex flex-col items-center'>
