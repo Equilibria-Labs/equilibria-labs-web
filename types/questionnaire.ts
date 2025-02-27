@@ -10,10 +10,6 @@ export interface BaseStep {
   reference?: string | null;
 }
 
-export interface QuestionStep extends BaseStep {
-  questionId: string;
-}
-
 export type ChoiceValue = string | number | undefined;
 
 export interface Choice {
@@ -23,16 +19,19 @@ export interface Choice {
   iconName?: ChoiceIconName;
 }
 
+export interface QuestionStep extends BaseStep {
+  questionId: string;
+  choices: Choice[];
+}
+
 export interface MultipleChoiceStep extends QuestionStep {
   type: 'multiple-choice-required' | 'multiple-choice-optional';
-  choices: Choice[];
   minSelections?: number;
   maxSelections?: number;
 }
 
 export interface SingleChoiceStep extends QuestionStep {
   type: 'single-choice';
-  choices: Choice[];
 }
 
 export interface EducationalStep extends BaseStep {
@@ -91,7 +90,7 @@ export type Step =
   | ResultsStep;
 
 export type Answer = {
-  questionId: string;
+  question: QuestionStep;
   value: ChoiceValue[];
 };
 

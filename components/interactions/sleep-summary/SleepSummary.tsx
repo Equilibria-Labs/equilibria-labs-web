@@ -19,9 +19,12 @@ export default function SleepSummary({ answers }: SleepSummaryProps) {
           <CardContent>
             <ul className='space-y-2'>
               {sectionAnswers.map((answer, index) => (
-                <li key={`${answer.questionId}-${index}`} className='text-sm'>
+                <li
+                  key={`${answer.question.questionId}-${index}`}
+                  className='text-sm'
+                >
                   <span className='font-medium'>
-                    Question {answer.questionId}:{' '}
+                    Question {answer.question.questionId}:{' '}
                   </span>
                   {Array.isArray(answer.value)
                     ? answer.value.join(', ')

@@ -2,7 +2,12 @@
 
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
-import { QuestionnaireConfig, ChoiceValue, Answer } from '@/types';
+import {
+  QuestionnaireConfig,
+  ChoiceValue,
+  Answer,
+  QuestionStep,
+} from '@/types';
 import { SingleChoiceStep } from './steps/single-choice';
 import { MultipleChoiceStep } from './steps/multiple-choice';
 import { MessageStep } from './steps/message';
@@ -12,7 +17,6 @@ import { ProgressBar } from '@/components/common/ProgressBar';
 import { BodyText } from '@/components/common/Typography';
 import Column from '@/components/structure/Column';
 import Box from '@/components/structure/Box';
-import { ThemeSwitcher } from '@/components/account/theme-switcher';
 
 interface QuestionnaireProps {
   config: QuestionnaireConfig;
@@ -45,9 +49,12 @@ export function Questionnaire({
     onCompleteAction(answers);
   };
 
-  const handleAnswer = (questionId: string, answer: ChoiceValue[]) => {
+  const handleAnswer = (step: QuestionStep, answer: ChoiceValue[]) => {
     setAnswers((prev: Answer[]) => {
-      const newAnswer: Answer = { questionId, value: answer };
+      const newAnswer: Answer = {
+        question: step,
+        value: answer,
+      };
       return [...prev, newAnswer];
     });
   };
@@ -65,10 +72,11 @@ export function Questionnaire({
           <SingleChoiceStep
             step={step}
             value={
-              answers.find(a => a.questionId === step.questionId)?.value || []
+              answers.find(a => a.question.questionId === step.questionId)
+                ?.value || []
             }
             onChange={value =>
-              handleAnswer(step.questionId, value !== undefined ? [value] : [])
+              handleAnswer(step, value !== undefined ? [value] : [])
             }
             next={handleNext}
           />
@@ -79,9 +87,10 @@ export function Questionnaire({
           <MultipleChoiceStep
             step={step}
             initialValue={
-              answers.find(a => a.questionId === step.questionId)?.value || []
+              answers.find(a => a.question.questionId === step.questionId)
+                ?.value || []
             }
-            onChange={value => handleAnswer(step.questionId, value)}
+            onChange={value => handleAnswer(step, value)}
             next={handleNext}
           />
         );

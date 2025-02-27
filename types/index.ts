@@ -9,6 +9,7 @@ export type {
   ResultsIssue,
   ResultsStep,
   WeatherHeatmapResults,
+  QuestionStep,
   Step,
   QuestionnaireConfig,
   ChoiceValue,
