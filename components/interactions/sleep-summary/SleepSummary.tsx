@@ -1,34 +1,44 @@
-import { Answer } from '@/types';
+import { Answer, Dialogue, QuestionStep, ChoiceValue, Choice } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialogue as SharedDialogue } from '@/types/shared/dialogue';
 
-interface SleepSummaryProps {
-  answers: Record<string, Answer[]>;
+export interface SleepSummaryProps {
+  dialogues: Record<string, Dialogue>;
 }
 
-export default function SleepSummary({ answers }: SleepSummaryProps) {
+export default function SleepSummary({ dialogues }: SleepSummaryProps) {
   return (
     <div className='space-y-4'>
       <h2 className='text-2xl font-bold'>Sleep Report Summary</h2>
-      {Object.entries(answers).map(([sectionId, sectionAnswers]) => (
-        <Card key={sectionId}>
+      {Object.entries(dialogues).map(([dialogueId, dialogue]) => (
+        <Card key={dialogueId}>
           <CardHeader>
             <CardTitle className='capitalize'>
-              {sectionId.replace('-', ' ')} Responses
+              {dialogueId.replace('-', ' ')} Responses
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className='space-y-2'>
-              {sectionAnswers.map((answer, index) => (
+            <ul className='space-y-4'>
+              {dialogue.answers.map((answer: Answer, index) => (
                 <li
-                  key={`${answer.question.questionId}-${index}`}
-                  className='text-sm'
+                  key={`${dialogueId}-${index}`}
+                  className='text-sm space-y-1'
                 >
-                  <span className='font-medium'>
-                    Question {answer.question.questionId}:{' '}
-                  </span>
-                  {Array.isArray(answer.value)
-                    ? answer.value.join(', ')
-                    : answer.value}
+                  <div className='font-medium text-base'>
+                    {answer.step.question}
+                  </div>
+                  <div className='text-muted-foreground'>
+                    {Array.isArray(answer.value)
+                      ? answer.value
+                          .map((v: ChoiceValue) => {
+                            const choice = answer.step.choices.find(
+                              (c: Choice) => c.value === v
+                            );
+                            return choice ? choice.text : v;
+                          })
+                          .join(', ')
+                      : answer.value}
+                  </div>
                 </li>
               ))}
             </ul>

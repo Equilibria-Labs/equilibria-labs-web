@@ -1,5 +1,5 @@
 import { ChoiceIconName } from '@/components/common/Choice';
-
+import { Dialogue } from './shared/dialogue';
 export interface BaseStep {
   stepId: string;
   type: string;
@@ -90,14 +90,11 @@ export type Step =
   | ResultsStep;
 
 export type Answer = {
-  question: QuestionStep;
+  step: QuestionStep;
   value: ChoiceValue[];
 };
 
-export type QuestionnaireConfig = {
-  dialogueId: string;
-  title: string;
-  version: string;
+export type QuestionnaireConfig = Dialogue & {
   shouldShowProgress: boolean;
   steps: Step[];
   resultsSteps: ResultsStep[];

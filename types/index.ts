@@ -18,3 +18,4 @@ export type {
 
 export type { OnboardingConfig } from './onboarding';
 export type { User } from './user';
+export type { Dialogue } from './shared/dialogue';

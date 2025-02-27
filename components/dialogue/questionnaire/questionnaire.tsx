@@ -52,7 +52,7 @@ export function Questionnaire({
   const handleAnswer = (step: QuestionStep, answer: ChoiceValue[]) => {
     setAnswers((prev: Answer[]) => {
       const newAnswer: Answer = {
-        question: step,
+        step,
         value: answer,
       };
       return [...prev, newAnswer];
@@ -72,8 +72,8 @@ export function Questionnaire({
           <SingleChoiceStep
             step={step}
             value={
-              answers.find(a => a.question.questionId === step.questionId)
-                ?.value || []
+              answers.find(a => a.step.questionId === step.questionId)?.value ||
+              []
             }
             onChange={value =>
               handleAnswer(step, value !== undefined ? [value] : [])
@@ -87,8 +87,8 @@ export function Questionnaire({
           <MultipleChoiceStep
             step={step}
             initialValue={
-              answers.find(a => a.question.questionId === step.questionId)
-                ?.value || []
+              answers.find(a => a.step.questionId === step.questionId)?.value ||
+              []
             }
             onChange={value => handleAnswer(step, value)}
             next={handleNext}

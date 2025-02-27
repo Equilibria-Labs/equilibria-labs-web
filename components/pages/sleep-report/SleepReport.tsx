@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import SleepISI from '@/components/interactions/sleep-isi/SleepIsi';
 import SleepSummary from '@/components/interactions/sleep-summary/SleepSummary';
-import { Answer } from '@/types';
+import { Answer, Dialogue } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import SleepPsqi from '@/components/interactions/sleep-psqi/SleepPsqi';
 
@@ -30,18 +30,27 @@ export default function SleepReport() {
     SLEEP_REPORT_SECTIONS[0].sectionId
   );
 
-  const [storedAnswers, setStoredAnswers] = useLocalStorage<
-    Record<string, Answer[]>
-  >('sleep-report-answers', {});
+  const [storedDialogues, setStoredDialogues] = useLocalStorage<
+    Record<string, Dialogue>
+  >('sleep-report-dialogues', {});
 
   const currentSectionIndex = SLEEP_REPORT_SECTIONS.findIndex(
     section => section.sectionId === currentSection
   );
 
   const handleSectionComplete = (dialogueId: string, answers: Answer[]) => {
-    setStoredAnswers(prev => ({
+    const dialogue: Dialogue = {
+      dialogueId,
+      answers,
+      title: dialogueId.toUpperCase(), // You can customize the title as needed
+      version: '1.0', // You can manage versions as needed
+      status: 'complete',
+      submittedAt: new Date().toISOString(),
+    };
+
+    setStoredDialogues(prev => ({
       ...prev,
-      [dialogueId]: answers,
+      [dialogueId]: dialogue,
     }));
 
     // Move to next section if available
@@ -62,13 +71,13 @@ export default function SleepReport() {
       case 'psqi':
         return (
           <SleepPsqi
-            onCompleteAction={answers =>
-              handleSectionComplete('onboarding', answers)
+            onCompleteAction={
+              answers => handleSectionComplete('psqi', answers) // Fixed dialogueId from 'onboarding' to 'psqi'
             }
           />
         );
       case 'summary':
-        return <SleepSummary answers={storedAnswers} />;
+        return <SleepSummary dialogues={storedDialogues} />;
       default:
         return null;
     }
