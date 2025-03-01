@@ -274,7 +274,7 @@ function evaluateExpression(
           if (!answer) {
             value = 0; // Missing answers default to 0
           } else {
-            const answerValue = answer.value[0];
+            const answerValue = answer.value[0]?.numericValue;
             if (typeof answerValue !== 'number' || isNaN(answerValue)) {
               throw new FormulaError(
                 `Invalid answer value for question "${token}". Answer must be numeric.`

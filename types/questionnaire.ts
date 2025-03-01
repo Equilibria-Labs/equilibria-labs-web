@@ -10,12 +10,15 @@ export interface BaseStep {
   reference?: string | null;
 }
 
-export type ChoiceValue = string | number | undefined;
+export type ChoiceValue = {
+  stringValue?: string;
+  numericValue?: number;
+};
 
 export interface Choice {
   choiceId: string;
   text: string;
-  value?: ChoiceValue;
+  value: ChoiceValue;
   iconName?: ChoiceIconName;
 }
 

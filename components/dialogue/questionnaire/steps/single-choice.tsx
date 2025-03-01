@@ -26,15 +26,17 @@ export function SingleChoiceStep({
         {step.instruction && <BodyText>{step.instruction}</BodyText>}
       </Column>
       <RadioGroup
-        value={value[0]?.toString() || ''}
-        onValueChange={onChange}
+        value={
+          value[0]?.stringValue || value[0]?.numericValue?.toString() || ''
+        }
+        onValueChange={(val: string) => onChange({ stringValue: val })}
         className='space-y-3'
       >
         {step.choices.map(choice => (
           <Choice
             key={choice.choiceId}
             choice={choice}
-            onChange={onChange}
+            onChange={() => onChange(choice.value)}
             next={next}
             type='radio'
             iconName={choice.iconName}

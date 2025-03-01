@@ -10,6 +10,6 @@ export type Dialogue = {
   answers: Answer[];
   title: string;
   version: string;
-  status: 'incomplete' | 'complete' | 'submitted';
+  status: 'not_started' | 'in_progress' | 'complete' | 'submitted';
   submittedAt?: string; // ISO timestamp
 };
