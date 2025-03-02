@@ -1,9 +1,7 @@
 // import { useState, useEffect } from 'react';
 import { useState } from 'react';
-import {
-  MultipleChoiceStep as MultipleChoiceStepType,
-  ChoiceValue,
-} from '@/types/questionnaire';
+import { MultipleChoiceStep as MultipleChoiceStepType } from '@/types/questionnaire';
+import { ChoiceValue } from '@/types/shared/dialogue';
 import { Button } from '@/components/ui/button';
 import { Choice } from '@/components/common/Choice';
 import { BodyText, Heading } from '@/components/common/Typography';
@@ -30,15 +28,20 @@ export function MultipleChoiceStep({
   //   onChange(selectedOptions)
   // }, [selectedOptions, onChange])
 
-  const handleToggle = (choiceId: ChoiceValue) => {
+  const handleToggle = (choice: ChoiceValue) => {
     const newSelection =
-      choiceId === 'none'
-        ? selectedOptions.includes('none')
+      choice.stringValue === 'none'
+        ? selectedOptions.some(opt => opt.stringValue === 'none')
           ? []
-          : ['none']
-        : selectedOptions.includes(choiceId?.toString() || '')
-          ? selectedOptions.filter(id => id !== choiceId)
-          : [...selectedOptions.filter(id => id !== 'none'), choiceId];
+          : [{ stringValue: 'none' }]
+        : selectedOptions.some(opt => opt.stringValue === choice.stringValue)
+          ? selectedOptions.filter(
+              opt => opt.stringValue !== choice.stringValue
+            )
+          : [
+              ...selectedOptions.filter(opt => opt.stringValue !== 'none'),
+              choice,
+            ];
 
     setSelectedOptions(newSelection);
     onChange(newSelection);
@@ -57,10 +60,14 @@ export function MultipleChoiceStep({
         <Choice
           key={choice.choiceId}
           choice={choice}
-          onChange={handleToggle}
+          onChange={() => handleToggle(choice.value)}
           next={next}
           type='checkbox'
-          checked={selectedOptions.includes(choice.choiceId)}
+          checked={selectedOptions.some(
+            opt =>
+              opt.stringValue === choice.value.stringValue ||
+              opt.numericValue === choice.value.numericValue
+          )}
           iconName={choice.iconName}
         />
       ))}

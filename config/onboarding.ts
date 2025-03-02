@@ -5,6 +5,8 @@ export const onboardingConfig: QuestionnaireConfig = {
   title: 'Onboarding',
   version: '1',
   shouldShowProgress: true,
+  answers: [],
+  status: 'not_started',
   resultsSteps: [
     {
       stepId: 'results',
@@ -40,22 +42,22 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'fall-asleep',
-          value: 'fall-asleep',
+          value: { stringValue: 'fall-asleep' },
           text: 'Fall asleep quicker',
         },
         {
           choiceId: 'sleep-through',
-          value: 'sleep-through',
+          value: { stringValue: 'sleep-through' },
           text: 'Sleep through the night',
         },
         {
           choiceId: 'reduce-waking-up-early',
-          value: 'reduce-waking-up-early',
+          value: { stringValue: 'reduce-waking-up-early' },
           text: 'Reduce waking up too early',
         },
         {
           choiceId: 'deep-sleep',
-          value: 'deep-sleep',
+          value: { stringValue: 'deep-sleep' },
           text: 'Get more deep sleep',
         },
       ],
@@ -69,13 +71,21 @@ export const onboardingConfig: QuestionnaireConfig = {
       question: 'What is your age group?',
       instruction: 'Sleep needs change over time.',
       choices: [
-        { choiceId: 'under-18', value: 'under-18', text: 'Under 18' },
-        { choiceId: '18-29', value: '18-29', text: '18-29' },
-        { choiceId: '30s', value: '30s', text: '30s' },
-        { choiceId: '40s', value: '40s', text: '40s' },
-        { choiceId: '50s', value: '50s', text: '50s' },
-        { choiceId: '60s', value: '60s', text: '60s' },
-        { choiceId: '70-plus', value: '70-plus', text: '70s or over' },
+        {
+          choiceId: 'under-18',
+          value: { stringValue: 'under-18' },
+          text: 'Under 18',
+        },
+        { choiceId: '18-29', value: { stringValue: '18-29' }, text: '18-29' },
+        { choiceId: '30s', value: { stringValue: '30s' }, text: '30s' },
+        { choiceId: '40s', value: { stringValue: '40s' }, text: '40s' },
+        { choiceId: '50s', value: { stringValue: '50s' }, text: '50s' },
+        { choiceId: '60s', value: { stringValue: '60s' }, text: '60s' },
+        {
+          choiceId: '70-plus',
+          value: { stringValue: '70-plus' },
+          text: '70s or over',
+        },
       ],
       reference: 'cbt-i',
     },
@@ -85,15 +95,19 @@ export const onboardingConfig: QuestionnaireConfig = {
       type: 'single-choice',
       question: 'How often do you wake up in the middle of the night?',
       choices: [
-        { choiceId: 'every-night', value: 'every-night', text: 'Every night' },
+        {
+          choiceId: 'every-night',
+          value: { stringValue: 'every-night' },
+          text: 'Every night',
+        },
         {
           choiceId: 'several-times',
-          value: 'several-times',
+          value: { stringValue: 'several-times' },
           text: 'Several times a week',
         },
         {
           choiceId: 'once-or-less',
-          value: 'once-or-less',
+          value: { stringValue: 'once-or-less' },
           text: 'Once a week or less',
         },
       ],
@@ -105,9 +119,17 @@ export const onboardingConfig: QuestionnaireConfig = {
       type: 'single-choice',
       question: 'Do you often wake up to go to the bathroom?',
       choices: [
-        { choiceId: 'always', value: 'always', text: 'Always' },
-        { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
-        { choiceId: 'never', value: 'never', text: 'Never' },
+        {
+          choiceId: 'always',
+          value: { stringValue: 'always' },
+          text: 'Always',
+        },
+        {
+          choiceId: 'sometimes',
+          value: { stringValue: 'sometimes' },
+          text: 'Sometimes',
+        },
+        { choiceId: 'never', value: { stringValue: 'never' }, text: 'Never' },
       ],
       reference: 'PSQI',
     },
@@ -118,9 +140,17 @@ export const onboardingConfig: QuestionnaireConfig = {
       question:
         'After you wake up at night, do you struggle to fall back asleep?',
       choices: [
-        { choiceId: 'every-time', value: 'every-time', text: 'Every time' },
-        { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
-        { choiceId: 'never', value: 'never', text: 'Never' },
+        {
+          choiceId: 'every-time',
+          value: { stringValue: 'every-time' },
+          text: 'Every time',
+        },
+        {
+          choiceId: 'sometimes',
+          value: { stringValue: 'sometimes' },
+          text: 'Sometimes',
+        },
+        { choiceId: 'never', value: { stringValue: 'never' }, text: 'Never' },
       ],
       reference: 'PSQI',
     },
@@ -131,20 +161,24 @@ export const onboardingConfig: QuestionnaireConfig = {
       question: 'On an average night, how long are you awake in bed?',
       instruction: 'Include the time it takes you to fall asleep',
       choices: [
-        { choiceId: '20-min', value: '20-min', text: '20 minutes or less' },
+        {
+          choiceId: '20-min',
+          value: { stringValue: '20-min' },
+          text: '20 minutes or less',
+        },
         {
           choiceId: '30-45-min',
-          value: '30-45-min',
+          value: { stringValue: '30-45-min' },
           text: 'Between 30 - 45 mins',
         },
         {
           choiceId: '1-2-hours',
-          value: '1-2-hours',
+          value: { stringValue: '1-2-hours' },
           text: 'Between 1 - 2 hours',
         },
         {
           choiceId: 'over-2-hours',
-          value: 'over-2-hours',
+          value: { stringValue: 'over-2-hours' },
           text: 'Over 2 hours',
         },
       ],
@@ -165,12 +199,12 @@ export const onboardingConfig: QuestionnaireConfig = {
       question: 'How many hours of sleep do you typically get per night?',
       instruction: 'An estimate for the last week will do!',
       choices: [
-        { choiceId: '4', value: '4', text: '4 hours or less' },
-        { choiceId: '5', value: '5', text: '5 hours' },
-        { choiceId: '6', value: '6', text: '6 hours' },
-        { choiceId: '7', value: '7', text: '7 hours' },
-        { choiceId: '8', value: '8', text: '8 hours' },
-        { choiceId: '9', value: '9', text: '9 hours or more' },
+        { choiceId: '4', value: { stringValue: '4' }, text: '4 hours or less' },
+        { choiceId: '5', value: { stringValue: '5' }, text: '5 hours' },
+        { choiceId: '6', value: { stringValue: '6' }, text: '6 hours' },
+        { choiceId: '7', value: { stringValue: '7' }, text: '7 hours' },
+        { choiceId: '8', value: { stringValue: '8' }, text: '8 hours' },
+        { choiceId: '9', value: { stringValue: '9' }, text: '9 hours or more' },
       ],
       reference: 'PSQI',
     },
@@ -188,9 +222,13 @@ export const onboardingConfig: QuestionnaireConfig = {
       type: 'single-choice',
       question: 'Do racing thoughts keep you up at night?',
       choices: [
-        { choiceId: 'often', value: 'often', text: 'Often' },
-        { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
-        { choiceId: 'never', value: 'never', text: 'Never' },
+        { choiceId: 'often', value: { stringValue: 'often' }, text: 'Often' },
+        {
+          choiceId: 'sometimes',
+          value: { stringValue: 'sometimes' },
+          text: 'Sometimes',
+        },
+        { choiceId: 'never', value: { stringValue: 'never' }, text: 'Never' },
       ],
       reference: null,
     },
@@ -202,18 +240,22 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'less-than-year',
-          value: 'less-than-year',
+          value: { stringValue: 'less-than-year' },
           text: 'Less than a year',
         },
-        { choiceId: 'about-year', value: 'about-year', text: 'About a year' },
+        {
+          choiceId: 'about-year',
+          value: { stringValue: 'about-year' },
+          text: 'About a year',
+        },
         {
           choiceId: 'several-years',
-          value: 'several-years',
+          value: { stringValue: 'several-years' },
           text: 'Several years',
         },
         {
           choiceId: 'entire-life',
-          value: 'entire-life',
+          value: { stringValue: 'entire-life' },
           text: 'My entire life',
         },
       ],
@@ -227,22 +269,34 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'health',
-          value: 'health',
+          value: { stringValue: 'health' },
           text: "I'm worried about my health",
         },
         {
           choiceId: 'productivity',
-          value: 'productivity',
+          value: { stringValue: 'productivity' },
           text: 'I feel unproductive / ineffective',
         },
-        { choiceId: 'mood', value: 'mood', text: 'I feel irritable and moody' },
-        { choiceId: 'self', value: 'self', text: "I don't feel like myself" },
+        {
+          choiceId: 'mood',
+          value: { stringValue: 'mood' },
+          text: 'I feel irritable and moody',
+        },
+        {
+          choiceId: 'self',
+          value: { stringValue: 'self' },
+          text: "I don't feel like myself",
+        },
         {
           choiceId: 'nothing-worked',
-          value: 'nothing-worked',
+          value: { stringValue: 'nothing-worked' },
           text: 'Nothing else has worked for me',
         },
-        { choiceId: 'none', value: 'none', text: 'None of the above' },
+        {
+          choiceId: 'none',
+          value: { stringValue: 'none' },
+          text: 'None of the above',
+        },
       ],
       minSelections: 1,
     },
@@ -253,11 +307,19 @@ export const onboardingConfig: QuestionnaireConfig = {
       question:
         'Over the past two weeks, how would you rate the quality of your sleep?',
       choices: [
-        { choiceId: 'good', value: 'good', text: 'Good' },
-        { choiceId: 'okay', value: 'okay', text: 'Okay' },
-        { choiceId: 'poor', value: 'poor', text: 'Poor' },
-        { choiceId: 'very-poor', value: 'very-poor', text: 'Very Poor' },
-        { choiceId: 'unsure', value: 'unsure', text: 'Unsure' },
+        { choiceId: 'good', value: { stringValue: 'good' }, text: 'Good' },
+        { choiceId: 'okay', value: { stringValue: 'okay' }, text: 'Okay' },
+        { choiceId: 'poor', value: { stringValue: 'poor' }, text: 'Poor' },
+        {
+          choiceId: 'very-poor',
+          value: { stringValue: 'very-poor' },
+          text: 'Very Poor',
+        },
+        {
+          choiceId: 'unsure',
+          value: { stringValue: 'unsure' },
+          text: 'Unsure',
+        },
       ],
     },
     {
@@ -270,28 +332,32 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'stay-up-late',
-          value: 'stay-up-late',
+          value: { stringValue: 'stay-up-late' },
           text: 'I often stay up too late',
         },
-        { choiceId: 'work-stress', value: 'work-stress', text: 'Work stress' },
+        {
+          choiceId: 'work-stress',
+          value: { stringValue: 'work-stress' },
+          text: 'Work stress',
+        },
         {
           choiceId: 'health-issues',
-          value: 'health-issues',
+          value: { stringValue: 'health-issues' },
           text: 'Health issues, injury or disease',
         },
         {
           choiceId: 'hormonal-imbalance',
-          value: 'hormonal-imbalance',
+          value: { stringValue: 'hormonal-imbalance' },
           text: 'Hormonal imbalance',
         },
         {
           choiceId: 'family-stress',
-          value: 'family-stress',
+          value: { stringValue: 'family-stress' },
           text: 'Family stress',
         },
         {
           choiceId: 'move-relocation',
-          value: 'move-relocation',
+          value: { stringValue: 'move-relocation' },
           text: 'Move or relocation',
         },
       ],
@@ -312,11 +378,15 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'most-of-time',
-          value: 'most-of-time',
+          value: { stringValue: 'most-of-time' },
           text: 'Most of the time',
         },
-        { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
-        { choiceId: 'never', value: 'never', text: 'Never' },
+        {
+          choiceId: 'sometimes',
+          value: { stringValue: 'sometimes' },
+          text: 'Sometimes',
+        },
+        { choiceId: 'never', value: { stringValue: 'never' }, text: 'Never' },
       ],
     },
     {
@@ -326,8 +396,8 @@ export const onboardingConfig: QuestionnaireConfig = {
       question:
         "True or false? If you have trouble falling asleep, it's best to stay in bed and wait until you get sleepy.",
       choices: [
-        { choiceId: 'true', value: 'true', text: 'True' },
-        { choiceId: 'false', value: 'false', text: 'False' },
+        { choiceId: 'true', value: { stringValue: 'true' }, text: 'True' },
+        { choiceId: 'false', value: { stringValue: 'false' }, text: 'False' },
       ],
     },
     {
@@ -344,9 +414,17 @@ export const onboardingConfig: QuestionnaireConfig = {
       type: 'single-choice',
       question: 'Do you share your bed with a partner?',
       choices: [
-        { choiceId: 'always', value: 'always', text: 'Always' },
-        { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
-        { choiceId: 'never', value: 'never', text: 'Never' },
+        {
+          choiceId: 'always',
+          value: { stringValue: 'always' },
+          text: 'Always',
+        },
+        {
+          choiceId: 'sometimes',
+          value: { stringValue: 'sometimes' },
+          text: 'Sometimes',
+        },
+        { choiceId: 'never', value: { stringValue: 'never' }, text: 'Never' },
       ],
     },
     {
@@ -355,9 +433,17 @@ export const onboardingConfig: QuestionnaireConfig = {
       type: 'single-choice',
       question: 'Does noise, light, or temperature often disrupt your sleep?',
       choices: [
-        { choiceId: 'always', value: 'always', text: 'Always' },
-        { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
-        { choiceId: 'never', value: 'never', text: 'Never' },
+        {
+          choiceId: 'always',
+          value: { stringValue: 'always' },
+          text: 'Always',
+        },
+        {
+          choiceId: 'sometimes',
+          value: { stringValue: 'sometimes' },
+          text: 'Sometimes',
+        },
+        { choiceId: 'never', value: { stringValue: 'never' }, text: 'Never' },
       ],
     },
     {
@@ -366,8 +452,8 @@ export const onboardingConfig: QuestionnaireConfig = {
       type: 'single-choice',
       question: 'Do you wear a smartwatch or a sleep tracker?',
       choices: [
-        { choiceId: 'yes', value: 'yes', text: 'Yes' },
-        { choiceId: 'no', value: 'no', text: 'No' },
+        { choiceId: 'yes', value: { stringValue: 'yes' }, text: 'Yes' },
+        { choiceId: 'no', value: { stringValue: 'no' }, text: 'No' },
       ],
     },
     {
@@ -385,8 +471,8 @@ export const onboardingConfig: QuestionnaireConfig = {
       question:
         'Do you want to understand the root causes of your sleep issues?',
       choices: [
-        { choiceId: 'yes', value: 'yes', text: 'Yes' },
-        { choiceId: 'no', value: 'no', text: 'No' },
+        { choiceId: 'yes', value: { stringValue: 'yes' }, text: 'Yes' },
+        { choiceId: 'no', value: { stringValue: 'no' }, text: 'No' },
       ],
     },
     {
@@ -396,9 +482,13 @@ export const onboardingConfig: QuestionnaireConfig = {
       question:
         "Do you find it difficult to get through the day after a poor night's sleep?",
       choices: [
-        { choiceId: 'often', value: 'often', text: 'Often' },
-        { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
-        { choiceId: 'never', value: 'never', text: 'Never' },
+        { choiceId: 'often', value: { stringValue: 'often' }, text: 'Often' },
+        {
+          choiceId: 'sometimes',
+          value: { stringValue: 'sometimes' },
+          text: 'Sometimes',
+        },
+        { choiceId: 'never', value: { stringValue: 'never' }, text: 'Never' },
       ],
     },
     {
@@ -410,21 +500,25 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'relationships',
-          value: 'relationships',
+          value: { stringValue: 'relationships' },
           text: 'Relationships with family and friends',
         },
-        { choiceId: 'work', value: 'work', text: 'Work and career' },
+        {
+          choiceId: 'work',
+          value: { stringValue: 'work' },
+          text: 'Work and career',
+        },
         {
           choiceId: 'health',
-          value: 'health',
+          value: { stringValue: 'health' },
           text: 'Health, fitness and diet',
         },
         {
           choiceId: 'hobbies',
-          value: 'hobbies',
+          value: { stringValue: 'hobbies' },
           text: 'Hobbies and activities',
         },
-        { choiceId: 'other', value: 'other', text: 'Other' },
+        { choiceId: 'other', value: { stringValue: 'other' }, text: 'Other' },
       ],
       minSelections: 1,
     },
@@ -435,9 +529,13 @@ export const onboardingConfig: QuestionnaireConfig = {
       question:
         'Does poor sleep ever cause you to feel impatient, cranky, or unfriendly toward people you care about?',
       choices: [
-        { choiceId: 'often', value: 'often', text: 'Often' },
-        { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
-        { choiceId: 'never', value: 'never', text: 'Never' },
+        { choiceId: 'often', value: { stringValue: 'often' }, text: 'Often' },
+        {
+          choiceId: 'sometimes',
+          value: { stringValue: 'sometimes' },
+          text: 'Sometimes',
+        },
+        { choiceId: 'never', value: { stringValue: 'never' }, text: 'Never' },
       ],
     },
     {
@@ -456,9 +554,13 @@ export const onboardingConfig: QuestionnaireConfig = {
         "Is there a history of Alzheimer's or Parkinson's in your family?",
       instruction: 'Sleep issues can increase health risks.',
       choices: [
-        { choiceId: 'yes', value: 'yes', text: 'Yes' },
-        { choiceId: 'no', value: 'no', text: 'No' },
-        { choiceId: 'unsure', value: 'unsure', text: 'Unsure' },
+        { choiceId: 'yes', value: { stringValue: 'yes' }, text: 'Yes' },
+        { choiceId: 'no', value: { stringValue: 'no' }, text: 'No' },
+        {
+          choiceId: 'unsure',
+          value: { stringValue: 'unsure' },
+          text: 'Unsure',
+        },
       ],
     },
     {
@@ -468,9 +570,13 @@ export const onboardingConfig: QuestionnaireConfig = {
       question:
         'Have you been previously diagnosed with or treated for sleep apnea?',
       choices: [
-        { choiceId: 'yes', value: 'yes', text: 'Yes' },
-        { choiceId: 'no', value: 'no', text: 'No' },
-        { choiceId: 'unsure', value: 'unsure', text: 'Unsure' },
+        { choiceId: 'yes', value: { stringValue: 'yes' }, text: 'Yes' },
+        { choiceId: 'no', value: { stringValue: 'no' }, text: 'No' },
+        {
+          choiceId: 'unsure',
+          value: { stringValue: 'unsure' },
+          text: 'Unsure',
+        },
       ],
     },
     {
@@ -480,9 +586,13 @@ export const onboardingConfig: QuestionnaireConfig = {
       question: 'Do you ever feel stressed at the thought of going to bed?',
       instruction: 'Long-term sleep issues can lead to sleep anxiety.',
       choices: [
-        { choiceId: 'often', value: 'often', text: 'Often' },
-        { choiceId: 'sometimes', value: 'sometimes', text: 'Sometimes' },
-        { choiceId: 'never', value: 'never', text: 'Never' },
+        { choiceId: 'often', value: { stringValue: 'often' }, text: 'Often' },
+        {
+          choiceId: 'sometimes',
+          value: { stringValue: 'sometimes' },
+          text: 'Sometimes',
+        },
+        { choiceId: 'never', value: { stringValue: 'never' }, text: 'Never' },
       ],
     },
     {
@@ -493,8 +603,8 @@ export const onboardingConfig: QuestionnaireConfig = {
         '"I want to improve my sleep, but nothing I\'ve tried has worked in a lasting way."',
       instruction: 'Do you relate to the statement above?',
       choices: [
-        { choiceId: 'yes', value: 'yes', text: 'Yes' },
-        { choiceId: 'no', value: 'no', text: 'No' },
+        { choiceId: 'yes', value: { stringValue: 'yes' }, text: 'Yes' },
+        { choiceId: 'no', value: { stringValue: 'no' }, text: 'No' },
       ],
     },
     {
@@ -504,28 +614,32 @@ export const onboardingConfig: QuestionnaireConfig = {
       question: 'What have you tried to improve your sleep?',
       instruction: 'Select all that apply:',
       choices: [
-        { choiceId: 'caffeine', value: 'caffeine', text: 'Cutting caffeine' },
+        {
+          choiceId: 'caffeine',
+          value: { stringValue: 'caffeine' },
+          text: 'Cutting caffeine',
+        },
         {
           choiceId: 'meditation',
-          value: 'meditation',
+          value: { stringValue: 'meditation' },
           text: 'Meditation / Yoga',
         },
         {
           choiceId: 'screen-time',
-          value: 'screen-time',
+          value: { stringValue: 'screen-time' },
           text: 'Reducing screen time',
         },
         {
           choiceId: 'supplements',
-          value: 'supplements',
+          value: { stringValue: 'supplements' },
           text: 'Supplements (CBD, magnesium)',
         },
         {
           choiceId: 'diet',
-          value: 'diet',
+          value: { stringValue: 'diet' },
           text: 'Eating or drinking less at night',
         },
-        { choiceId: 'other', value: 'other', text: 'Other' },
+        { choiceId: 'other', value: { stringValue: 'other' }, text: 'Other' },
       ],
       minSelections: 1,
     },
@@ -547,17 +661,17 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'done-before',
-          value: 'done-before',
+          value: { stringValue: "I've done CBTI before" },
           text: "I've done CBTI before",
         },
         {
           choiceId: 'heard-of',
-          value: 'heard-of',
+          value: { stringValue: 'heard-of' },
           text: 'Heard of it but never tried it',
         },
         {
           choiceId: 'never-heard',
-          value: 'never-heard',
+          value: { stringValue: 'never-heard' },
           text: 'Never heard of it',
         },
       ],
@@ -571,20 +685,24 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'sleep-in',
-          value: 'sleep-in',
+          value: { stringValue: 'sleep-in' },
           text: 'Sleep in to make up for lost sleep',
         },
         {
           choiceId: 'earlier-bedtime',
-          value: 'earlier-bedtime',
+          value: { stringValue: 'earlier-bedtime' },
           text: 'Go to bed earlier the next night',
         },
         {
           choiceId: 'nap',
-          value: 'nap',
+          value: { stringValue: 'nap' },
           text: 'Take a nap to make up for lost sleep',
         },
-        { choiceId: 'none', value: 'none', text: 'None of the above' },
+        {
+          choiceId: 'none',
+          value: { stringValue: 'none' },
+          text: 'None of the above',
+        },
       ],
     },
     {
@@ -595,16 +713,24 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'longer-bed',
-          value: 'longer-bed',
+          value: { stringValue: 'longer-bed' },
           text: 'Stay in bed longer',
         },
-        { choiceId: 'melatonin', value: 'melatonin', text: 'Use melatonin' },
+        {
+          choiceId: 'melatonin',
+          value: { stringValue: 'melatonin' },
+          text: 'Use melatonin',
+        },
         {
           choiceId: 'adjust-schedule',
-          value: 'adjust-schedule',
+          value: { stringValue: 'adjust-schedule' },
           text: 'Adjust your sleep schedule',
         },
-        { choiceId: 'all', value: 'all', text: 'All of the above' },
+        {
+          choiceId: 'all',
+          value: { stringValue: 'all' },
+          text: 'All of the above',
+        },
       ],
     },
     {
@@ -617,35 +743,39 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'uncover-causes',
-          value: 'uncover-causes',
+          value: { stringValue: 'uncover-causes' },
           text: 'Uncover causes of my sleep issues',
         },
         {
           choiceId: 'learn-ways',
-          value: 'learn-ways',
+          value: { stringValue: 'learn-ways' },
           text: 'Learn proven ways to improve sleep',
         },
         {
           choiceId: 'break-habits',
-          value: 'break-habits',
+          value: { stringValue: 'break-habits' },
           text: 'Break habits that hurt sleep quality',
         },
         {
           choiceId: 'build-habits',
-          value: 'build-habits',
+          value: { stringValue: 'build-habits' },
           text: 'Build positive sleep habits',
         },
         {
           choiceId: 'track-patterns',
-          value: 'track-patterns',
+          value: { stringValue: 'track-patterns' },
           text: 'Track my sleep patterns',
         },
         {
           choiceId: 'use-tools',
-          value: 'use-tools',
+          value: { stringValue: 'use-tools' },
           text: 'Use proven tools to reset my sleep',
         },
-        { choiceId: 'none', value: 'none', text: 'None of the above' },
+        {
+          choiceId: 'none',
+          value: { stringValue: 'none' },
+          text: 'None of the above',
+        },
       ],
       minSelections: 1,
     },
@@ -655,10 +785,26 @@ export const onboardingConfig: QuestionnaireConfig = {
       type: 'single-choice',
       question: 'How ready do you feel to start improving your sleep?',
       choices: [
-        { choiceId: 'ready', value: 'ready', text: "I'm ready" },
-        { choiceId: 'somewhat', value: 'somewhat', text: 'Somewhat ready' },
-        { choiceId: 'not-ready', value: 'not-ready', text: 'Not ready at all' },
-        { choiceId: 'unsure', value: 'unsure', text: 'Unsure' },
+        {
+          choiceId: 'ready',
+          value: { stringValue: 'ready' },
+          text: "I'm ready",
+        },
+        {
+          choiceId: 'somewhat',
+          value: { stringValue: 'somewhat' },
+          text: 'Somewhat ready',
+        },
+        {
+          choiceId: 'not-ready',
+          value: { stringValue: 'not-ready' },
+          text: 'Not ready at all',
+        },
+        {
+          choiceId: 'unsure',
+          value: { stringValue: 'unsure' },
+          text: 'Unsure',
+        },
       ],
     },
     {
@@ -669,24 +815,40 @@ export const onboardingConfig: QuestionnaireConfig = {
       choices: [
         {
           choiceId: 'healthcare',
-          value: 'healthcare',
+          value: { stringValue: 'healthcare' },
           text: 'Healthcare professional',
         },
-        { choiceId: 'news', value: 'news', text: 'News, blog or article' },
-        { choiceId: 'google', value: 'google', text: 'Google' },
+        {
+          choiceId: 'news',
+          value: { stringValue: 'news' },
+          text: 'News, blog or article',
+        },
+        {
+          choiceId: 'google',
+          value: { stringValue: 'google' },
+          text: 'Google',
+        },
         {
           choiceId: 'social-media',
-          value: 'social-media',
+          value: { stringValue: 'social-media' },
           text: 'Social media',
         },
-        { choiceId: 'podcast', value: 'podcast', text: 'Podcast' },
+        {
+          choiceId: 'podcast',
+          value: { stringValue: 'podcast' },
+          text: 'Podcast',
+        },
         {
           choiceId: 'friend-family',
-          value: 'friend-family',
+          value: { stringValue: 'friend-family' },
           text: 'Friend or family member',
         },
-        { choiceId: 'app-store', value: 'app-store', text: 'App Store' },
-        { choiceId: 'other', value: 'other', text: 'Other' },
+        {
+          choiceId: 'app-store',
+          value: { stringValue: 'app-store' },
+          text: 'App Store',
+        },
+        { choiceId: 'other', value: { stringValue: 'other' }, text: 'Other' },
       ],
     },
     {
@@ -695,9 +857,13 @@ export const onboardingConfig: QuestionnaireConfig = {
       type: 'single-choice',
       question: 'Have you ever been diagnosed or treated for insomnia?',
       choices: [
-        { choiceId: 'yes', value: 'yes', text: 'Yes' },
-        { choiceId: 'no', value: 'no', text: 'No' },
-        { choiceId: 'not-sure', value: 'not-sure', text: 'Not Sure' },
+        { choiceId: 'yes', value: { stringValue: 'yes' }, text: 'Yes' },
+        { choiceId: 'no', value: { stringValue: 'no' }, text: 'No' },
+        {
+          choiceId: 'not-sure',
+          value: { stringValue: 'not-sure' },
+          text: 'Not Sure',
+        },
       ],
     },
     {
@@ -706,9 +872,13 @@ export const onboardingConfig: QuestionnaireConfig = {
       type: 'single-choice',
       question: 'Do you have a nightly routine to wind down in the evenings?',
       choices: [
-        { choiceId: 'yes', value: 'yes', text: 'Yes' },
-        { choiceId: 'no', value: 'no', text: 'No' },
-        { choiceId: 'unsure', value: 'unsure', text: 'Unsure' },
+        { choiceId: 'yes', value: { stringValue: 'yes' }, text: 'Yes' },
+        { choiceId: 'no', value: { stringValue: 'no' }, text: 'No' },
+        {
+          choiceId: 'unsure',
+          value: { stringValue: 'unsure' },
+          text: 'Unsure',
+        },
       ],
     },
     {

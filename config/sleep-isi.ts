@@ -5,6 +5,10 @@ export const sleepIsiConfig: QuestionnaireConfig = {
   title: 'Sleep Disruption',
   version: '1.1',
   shouldShowProgress: true,
+  answers: [],
+  status: 'not_started',
+  formulaString:
+    'fall-asleep + stay-asleep + waking-too-early + sleep-satisfaction + daily-functioning + noticeable-to-others + sleep-worry',
   resultsSteps: [
     {
       formulaString:
@@ -124,31 +128,46 @@ export const sleepIsiConfig: QuestionnaireConfig = {
         {
           choiceId: 'not-at-all',
           text: 'Not at all difficult',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-at-all',
+          },
           iconName: 'blank',
         },
         {
           choiceId: 'mildly-difficult',
           text: 'Mildly difficult',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'mildly-difficult',
+          },
           iconName: 'signalZero',
         },
         {
           choiceId: 'moderately-difficult',
           text: 'Moderately difficult',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'moderately-difficult',
+          },
           iconName: 'signalLow',
         },
         {
           choiceId: 'very-difficult',
           text: 'Very difficult',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'very-difficult',
+          },
           iconName: 'signalMedium',
         },
         {
           choiceId: 'extremely-difficult',
           text: 'Extremely difficult',
-          value: 4,
+          value: {
+            numericValue: 4,
+            stringValue: 'extremely-difficult',
+          },
           iconName: 'signalHigh',
         },
       ],
@@ -164,31 +183,46 @@ export const sleepIsiConfig: QuestionnaireConfig = {
         {
           choiceId: 'not-at-all',
           text: 'Not at all difficult',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-at-all',
+          },
           iconName: 'blank',
         },
         {
           choiceId: 'mildly-difficult',
           text: 'Mildly difficult',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'mildly-difficult',
+          },
           iconName: 'signalZero',
         },
         {
           choiceId: 'moderately-difficult',
           text: 'Moderately difficult',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'moderately-difficult',
+          },
           iconName: 'signalLow',
         },
         {
           choiceId: 'very-difficult',
           text: 'Very difficult',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'very-difficult',
+          },
           iconName: 'signalMedium',
         },
         {
           choiceId: 'extremely-difficult',
           text: 'Extremely difficult',
-          value: 4,
+          value: {
+            numericValue: 4,
+            stringValue: 'extremely-difficult',
+          },
           iconName: 'signalHigh',
         },
       ],
@@ -201,24 +235,49 @@ export const sleepIsiConfig: QuestionnaireConfig = {
       question: 'How severe are problems *waking too early*?',
       instruction: 'In the past 2 weeks',
       choices: [
-        { choiceId: 'none', text: 'None', value: 0, iconName: 'blank' },
-        { choiceId: 'mild', text: 'Mild', value: 1, iconName: 'signalZero' },
+        {
+          choiceId: 'none',
+          text: 'None',
+          value: {
+            numericValue: 0,
+            stringValue: 'none',
+          },
+          iconName: 'blank',
+        },
+        {
+          choiceId: 'mild',
+          text: 'Mild',
+          value: {
+            numericValue: 1,
+            stringValue: 'mild',
+          },
+          iconName: 'signalZero',
+        },
         {
           choiceId: 'moderate',
           text: 'Moderate',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'moderate',
+          },
           iconName: 'signalLow',
         },
         {
           choiceId: 'severe',
           text: 'Severe',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'severe',
+          },
           iconName: 'signalMedium',
         },
         {
           choiceId: 'very-severe',
           text: 'Very Severe',
-          value: 4,
+          value: {
+            numericValue: 4,
+            stringValue: 'very-severe',
+          },
           iconName: 'signalHigh',
         },
       ],
@@ -236,26 +295,46 @@ export const sleepIsiConfig: QuestionnaireConfig = {
         {
           choiceId: 'satisfied',
           text: 'Satisfied',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'satisfied',
+          },
           iconName: 'laugh',
         },
         {
           choiceId: 'moderately-satisfied',
           text: 'Moderately satisfied',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'moderately-satisfied',
+          },
           iconName: 'smile',
         },
-        { choiceId: 'neutral', text: 'Neutral', value: 2, iconName: 'meh' },
+        {
+          choiceId: 'neutral',
+          text: 'Neutral',
+          value: {
+            numericValue: 2,
+            stringValue: 'neutral',
+          },
+          iconName: 'meh',
+        },
         {
           choiceId: 'dissatisfied',
           text: 'Dissatisfied',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'dissatisfied',
+          },
           iconName: 'frown',
         },
         {
           choiceId: 'very-dissatisfied',
           text: 'Very Dissatisfied',
-          value: 4,
+          value: {
+            numericValue: 4,
+            stringValue: 'very-dissatisfied',
+          },
           iconName: 'angry',
         },
       ],
@@ -273,31 +352,46 @@ export const sleepIsiConfig: QuestionnaireConfig = {
         {
           choiceId: 'not-at-all',
           text: 'Not at all interfering',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-at-all',
+          },
           iconName: 'blank',
         },
         {
           choiceId: 'a-little',
           text: 'A little interfering',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'a-little',
+          },
           iconName: 'signalZero',
         },
         {
           choiceId: 'somewhat',
           text: 'Somewhat interfering',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'somewhat',
+          },
           iconName: 'signalLow',
         },
         {
           choiceId: 'much',
           text: 'Much interfering',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'much',
+          },
           iconName: 'signalMedium',
         },
         {
           choiceId: 'very-much',
           text: 'Very much interfering',
-          value: 4,
+          value: {
+            numericValue: 4,
+            stringValue: 'very-much',
+          },
           iconName: 'signalHigh',
         },
       ],
@@ -313,26 +407,46 @@ export const sleepIsiConfig: QuestionnaireConfig = {
         {
           choiceId: 'not-at-all',
           text: 'Not at all noticeable at all',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-at-all',
+          },
           iconName: 'blank',
         },
         {
           choiceId: 'barely',
           text: 'Barely',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'barely',
+          },
           iconName: 'signalZero',
         },
         {
           choiceId: 'somewhat',
           text: 'Somewhat',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'somewhat',
+          },
           iconName: 'signalLow',
         },
-        { choiceId: 'much', text: 'Much', value: 3, iconName: 'signalMedium' },
+        {
+          choiceId: 'much',
+          text: 'Much',
+          value: {
+            numericValue: 3,
+            stringValue: 'much',
+          },
+          iconName: 'signalMedium',
+        },
         {
           choiceId: 'very-much',
           text: 'Very Much Noticeable',
-          value: 4,
+          value: {
+            numericValue: 4,
+            stringValue: 'very-much',
+          },
           iconName: 'signalHigh',
         },
       ],
@@ -347,21 +461,46 @@ export const sleepIsiConfig: QuestionnaireConfig = {
         {
           choiceId: 'not-at-all',
           text: 'Not at all Worried',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-at-all',
+          },
           iconName: 'smile',
         },
-        { choiceId: 'a-little', text: 'A Little', value: 1, iconName: 'meh' },
+        {
+          choiceId: 'a-little',
+          text: 'A Little',
+          value: {
+            numericValue: 1,
+            stringValue: 'a-little',
+          },
+          iconName: 'meh',
+        },
         {
           choiceId: 'somewhat',
           text: 'Somewhat',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'somewhat',
+          },
           iconName: 'annoyed',
         },
-        { choiceId: 'much', text: 'Much', value: 3, iconName: 'frown' },
+        {
+          choiceId: 'much',
+          text: 'Much',
+          value: {
+            numericValue: 3,
+            stringValue: 'much',
+          },
+          iconName: 'frown',
+        },
         {
           choiceId: 'very-much',
           text: 'Very Much Worried',
-          value: 4,
+          value: {
+            numericValue: 4,
+            stringValue: 'very-much',
+          },
           iconName: 'angry',
         },
       ],

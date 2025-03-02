@@ -1,13 +1,14 @@
 import type React from 'react';
 
 import { Heading, BodyText } from '@/components/common/Typography';
-import { Answer, ResultsStep } from '@/types/questionnaire';
-import { getScoreFromAnswersWithFormula } from '../helpers/getScoreFromAnswersWithFormula';
+import { ResultsStep } from '@/types/questionnaire';
+import { Answer } from '@/types/shared/dialogue';
 import Column from '@/components/structure/Column';
 import WeatherHeatmap from '@/components/common/WeatherHeatmap';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { parseBoldText } from '@/utils/text';
+import { getScoreFromAnswersWithFormula } from '../helpers/getScoreFromAnswersWithFormula';
 
 interface Props {
   answers: Answer[];
