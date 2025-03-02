@@ -3,8 +3,6 @@
  * If you modify this type, ensure the corresponding backend type is updated as well.
  */
 
-import { ChoiceIconName } from '@/components/common/Choice';
-
 export interface BaseStep {
   stepId: string;
   type: string;
@@ -38,9 +36,10 @@ export type Answer = {
 
 export type Dialogue = {
   dialogueId: string;
-  answers: Answer[];
   title: string;
   version: string;
   status: 'not_started' | 'in_progress' | 'complete' | 'submitted';
   submittedAt?: string; // ISO timestamp
+  answers: Answer[];
+  score?: number;
 };

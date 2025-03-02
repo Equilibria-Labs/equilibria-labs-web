@@ -1,7 +1,5 @@
 // Export all types from questionnaire.ts
 export type {
-  BaseStep,
-  Choice,
   MultipleChoiceStep,
   SingleChoiceStep,
   EducationalStep,
@@ -9,13 +7,17 @@ export type {
   ResultsIssue,
   ResultsStep,
   WeatherHeatmapResults,
-  QuestionStep,
   Step,
   QuestionnaireConfig,
-  ChoiceValue,
-  Answer,
 } from './questionnaire';
 
 export type { OnboardingConfig } from './onboarding';
 export type { User } from './user';
-export type { Dialogue } from './shared/dialogue';
+export type {
+  Dialogue,
+  QuestionStep,
+  ChoiceValue,
+  Answer,
+  BaseStep,
+  Choice,
+} from './shared/dialogue';

@@ -26,6 +26,9 @@ export default function SleepSummary({ dialogues }: SleepSummaryProps) {
                   Submitted: {format(new Date(dialogue.submittedAt), 'PPp')}
                 </div>
               )}
+              {dialogue.score !== undefined && (
+                <div>Score: {dialogue.score}</div>
+              )}
             </div>
           </CardHeader>
           <CardContent>
@@ -42,23 +45,16 @@ export default function SleepSummary({ dialogues }: SleepSummaryProps) {
                         {answer.step.question}
                       </div>
                       <div className='text-muted-foreground'>
-                        {Array.isArray(answer.value)
-                          ? answer.value
-                              .map((choiceValue: ChoiceValue) => {
-                                const selectedChoice = answer.step.choices.find(
-                                  (choice: Choice) =>
-                                    choice.value === choiceValue
-                                );
-                                return selectedChoice
-                                  ? `${selectedChoice.text} (${choiceValue.numericValue})`
-                                  : choiceValue.stringValue;
-                              })
-                              .join(', ')
-                          : typeof answer.value === 'number'
-                            ? `${answer.step.choices.find((choice: Choice) => choice.value === answer.value)?.text} (${answer.value})`
-                            : answer.value.numericValue
-                              ? `${answer.step.choices.find((choice: Choice) => choice.value === answer.value)?.text} (${answer.value.numericValue})`
-                              : answer.value.stringValue}
+                        {answer.value
+                          .map((choiceValue: ChoiceValue) => {
+                            const selectedChoice = answer.step.choices.find(
+                              (choice: Choice) => choice.value === choiceValue
+                            );
+                            return selectedChoice
+                              ? `${selectedChoice.text} (${choiceValue.numericValue})`
+                              : choiceValue.stringValue;
+                          })
+                          .join(', ')}
                       </div>
                     </li>
                   ))}

@@ -52,11 +52,11 @@ export interface BaseResultsStep extends BaseStep {
 export interface WeatherHeatmapResults extends BaseResultsStep {
   arrowLabel?: string;
   arrowSubLabel?: string;
+  formulaString: string;
   score: number;
   maxScore: number;
   issues: ResultsIssue[];
   resultsBands: ResultsBand[];
-  formulaString: string;
   heading?: string;
   text?: string;
   buttonText?: string;
@@ -74,6 +74,7 @@ export type Step =
 
 export type QuestionnaireConfig = Dialogue & {
   shouldShowProgress: boolean;
+  formulaString?: string;
   steps: Step[];
   resultsSteps: ResultsStep[];
 };

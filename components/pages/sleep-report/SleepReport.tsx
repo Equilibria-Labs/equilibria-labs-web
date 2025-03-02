@@ -38,7 +38,11 @@ export default function SleepReport() {
     section => section.sectionId === currentSection
   );
 
-  const handleSectionComplete = (dialogueId: string, answers: Answer[]) => {
+  const handleSectionComplete = (
+    dialogueId: string,
+    answers: Answer[],
+    score?: number
+  ) => {
     const dialogue: Dialogue = {
       dialogueId,
       answers,
@@ -46,6 +50,7 @@ export default function SleepReport() {
       version: '1.0', // You can manage versions as needed
       status: 'complete',
       submittedAt: new Date().toISOString(),
+      score,
     };
 
     setStoredDialogues(prev => ({
@@ -65,14 +70,16 @@ export default function SleepReport() {
       case 'isi':
         return (
           <SleepISI
-            onCompleteAction={answers => handleSectionComplete('isi', answers)}
+            onCompleteAction={(answers: Answer[], score?: number) =>
+              handleSectionComplete('isi', answers, score)
+            }
           />
         );
       case 'psqi':
         return (
           <SleepPsqi
-            onCompleteAction={
-              answers => handleSectionComplete('psqi', answers) // Fixed dialogueId from 'onboarding' to 'psqi'
+            onCompleteAction={(answers: Answer[], score?: number) =>
+              handleSectionComplete('psqi', answers, score)
             }
           />
         );

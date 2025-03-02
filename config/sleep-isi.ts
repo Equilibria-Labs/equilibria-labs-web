@@ -7,6 +7,8 @@ export const sleepIsiConfig: QuestionnaireConfig = {
   shouldShowProgress: true,
   answers: [],
   status: 'not_started',
+  formulaString:
+    'fall-asleep + stay-asleep + waking-too-early + sleep-satisfaction + daily-functioning + noticeable-to-others + sleep-worry',
   resultsSteps: [
     {
       formulaString:

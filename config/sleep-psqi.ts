@@ -7,6 +7,8 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
   shouldShowProgress: true,
   answers: [],
   status: 'not_started',
+  formulaString:
+    'subjective-sleep-quality + min(sleep-latency-time + sleep-latency-frequency, 3) + sleep-efficiency + min(bathroom + breathing + cough-snore + too-cold + too-hot + bad-dreams + pain + other-reasons, 3) + sleep-medications + min(avg(wake-middle-night + bathroom + breathing + cough-snore + too-cold + too-hot + bad-dreams + pain + other-reasons), 3) + min(daytime-alertness + daytime-function, 3)',
   resultsSteps: [
     {
       formulaString:
