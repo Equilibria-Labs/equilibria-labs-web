@@ -44,14 +44,21 @@ export default function SleepSummary({ dialogues }: SleepSummaryProps) {
                       <div className='text-muted-foreground'>
                         {Array.isArray(answer.value)
                           ? answer.value
-                              .map((v: ChoiceValue) => {
-                                const choice = answer.step.choices.find(
-                                  (c: Choice) => c.value === v
+                              .map((choiceValue: ChoiceValue) => {
+                                const selectedChoice = answer.step.choices.find(
+                                  (choice: Choice) =>
+                                    choice.value === choiceValue
                                 );
-                                return choice ? choice.text : v;
+                                return selectedChoice
+                                  ? `${selectedChoice.text} (${choiceValue.numericValue})`
+                                  : choiceValue.stringValue;
                               })
                               .join(', ')
-                          : answer.value}
+                          : typeof answer.value === 'number'
+                            ? `${answer.step.choices.find((choice: Choice) => choice.value === answer.value)?.text} (${answer.value})`
+                            : answer.value.numericValue
+                              ? `${answer.step.choices.find((choice: Choice) => choice.value === answer.value)?.text} (${answer.value.numericValue})`
+                              : answer.value.stringValue}
                       </div>
                     </li>
                   ))}
