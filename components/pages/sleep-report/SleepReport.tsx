@@ -49,7 +49,7 @@ export default function SleepReport() {
       title: dialogueId.toUpperCase(), // You can customize the title as needed
       version: '1.0', // You can manage versions as needed
       status: 'complete',
-      submittedAt: new Date().toISOString(),
+      submitted_at: new Date().toISOString(),
       score,
     };
 

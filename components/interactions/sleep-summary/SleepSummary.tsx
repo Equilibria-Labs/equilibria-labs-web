@@ -21,9 +21,9 @@ export default function SleepSummary({ dialogues }: SleepSummaryProps) {
             <div className='text-sm text-muted-foreground space-y-1'>
               <div>Version: {dialogue.version}</div>
               <div>Status: {formatStatus(dialogue.status)}</div>
-              {dialogue.submittedAt && (
+              {dialogue.submitted_at && (
                 <div>
-                  Submitted: {format(new Date(dialogue.submittedAt), 'PPp')}
+                  Submitted: {format(new Date(dialogue.submitted_at), 'PPp')}
                 </div>
               )}
               {dialogue.score !== undefined && (

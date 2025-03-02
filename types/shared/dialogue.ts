@@ -39,7 +39,9 @@ export type Dialogue = {
   title: string;
   version: string;
   status: 'not_started' | 'in_progress' | 'complete' | 'submitted';
-  submittedAt?: string; // ISO timestamp
+  submitted_at?: string; // ISO timestamp
+  created_at?: string; // ISO timestamp
+  updated_at?: string; // ISO timestamp
   answers: Answer[];
   score?: number;
 };
