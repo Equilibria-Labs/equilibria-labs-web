@@ -3,7 +3,38 @@
  * If you modify this type, ensure the corresponding backend type is updated as well.
  */
 
-import { Answer } from '../questionnaire';
+import { ChoiceIconName } from '@/components/common/Choice';
+
+export interface BaseStep {
+  stepId: string;
+  type: string;
+  title?: string;
+  question?: string;
+  instruction?: string;
+  description?: string;
+  reference?: string | null;
+}
+
+export type ChoiceValue = {
+  stringValue?: string;
+  numericValue?: number;
+};
+
+export interface Choice {
+  choiceId: string;
+  text: string;
+  value: ChoiceValue;
+}
+
+export interface QuestionStep extends BaseStep {
+  questionId: string;
+  choices: Choice[];
+}
+
+export type Answer = {
+  step: QuestionStep;
+  value: ChoiceValue[];
+};
 
 export type Dialogue = {
   dialogueId: string;

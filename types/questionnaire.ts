@@ -1,40 +1,20 @@
+import { Dialogue, BaseStep, QuestionStep, Choice } from './shared/dialogue';
 import { ChoiceIconName } from '@/components/common/Choice';
-import { Dialogue } from './shared/dialogue';
-export interface BaseStep {
-  stepId: string;
-  type: string;
-  title?: string;
-  question?: string;
-  instruction?: string;
-  description?: string;
-  reference?: string | null;
-}
 
-export type ChoiceValue = {
-  stringValue?: string;
-  numericValue?: number;
-};
-
-export interface Choice {
-  choiceId: string;
-  text: string;
-  value: ChoiceValue;
+export interface UIChoice extends Choice {
   iconName?: ChoiceIconName;
 }
 
-export interface QuestionStep extends BaseStep {
-  questionId: string;
-  choices: Choice[];
-}
-
-export interface MultipleChoiceStep extends QuestionStep {
+export interface MultipleChoiceStep extends Omit<QuestionStep, 'choices'> {
   type: 'multiple-choice-required' | 'multiple-choice-optional';
   minSelections?: number;
   maxSelections?: number;
+  choices: UIChoice[];
 }
 
-export interface SingleChoiceStep extends QuestionStep {
+export interface SingleChoiceStep extends Omit<QuestionStep, 'choices'> {
   type: 'single-choice';
+  choices: UIChoice[];
 }
 
 export interface EducationalStep extends BaseStep {
@@ -91,11 +71,6 @@ export type Step =
   | EducationalStep
   | MessageStep
   | ResultsStep;
-
-export type Answer = {
-  step: QuestionStep;
-  value: ChoiceValue[];
-};
 
 export type QuestionnaireConfig = Dialogue & {
   shouldShowProgress: boolean;
