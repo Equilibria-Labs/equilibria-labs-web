@@ -17,10 +17,10 @@ import { ProgressBar } from '@/components/common/ProgressBar';
 import { BodyText } from '@/components/common/Typography';
 import Column from '@/components/structure/Column';
 import Box from '@/components/structure/Box';
-
+import { getScoreFromAnswersWithFormula } from './helpers/getScoreFromAnswersWithFormula';
 interface QuestionnaireProps {
   config: QuestionnaireConfig;
-  onCompleteAction: (answers: Answer[]) => void;
+  onCompleteAction: (answers: Answer[], score?: number) => void;
 }
 
 export function Questionnaire({
@@ -46,7 +46,10 @@ export function Questionnaire({
     }
 
     // Call onCompleteAction when we've completed all steps including results
-    onCompleteAction(answers);
+    const score = config.formulaString
+      ? getScoreFromAnswersWithFormula(answers, config.formulaString)
+      : undefined;
+    onCompleteAction(answers, score);
   };
 
   const handleAnswer = (step: QuestionStep, answer: ChoiceValue[]) => {

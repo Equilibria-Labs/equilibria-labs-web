@@ -12,9 +12,33 @@ describe('getScoreFromAnswersWithFormula', () => {
   // Test basic arithmetic with question IDs
   test('correctly calculates basic arithmetic with question IDs', () => {
     const answers: Answer[] = [
-      { questionId: 'sleep-worry', value: [2] },
-      { questionId: 'anxiety-level', value: [3] },
-      { questionId: 'depression-score', value: [4] },
+      {
+        step: {
+          questionId: 'sleep-worry',
+          choices: [],
+          stepId: 'sleep-worry',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 2 }],
+      },
+      {
+        step: {
+          questionId: 'anxiety-level',
+          choices: [],
+          stepId: 'anxiety-level',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 3 }],
+      },
+      {
+        step: {
+          questionId: 'depression-score',
+          choices: [],
+          stepId: 'depression-score',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 4 }],
+      },
     ];
     expect(
       getScoreFromAnswersWithFormula(
@@ -36,8 +60,24 @@ describe('getScoreFromAnswersWithFormula', () => {
   // Test mixing numeric literals with question IDs
   test('correctly handles mix of numeric literals and question IDs', () => {
     const answers: Answer[] = [
-      { questionId: 'mood-score', value: [5] },
-      { questionId: 'stress-level', value: [2] },
+      {
+        step: {
+          questionId: 'mood-score',
+          choices: [],
+          stepId: 'mood-score',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 5 }],
+      },
+      {
+        step: {
+          questionId: 'stress-level',
+          choices: [],
+          stepId: 'stress-level',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 2 }],
+      },
     ];
     expect(getScoreFromAnswersWithFormula(answers, 'mood-score + 3')).toBe(8);
     expect(getScoreFromAnswersWithFormula(answers, '10 - stress-level')).toBe(
@@ -53,7 +93,17 @@ describe('getScoreFromAnswersWithFormula', () => {
 
   // Test handling of missing answers
   test('handles missing answers by using 0', () => {
-    const answers: Answer[] = [{ questionId: 'sleep-quality', value: [1] }];
+    const answers: Answer[] = [
+      {
+        step: {
+          questionId: 'sleep-quality',
+          choices: [],
+          stepId: 'sleep-quality',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 1 }],
+      },
+    ];
     expect(
       getScoreFromAnswersWithFormula(answers, 'sleep-quality + energy-level')
     ).toBe(1); // energy-level is missing
@@ -65,8 +115,24 @@ describe('getScoreFromAnswersWithFormula', () => {
   // Test decimal numbers
   test('correctly handles decimal numbers', () => {
     const answers: Answer[] = [
-      { questionId: 'focus-level', value: [1.5] },
-      { questionId: 'energy-score', value: [2.5] },
+      {
+        step: {
+          questionId: 'focus-level',
+          choices: [],
+          stepId: 'focus-level',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 1.5 }],
+      },
+      {
+        step: {
+          questionId: 'energy-score',
+          choices: [],
+          stepId: 'energy-score',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 2.5 }],
+      },
     ];
     expect(getScoreFromAnswersWithFormula(answers, 'focus-level + 2.5')).toBe(
       4
@@ -79,7 +145,17 @@ describe('getScoreFromAnswersWithFormula', () => {
   // Test error cases
   describe('error handling', () => {
     test('throws error for invalid tokens', () => {
-      const answers: Answer[] = [{ questionId: 'sleep-score', value: [1] }];
+      const answers: Answer[] = [
+        {
+          step: {
+            questionId: 'sleep-score',
+            choices: [],
+            stepId: 'sleep-score',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 1 }],
+        },
+      ];
       expect(() =>
         getScoreFromAnswersWithFormula(answers, 'sleep-score + @')
       ).toThrow(FormulaError);
@@ -93,8 +169,24 @@ describe('getScoreFromAnswersWithFormula', () => {
 
     test('throws error for division by zero', () => {
       const answers: Answer[] = [
-        { questionId: 'numerator', value: [1] },
-        { questionId: 'denominator', value: [0] },
+        {
+          step: {
+            questionId: 'numerator',
+            choices: [],
+            stepId: 'numerator',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 1 }],
+        },
+        {
+          step: {
+            questionId: 'denominator',
+            choices: [],
+            stepId: 'denominator',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 0 }],
+        },
       ];
       expect(() =>
         getScoreFromAnswersWithFormula(answers, 'numerator / 0')
@@ -106,7 +198,15 @@ describe('getScoreFromAnswersWithFormula', () => {
 
     test('throws error for non-numeric answer values', () => {
       const answers: Answer[] = [
-        { questionId: 'text-input', value: ['not a number'] },
+        {
+          step: {
+            questionId: 'text-input',
+            choices: [],
+            stepId: 'text-input',
+            type: 'single-choice',
+          },
+          value: [{ stringValue: 'not a number' }],
+        },
       ];
       expect(() =>
         getScoreFromAnswersWithFormula(answers, 'text-input + 1')
@@ -117,10 +217,42 @@ describe('getScoreFromAnswersWithFormula', () => {
   // Test complex formulas
   test('correctly calculates complex formulas', () => {
     const answers: Answer[] = [
-      { questionId: 'sleep-duration', value: [2] },
-      { questionId: 'sleep-quality', value: [3] },
-      { questionId: 'anxiety-level', value: [4] },
-      { questionId: 'stress-score', value: [5] },
+      {
+        step: {
+          questionId: 'sleep-duration',
+          choices: [],
+          stepId: 'sleep-duration',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 2 }],
+      },
+      {
+        step: {
+          questionId: 'sleep-quality',
+          choices: [],
+          stepId: 'sleep-quality',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 3 }],
+      },
+      {
+        step: {
+          questionId: 'anxiety-level',
+          choices: [],
+          stepId: 'anxiety-level',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 4 }],
+      },
+      {
+        step: {
+          questionId: 'stress-score',
+          choices: [],
+          stepId: 'stress-score',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 5 }],
+      },
     ];
     expect(
       getScoreFromAnswersWithFormula(
@@ -139,8 +271,24 @@ describe('getScoreFromAnswersWithFormula', () => {
   // Test whitespace handling
   test('handles various whitespace patterns', () => {
     const answers: Answer[] = [
-      { questionId: 'mood-level', value: [2] },
-      { questionId: 'energy-level', value: [3] },
+      {
+        step: {
+          questionId: 'mood-level',
+          choices: [],
+          stepId: 'mood-level',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 2 }],
+      },
+      {
+        step: {
+          questionId: 'energy-level',
+          choices: [],
+          stepId: 'energy-level',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 3 }],
+      },
     ];
     expect(
       getScoreFromAnswersWithFormula(answers, 'mood-level+energy-level')
@@ -162,8 +310,24 @@ describe('getScoreFromAnswersWithFormula', () => {
   // Test multiple answer sets
   test('correctly sums scores across multiple answer sets', () => {
     const answers: Answer[] = [
-      { questionId: 'physical-score', value: [2] },
-      { questionId: 'mental-score', value: [3] },
+      {
+        step: {
+          questionId: 'physical-score',
+          choices: [],
+          stepId: 'physical-score',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 2 }],
+      },
+      {
+        step: {
+          questionId: 'mental-score',
+          choices: [],
+          stepId: 'mental-score',
+          type: 'single-choice',
+        },
+        value: [{ numericValue: 3 }],
+      },
     ];
     expect(
       getScoreFromAnswersWithFormula(answers, 'physical-score + mental-score')
@@ -180,9 +344,33 @@ describe('getScoreFromAnswersWithFormula', () => {
   describe('parentheses handling', () => {
     it('should correctly evaluate formulas with parentheses', () => {
       const answers: Answer[] = [
-        { questionId: 'physical-health', value: [1] },
-        { questionId: 'mental-health', value: [2] },
-        { questionId: 'social-health', value: [3] },
+        {
+          step: {
+            questionId: 'physical-health',
+            choices: [],
+            stepId: 'physical-health',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 1 }],
+        },
+        {
+          step: {
+            questionId: 'mental-health',
+            choices: [],
+            stepId: 'mental-health',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 2 }],
+        },
+        {
+          step: {
+            questionId: 'social-health',
+            choices: [],
+            stepId: 'social-health',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 3 }],
+        },
       ];
 
       // Test basic parentheses
@@ -211,7 +399,17 @@ describe('getScoreFromAnswersWithFormula', () => {
     });
 
     it('should handle decimal multipliers correctly', () => {
-      const answers: Answer[] = [{ questionId: 'total-score', value: [10] }];
+      const answers: Answer[] = [
+        {
+          step: {
+            questionId: 'total-score',
+            choices: [],
+            stepId: 'total-score',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 10 }],
+        },
+      ];
 
       expect(getScoreFromAnswersWithFormula(answers, 'total-score * 0.6')).toBe(
         6
@@ -222,7 +420,17 @@ describe('getScoreFromAnswersWithFormula', () => {
     });
 
     it('should throw error for mismatched parentheses', () => {
-      const answers: Answer[] = [{ questionId: 'test-score', value: [1] }];
+      const answers: Answer[] = [
+        {
+          step: {
+            questionId: 'test-score',
+            choices: [],
+            stepId: 'test-score',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 1 }],
+        },
+      ];
 
       expect(() => {
         getScoreFromAnswersWithFormula(answers, '(test-score + 2');
@@ -237,8 +445,24 @@ describe('getScoreFromAnswersWithFormula', () => {
   describe('min function handling', () => {
     it('should correctly evaluate min function with two arguments', () => {
       const answers: Answer[] = [
-        { questionId: 'score-a', value: [5] },
-        { questionId: 'score-b', value: [3] },
+        {
+          step: {
+            questionId: 'score-a',
+            choices: [],
+            stepId: 'score-a',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 5 }],
+        },
+        {
+          step: {
+            questionId: 'score-b',
+            choices: [],
+            stepId: 'score-b',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 3 }],
+        },
       ];
 
       expect(
@@ -255,9 +479,33 @@ describe('getScoreFromAnswersWithFormula', () => {
 
     it('should handle min function with expressions', () => {
       const answers: Answer[] = [
-        { questionId: 'score-a', value: [2] },
-        { questionId: 'score-b', value: [3] },
-        { questionId: 'score-c', value: [4] },
+        {
+          step: {
+            questionId: 'score-a',
+            choices: [],
+            stepId: 'score-a',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 2 }],
+        },
+        {
+          step: {
+            questionId: 'score-b',
+            choices: [],
+            stepId: 'score-b',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 3 }],
+        },
+        {
+          step: {
+            questionId: 'score-c',
+            choices: [],
+            stepId: 'score-c',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 4 }],
+        },
       ];
 
       expect(
@@ -276,9 +524,33 @@ describe('getScoreFromAnswersWithFormula', () => {
 
     it('should handle complex formulas with min function', () => {
       const answers: Answer[] = [
-        { questionId: 'item1', value: [1] },
-        { questionId: 'item2', value: [2] },
-        { questionId: 'item3', value: [3] },
+        {
+          step: {
+            questionId: 'item1',
+            choices: [],
+            stepId: 'item1',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 1 }],
+        },
+        {
+          step: {
+            questionId: 'item2',
+            choices: [],
+            stepId: 'item2',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 2 }],
+        },
+        {
+          step: {
+            questionId: 'item3',
+            choices: [],
+            stepId: 'item3',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 3 }],
+        },
       ];
 
       // Test sum of items capped at 3
@@ -312,7 +584,17 @@ describe('getScoreFromAnswersWithFormula', () => {
     });
 
     it('should throw error for invalid min function syntax', () => {
-      const answers: Answer[] = [{ questionId: 'score', value: [1] }];
+      const answers: Answer[] = [
+        {
+          step: {
+            questionId: 'score',
+            choices: [],
+            stepId: 'score',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 1 }],
+        },
+      ];
 
       expect(() => {
         getScoreFromAnswersWithFormula(answers, 'min(score, )');
@@ -331,9 +613,33 @@ describe('getScoreFromAnswersWithFormula', () => {
   describe('avg function handling', () => {
     it('should correctly calculate average of multiple values', () => {
       const answers: Answer[] = [
-        { questionId: 'item1', value: [2] },
-        { questionId: 'item2', value: [4] },
-        { questionId: 'item3', value: [6] },
+        {
+          step: {
+            questionId: 'item1',
+            choices: [],
+            stepId: 'item1',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 2 }],
+        },
+        {
+          step: {
+            questionId: 'item2',
+            choices: [],
+            stepId: 'item2',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 4 }],
+        },
+        {
+          step: {
+            questionId: 'item3',
+            choices: [],
+            stepId: 'item3',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 6 }],
+        },
       ];
 
       expect(
@@ -347,9 +653,33 @@ describe('getScoreFromAnswersWithFormula', () => {
 
     it('should handle avg function with expressions', () => {
       const answers: Answer[] = [
-        { questionId: 'score1', value: [1] },
-        { questionId: 'score2', value: [2] },
-        { questionId: 'score3', value: [3] },
+        {
+          step: {
+            questionId: 'score1',
+            choices: [],
+            stepId: 'score1',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 1 }],
+        },
+        {
+          step: {
+            questionId: 'score2',
+            choices: [],
+            stepId: 'score2',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 2 }],
+        },
+        {
+          step: {
+            questionId: 'score3',
+            choices: [],
+            stepId: 'score3',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 3 }],
+        },
       ];
 
       expect(
@@ -362,9 +692,33 @@ describe('getScoreFromAnswersWithFormula', () => {
 
     it('should handle zero values correctly in average', () => {
       const answers: Answer[] = [
-        { questionId: 'val1', value: [0] },
-        { questionId: 'val2', value: [4] },
-        { questionId: 'val3', value: [8] },
+        {
+          step: {
+            questionId: 'val1',
+            choices: [],
+            stepId: 'val1',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 0 }],
+        },
+        {
+          step: {
+            questionId: 'val2',
+            choices: [],
+            stepId: 'val2',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 4 }],
+        },
+        {
+          step: {
+            questionId: 'val3',
+            choices: [],
+            stepId: 'val3',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 8 }],
+        },
       ];
 
       expect(
@@ -374,8 +728,24 @@ describe('getScoreFromAnswersWithFormula', () => {
 
     it('should handle missing values correctly in average', () => {
       const answers: Answer[] = [
-        { questionId: 'present1', value: [3] },
-        { questionId: 'present2', value: [6] },
+        {
+          step: {
+            questionId: 'present1',
+            choices: [],
+            stepId: 'present1',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 3 }],
+        },
+        {
+          step: {
+            questionId: 'present2',
+            choices: [],
+            stepId: 'present2',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 6 }],
+        },
       ];
 
       expect(
@@ -387,7 +757,17 @@ describe('getScoreFromAnswersWithFormula', () => {
     });
 
     it('should throw error for invalid avg function syntax', () => {
-      const answers: Answer[] = [{ questionId: 'score', value: [1] }];
+      const answers: Answer[] = [
+        {
+          step: {
+            questionId: 'score',
+            choices: [],
+            stepId: 'score',
+            type: 'single-choice',
+          },
+          value: [{ numericValue: 1 }],
+        },
+      ];
 
       expect(() => {
         getScoreFromAnswersWithFormula(answers, 'avg(,)');

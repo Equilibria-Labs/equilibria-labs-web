@@ -136,8 +136,8 @@ interface ChoiceProps {
   onChange: (value: ChoiceValue) => void;
   next: () => void;
   type: 'radio' | 'checkbox';
-  checked?: boolean; // Optional prop for checkbox
-  iconName?: ChoiceIconName; // Optional icon name from our predefined set
+  checked?: boolean;
+  iconName?: ChoiceIconName;
 }
 
 export function Choice({
@@ -157,6 +157,13 @@ export function Choice({
     }
   };
 
+  // Convert the choice value to a string for the RadioGroupItem
+  const radioValue =
+    choice.value.stringValue ??
+    (choice.value.numericValue !== undefined
+      ? String(choice.value.numericValue)
+      : '');
+
   const IconComponent = iconName ? CHOICE_ICONS[iconName] : null;
 
   return (
@@ -171,7 +178,7 @@ export function Choice({
       <div className='absolute inset-0 z-10' onClick={handleClick} />
       {type === 'radio' ? (
         <RadioGroupItem
-          value={String(choice.value ?? '')}
+          value={radioValue}
           id={choice.choiceId}
           className='sr-only'
         />
@@ -180,7 +187,7 @@ export function Choice({
           id={choice.choiceId}
           checked={checked}
           onCheckedChange={() => onChange(choice.value)}
-          className='hidden' // Hide the checkbox
+          className='hidden'
         />
       )}
       <div className='flex items-center gap-3 flex-1'>
