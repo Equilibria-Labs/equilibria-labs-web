@@ -1,38 +1,20 @@
+import { Dialogue, BaseStep, QuestionStep, Choice } from './shared/dialogue';
 import { ChoiceIconName } from '@/components/common/Choice';
 
-export interface BaseStep {
-  stepId: string;
-  type: string;
-  title?: string;
-  question?: string;
-  instruction?: string;
-  description?: string;
-  reference?: string | null;
-}
-
-export interface QuestionStep extends BaseStep {
-  questionId: string;
-}
-
-export type ChoiceValue = string | number | undefined;
-
-export interface Choice {
-  choiceId: string;
-  text: string;
-  value?: ChoiceValue;
+export interface UIChoice extends Choice {
   iconName?: ChoiceIconName;
 }
 
-export interface MultipleChoiceStep extends QuestionStep {
+export interface MultipleChoiceStep extends Omit<QuestionStep, 'choices'> {
   type: 'multiple-choice-required' | 'multiple-choice-optional';
-  choices: Choice[];
   minSelections?: number;
   maxSelections?: number;
+  choices: UIChoice[];
 }
 
-export interface SingleChoiceStep extends QuestionStep {
+export interface SingleChoiceStep extends Omit<QuestionStep, 'choices'> {
   type: 'single-choice';
-  choices: Choice[];
+  choices: UIChoice[];
 }
 
 export interface EducationalStep extends BaseStep {
@@ -70,11 +52,11 @@ export interface BaseResultsStep extends BaseStep {
 export interface WeatherHeatmapResults extends BaseResultsStep {
   arrowLabel?: string;
   arrowSubLabel?: string;
+  formulaString: string;
   score: number;
   maxScore: number;
   issues: ResultsIssue[];
   resultsBands: ResultsBand[];
-  formulaString: string;
   heading?: string;
   text?: string;
   buttonText?: string;
@@ -90,16 +72,9 @@ export type Step =
   | MessageStep
   | ResultsStep;
 
-export type Answer = {
-  questionId: string;
-  value: ChoiceValue[];
-};
-
-export type QuestionnaireConfig = {
-  dialogueId: string;
-  title: string;
-  version: string;
+export type QuestionnaireConfig = Dialogue & {
   shouldShowProgress: boolean;
+  formulaString?: string;
   steps: Step[];
   resultsSteps: ResultsStep[];
 };

@@ -212,7 +212,7 @@ function evaluateExpression(
             }
 
             if (/^[a-zA-Z][\w-]*$/.test(subToken)) {
-              const answer = answers.find(a => a.questionId === subToken);
+              const answer = answers.find(a => a.step.questionId === subToken);
               if (answer && typeof answer.value[0] === 'number') {
                 const value = answer.value[0];
                 if (value !== 0) {
@@ -270,11 +270,11 @@ function evaluateExpression(
         // Convert token to value
         let value: number;
         if (/^[a-zA-Z][\w-]*$/.test(token)) {
-          const answer = answers.find(a => a.questionId === token);
+          const answer = answers.find(a => a.step.questionId === token);
           if (!answer) {
             value = 0; // Missing answers default to 0
           } else {
-            const answerValue = answer.value[0];
+            const answerValue = answer.value[0]?.numericValue;
             if (typeof answerValue !== 'number' || isNaN(answerValue)) {
               throw new FormulaError(
                 `Invalid answer value for question "${token}". Answer must be numeric.`

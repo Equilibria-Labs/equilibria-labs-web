@@ -1,7 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { QuestionnaireConfig, ChoiceValue, Answer } from '@/types';
+import { useTheme } from 'next-themes';
+import {
+  QuestionnaireConfig,
+  ChoiceValue,
+  Answer,
+  QuestionStep,
+} from '@/types';
 import { SingleChoiceStep } from './steps/single-choice';
 import { MultipleChoiceStep } from './steps/multiple-choice';
 import { MessageStep } from './steps/message';
@@ -11,10 +17,10 @@ import { ProgressBar } from '@/components/common/ProgressBar';
 import { BodyText } from '@/components/common/Typography';
 import Column from '@/components/structure/Column';
 import Box from '@/components/structure/Box';
-
+import { getScoreFromAnswersWithFormula } from './helpers/getScoreFromAnswersWithFormula';
 interface QuestionnaireProps {
   config: QuestionnaireConfig;
-  onCompleteAction: (answers: Answer[]) => void;
+  onCompleteAction: (answers: Answer[], score?: number) => void;
 }
 
 export function Questionnaire({
@@ -23,10 +29,15 @@ export function Questionnaire({
 }: QuestionnaireProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
+  const { setTheme } = useTheme();
 
   const handleNext = () => {
     const nextStepIndex = currentStepIndex + 1;
     const allSteps = [...config.steps, ...config.resultsSteps];
+
+    // Cycle through themes based on step index
+    const themeNumber = (nextStepIndex % 4) + 1; // We have theme-1 through theme-4
+    setTheme(`theme-${themeNumber}`);
 
     // Move to next step if it exists
     if (nextStepIndex < allSteps.length) {
@@ -35,12 +46,18 @@ export function Questionnaire({
     }
 
     // Call onCompleteAction when we've completed all steps including results
-    onCompleteAction(answers);
+    const score = config.formulaString
+      ? getScoreFromAnswersWithFormula(answers, config.formulaString)
+      : undefined;
+    onCompleteAction(answers, score);
   };
 
-  const handleAnswer = (questionId: string, answer: ChoiceValue[]) => {
+  const handleAnswer = (step: QuestionStep, answer: ChoiceValue[]) => {
     setAnswers((prev: Answer[]) => {
-      const newAnswer: Answer = { questionId, value: answer };
+      const newAnswer: Answer = {
+        step,
+        value: answer,
+      };
       return [...prev, newAnswer];
     });
   };
@@ -58,10 +75,11 @@ export function Questionnaire({
           <SingleChoiceStep
             step={step}
             value={
-              answers.find(a => a.questionId === step.questionId)?.value || []
+              answers.find(a => a.step.questionId === step.questionId)?.value ||
+              []
             }
             onChange={value =>
-              handleAnswer(step.questionId, value !== undefined ? [value] : [])
+              handleAnswer(step, value !== undefined ? [value] : [])
             }
             next={handleNext}
           />
@@ -72,9 +90,10 @@ export function Questionnaire({
           <MultipleChoiceStep
             step={step}
             initialValue={
-              answers.find(a => a.questionId === step.questionId)?.value || []
+              answers.find(a => a.step.questionId === step.questionId)?.value ||
+              []
             }
-            onChange={value => handleAnswer(step.questionId, value)}
+            onChange={value => handleAnswer(step, value)}
             next={handleNext}
           />
         );

@@ -5,6 +5,10 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
   title: 'Sleep Quality',
   version: '1.0',
   shouldShowProgress: true,
+  answers: [],
+  status: 'not_started',
+  formulaString:
+    'subjective-sleep-quality + min(sleep-latency-time + sleep-latency-frequency, 3) + sleep-efficiency + min(bathroom + breathing + cough-snore + too-cold + too-hot + bad-dreams + pain + other-reasons, 3) + sleep-medications + min(avg(wake-middle-night + bathroom + breathing + cough-snore + too-cold + too-hot + bad-dreams + pain + other-reasons), 3) + min(daytime-alertness + daytime-function, 3)',
   resultsSteps: [
     {
       formulaString:
@@ -47,26 +51,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'subjective-sleep-quality',
       questionId: 'subjective-sleep-quality',
       type: 'single-choice',
-      question: 'How would you rate your sleep quality overall?',
+      question: 'How would you rate your *sleep quality overall*?',
       instruction: 'During the past month',
       choices: [
-        { choiceId: 'very-good', text: 'Very good', value: 0, iconName: 'sun' },
+        {
+          choiceId: 'very-good',
+          text: 'Very good',
+          value: {
+            numericValue: 0,
+            stringValue: 'very-good',
+          },
+          iconName: 'sun',
+        },
         {
           choiceId: 'fairly-good',
           text: 'Fairly good',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'fairly-good',
+          },
           iconName: 'cloudSun',
         },
         {
           choiceId: 'fairly-bad',
           text: 'Fairly bad',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'fairly-bad',
+          },
           iconName: 'cloudRain',
         },
         {
           choiceId: 'very-bad',
           text: 'Very bad',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'very-bad',
+          },
           iconName: 'cloudLightning',
         },
       ],
@@ -76,31 +97,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       questionId: 'sleep-latency-time',
       type: 'single-choice',
       question:
-        'How long (in minutes) has it typically taken you to fall asleep?',
+        'How long (in minutes) has it typically taken you to *fall asleep*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: '0-15',
           text: '0-15 minutes',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: '0-15',
+          },
           iconName: 'clock3',
         },
         {
           choiceId: '16-30',
           text: '16-30 minutes',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: '16-30',
+          },
           iconName: 'clock6',
         },
         {
           choiceId: '31-60',
           text: '31-60 minutes',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: '31-60',
+          },
           iconName: 'clock12',
         },
         {
           choiceId: 'over-60',
           text: 'More than 60 minutes',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'over-60',
+          },
           iconName: 'clockAlert',
         },
       ],
@@ -109,31 +142,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'sleep-latency-frequency',
       questionId: 'sleep-latency-frequency',
       type: 'single-choice',
-      question: 'How often have you had trouble falling asleep?',
+      question: 'How often have you had trouble *falling asleep*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -142,21 +187,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'sleep-duration',
       questionId: 'sleep-duration',
       type: 'single-choice',
-      question: 'How many hours of actual sleep did you get at night?',
+      question: 'How many hours of *actual sleep* did you get at night?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'more-than-7',
           text: 'More than 7 hours',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'more-than-7',
+          },
           iconName: 'bedSingle',
         },
-        { choiceId: '6-7', text: '6-7 hours', value: 1, iconName: 'bedSingle' },
-        { choiceId: '5-6', text: '5-6 hours', value: 2, iconName: 'bedSingle' },
+        {
+          choiceId: '6-7',
+          text: '6-7 hours',
+          value: {
+            numericValue: 1,
+            stringValue: '6-7',
+          },
+          iconName: 'bedSingle',
+        },
+        {
+          choiceId: '5-6',
+          text: '5-6 hours',
+          value: {
+            numericValue: 2,
+            stringValue: '5-6',
+          },
+          iconName: 'bedSingle',
+        },
         {
           choiceId: 'less-than-5',
           text: 'Less than 5 hours',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'less-than-5',
+          },
           iconName: 'bedSingle',
         },
       ],
@@ -165,31 +232,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'sleep-efficiency',
       questionId: 'sleep-efficiency',
       type: 'single-choice',
-      question: 'How often have you had trouble staying asleep?',
+      question: 'How often have you had trouble *staying asleep*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -200,31 +279,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       questionId: 'wake-middle-night',
       type: 'single-choice',
       question:
-        'How often have you had trouble waking up in the middle of the night or early morning?',
+        'How often have you had trouble *waking up* in the middle of the night or early morning?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -233,31 +324,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'bathroom',
       questionId: 'bathroom',
       type: 'single-choice',
-      question: 'How often have you had to get up to use the bathroom?',
+      question: 'How often have you had to get up to *use the bathroom*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -266,31 +369,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'breathing',
       questionId: 'breathing',
       type: 'single-choice',
-      question: 'How often have you had trouble breathing?',
+      question: 'How often have you had *trouble breathing*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -299,31 +414,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'cough-snore',
       questionId: 'cough-snore',
       type: 'single-choice',
-      question: 'How often have you coughed or snored loudly?',
+      question: 'How often have you *coughed or snored loudly*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -332,31 +459,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'too-cold',
       questionId: 'too-cold',
       type: 'single-choice',
-      question: 'How often have you felt too cold?',
+      question: 'How often have you *felt too cold*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -365,31 +504,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'too-hot',
       questionId: 'too-hot',
       type: 'single-choice',
-      question: 'How often have you felt too hot?',
+      question: 'How often have you *felt too hot*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -398,31 +549,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'bad-dreams',
       questionId: 'bad-dreams',
       type: 'single-choice',
-      question: 'How often have you had bad dreams?',
+      question: 'How often have you had *bad dreams*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -431,31 +594,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'pain',
       questionId: 'pain',
       type: 'single-choice',
-      question: 'How often have you had pain?',
+      question: 'How often have you had *pain*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -465,31 +640,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       questionId: 'other-reasons',
       type: 'single-choice',
       question:
-        'How often have you had other reasons that have troubled your sleep?',
+        'How often have you had *other reasons* that have troubled your sleep?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -498,31 +685,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       stepId: 'sleep-medications',
       questionId: 'sleep-medications',
       type: 'single-choice',
-      question:
-        'During the past month, how often have you taken medicine to help you sleep (prescribed or "over the counter")?',
+      question: 'How often have you *taken medicine* to help you sleep?',
+      instruction: 'Prescribed or "over the counter", during the past month',
       choices: [
         {
           choiceId: 'not-during-month',
           text: 'Not during the past month',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'not-during-month',
+          },
           iconName: 'calendarOff',
         },
         {
           choiceId: 'less-than-once',
           text: 'Less than once a week',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'less-than-once',
+          },
           iconName: 'calendar',
         },
         {
           choiceId: 'once-or-twice',
           text: 'Once or twice a week',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'once-or-twice',
+          },
           iconName: 'calendar1',
         },
         {
           choiceId: 'three-or-more',
           text: 'Three or more times a week',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'three-or-more',
+          },
           iconName: 'calendarDays',
         },
       ],
@@ -532,31 +731,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       questionId: 'daytime-alertness',
       type: 'single-choice',
       question:
-        'How much of a problem has it been for you to stay awake while driving, eating meals, or engaging in social activity?',
+        'How much of a problem has it been for you to stay awake while *driving, eating meals, or engaging in social activity*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'no-problem',
           text: 'No problem at all',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'no-problem',
+          },
           iconName: 'sun',
         },
         {
           choiceId: 'slight',
           text: 'Only a slight problem',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'slight',
+          },
           iconName: 'cloud',
         },
         {
           choiceId: 'moderate',
           text: 'Somewhat of a problem',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'moderate',
+          },
           iconName: 'cloudRain',
         },
         {
           choiceId: 'big',
           text: 'A very big problem',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'big',
+          },
           iconName: 'cloudLightning',
         },
       ],
@@ -566,31 +777,43 @@ export const sleepPsqiConfig: QuestionnaireConfig = {
       questionId: 'daytime-function',
       type: 'single-choice',
       question:
-        'How much of a problem has it been for you to keep up enthusiasm to get things done?',
+        'How much of a problem has it been for you to *keep up enthusiasm to get things done*?',
       instruction: 'During the past month',
       choices: [
         {
           choiceId: 'no-problem',
           text: 'No problem at all',
-          value: 0,
+          value: {
+            numericValue: 0,
+            stringValue: 'no-problem',
+          },
           iconName: 'sun',
         },
         {
           choiceId: 'slight',
           text: 'Only a slight problem',
-          value: 1,
+          value: {
+            numericValue: 1,
+            stringValue: 'slight',
+          },
           iconName: 'cloud',
         },
         {
           choiceId: 'moderate',
           text: 'Somewhat of a problem',
-          value: 2,
+          value: {
+            numericValue: 2,
+            stringValue: 'moderate',
+          },
           iconName: 'cloudRain',
         },
         {
           choiceId: 'big',
           text: 'A very big problem',
-          value: 3,
+          value: {
+            numericValue: 3,
+            stringValue: 'big',
+          },
           iconName: 'cloudLightning',
         },
       ],
