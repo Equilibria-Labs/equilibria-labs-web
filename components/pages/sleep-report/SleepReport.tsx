@@ -6,13 +6,10 @@ import SleepSummary from '@/components/interactions/sleep-summary/SleepSummary';
 import { Answer, Dialogue } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import SleepPsqi from '@/components/interactions/sleep-psqi/SleepPsqi';
-<<<<<<< HEAD
 import { useSheet } from '@/context/SheetContext';
 import { SignInForm } from '@/components/account/SignInForm';
-=======
 import useDialogue from '@/hooks/useDialogue';
 import { v4 as uuidv4 } from 'uuid';
->>>>>>> e541e151fac2aaa56d970b7cc2d12e24c0bb8801
 
 type SectionType = 'isi' | 'psqi' | 'summary';
 
@@ -48,7 +45,6 @@ export default function SleepReport() {
     section => section.sectionId === currentSection
   );
 
-<<<<<<< HEAD
   const handleOpenSheet = () => {
     openSheet({
       title: 'Sign in to save your sleep report',
@@ -56,8 +52,6 @@ export default function SleepReport() {
     });
   };
 
-  const handleSectionComplete = (dialogueId: string, answers: Answer[]) => {
-=======
   const handleSectionComplete = async (
     dialogueId: string,
     answers: Answer[],
@@ -68,7 +62,6 @@ export default function SleepReport() {
     const submissionId = uuidv4();
     const currentTimestamp = new Date().toISOString();
 
->>>>>>> e541e151fac2aaa56d970b7cc2d12e24c0bb8801
     const dialogue: Dialogue = {
       dialogueId,
       submissionId,
@@ -90,9 +83,7 @@ export default function SleepReport() {
       [storageKey]: dialogue,
     }));
 
-<<<<<<< HEAD
     handleOpenSheet();
-=======
     try {
       // Create new dialogue in the database with the submissionId
       await createDialogue(dialogue);
@@ -103,7 +94,6 @@ export default function SleepReport() {
       console.error(`Error saving ${dialogueId} to the database:`, error);
       // Continue with the flow even if API save fails
     }
->>>>>>> e541e151fac2aaa56d970b7cc2d12e24c0bb8801
 
     // Move to next section if available
     const nextSection = SLEEP_REPORT_SECTIONS[currentSectionIndex + 1];
