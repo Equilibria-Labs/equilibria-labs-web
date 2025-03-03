@@ -6,6 +6,8 @@ import SleepSummary from '@/components/interactions/sleep-summary/SleepSummary';
 import { Answer, Dialogue } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import SleepPsqi from '@/components/interactions/sleep-psqi/SleepPsqi';
+import { useSheet } from '@/context/SheetContext';
+import { SignInForm } from '@/components/account/SignInForm';
 
 type SectionType = 'isi' | 'psqi' | 'summary';
 
@@ -29,6 +31,7 @@ export default function SleepReport() {
   const [currentSection, setCurrentSection] = useState<SectionType>(
     SLEEP_REPORT_SECTIONS[0].sectionId
   );
+  const { openSheet } = useSheet();
 
   const [storedDialogues, setStoredDialogues] = useLocalStorage<
     Record<string, Dialogue>
@@ -37,6 +40,13 @@ export default function SleepReport() {
   const currentSectionIndex = SLEEP_REPORT_SECTIONS.findIndex(
     section => section.sectionId === currentSection
   );
+
+  const handleOpenSheet = () => {
+    openSheet({
+      title: 'Sign in to save your sleep report',
+      content: <SignInForm />,
+    });
+  };
 
   const handleSectionComplete = (dialogueId: string, answers: Answer[]) => {
     const dialogue: Dialogue = {
@@ -52,6 +62,8 @@ export default function SleepReport() {
       ...prev,
       [dialogueId]: dialogue,
     }));
+
+    handleOpenSheet();
 
     // Move to next section if available
     const nextSection = SLEEP_REPORT_SECTIONS[currentSectionIndex + 1];
