@@ -1,6 +1,7 @@
 import useSWR, { mutate } from 'swr';
 import axios from 'axios';
 import { Dialogue } from '@/types/shared/dialogue';
+import { createClient } from '@/utils/supabase/client';
 
 // API base URL - can be configured based on environment
 const API_BASE_URL =
@@ -11,20 +12,18 @@ const API_BASE_URL =
 
 // Fetcher function for SWR
 const fetcher = async (url: string) => {
+  const supabase = createClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const token = session?.access_token;
+
   const response = await axios.get(url, {
     headers: {
-      Authorization: `Bearer ${getAuthToken()}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   return response.data;
-};
-
-// Helper to get the auth token
-const getAuthToken = (): string => {
-  if (typeof window === 'undefined') return '';
-
-  // Replace with your actual auth token retrieval logic
-  return localStorage.getItem('authToken') || '';
 };
 
 export function useDialogue() {
@@ -66,12 +65,25 @@ export function useDialogue() {
   // Create a new dialogue
   const createDialogue = async (dialogue: Dialogue): Promise<Dialogue> => {
     try {
+      const supabase = createClient();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      const token = session?.access_token;
+
+      // Log the request details (for debugging)
+      console.log('Creating dialogue with:', {
+        url: `${API_BASE_URL}/api/dialogues`,
+        token: token ? 'Present' : 'Missing',
+        dialogue: dialogue,
+      });
+
       const response = await axios.post(
         `${API_BASE_URL}/api/dialogues`,
         { dialogue },
         {
           headers: {
-            Authorization: `Bearer ${getAuthToken()}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         }
@@ -82,7 +94,17 @@ export function useDialogue() {
 
       return response.data;
     } catch (error) {
-      console.error('Error creating dialogue:', error);
+      if (axios.isAxiosError(error)) {
+        console.error('Error creating dialogue:', {
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          message: error.message,
+          headers: error.response?.headers,
+        });
+      } else {
+        console.error('Error creating dialogue:', error);
+      }
       throw error;
     }
   };
@@ -93,6 +115,12 @@ export function useDialogue() {
     dialogue: Dialogue
   ): Promise<Dialogue> => {
     try {
+      const supabase = createClient();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      const token = session?.access_token;
+
       // Always require submissionId
       if (!dialogue.submissionId) {
         throw new Error('submissionId is required for updating a dialogue');
@@ -105,7 +133,7 @@ export function useDialogue() {
         { dialogue },
         {
           headers: {
-            Authorization: `Bearer ${getAuthToken()}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         }
