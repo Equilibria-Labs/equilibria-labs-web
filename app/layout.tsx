@@ -1,6 +1,7 @@
 import { Fraunces, Outfit } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import SplashScreen from '@/components/structure/SplashScreen';
+import { SheetProvider } from '@/context/SheetContext';
 import './globals.css';
 
 const defaultUrl = process.env.VERCEL_URL
@@ -49,10 +50,12 @@ export default function RootLayout({
           }}
           defaultTheme='theme-1'
         >
-          <SplashScreen />
-          <main className='min-h-screen flex flex-col items-center'>
-            {children}
-          </main>
+          <SheetProvider>
+            <SplashScreen />
+            <main className='min-h-screen flex flex-col items-center'>
+              {children}
+            </main>
+          </SheetProvider>
         </ThemeProvider>
       </body>
     </html>
