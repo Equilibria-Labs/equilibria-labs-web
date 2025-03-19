@@ -1,6 +1,17 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
+import {
+  ChevronRight,
+  ChevronLeft,
+  ChevronUp,
+  ChevronDown,
+  Plus,
+  Minus,
+  X,
+  Check,
+  type LucideIcon,
+} from 'lucide-react';
 
 import { cn } from '../../lib/utils';
 
@@ -37,17 +48,65 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  iconName?:
+    | 'chevronRight'
+    | 'chevronLeft'
+    | 'chevronUp'
+    | 'chevronDown'
+    | 'plus'
+    | 'minus'
+    | 'x'
+    | 'check';
+  iconClassName?: string;
+  isIconFirst?: boolean;
 }
 
+const iconMap: Record<NonNullable<ButtonProps['iconName']>, LucideIcon> = {
+  chevronRight: ChevronRight,
+  chevronLeft: ChevronLeft,
+  chevronUp: ChevronUp,
+  chevronDown: ChevronDown,
+  plus: Plus,
+  minus: Minus,
+  x: X,
+  check: Check,
+};
+
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      iconName,
+      iconClassName,
+      isIconFirst = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'button';
+    const Icon = iconName ? iconMap[iconName] : null;
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {isIconFirst && Icon && (
+          <Icon className={cn('h-4 w-4', iconClassName)} />
+        )}
+        {children && Icon && (
+          <span className={cn(isIconFirst ? 'ml-2' : 'mr-2')}>{children}</span>
+        )}
+        {!Icon && children}
+        {!isIconFirst && Icon && (
+          <Icon className={cn('h-4 w-4', iconClassName)} />
+        )}
+      </Comp>
     );
   }
 );
