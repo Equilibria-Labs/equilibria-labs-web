@@ -123,15 +123,3 @@ export function EmotionSlider() {
     </Column>
   );
 }
-
-function AnxietyButton({ label, color }: { label: string; color: string }) {
-  return (
-    <div className='flex flex-col items-center'>
-      <button
-        className={`h-24 w-24 rounded-full ${color} bg-opacity-80 p-4 text-white shadow-md transition hover:scale-105`}
-      >
-        <span className='text-sm font-medium'>{label}</span>
-      </button>
-    </div>
-  );
-}
