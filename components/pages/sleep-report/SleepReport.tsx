@@ -6,6 +6,8 @@ import SleepSummary from '@/components/interactions/sleep-summary/SleepSummary';
 import { Answer, Dialogue } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import SleepPsqi from '@/components/interactions/sleep-psqi/SleepPsqi';
+import { useSheet } from '@/context/SheetContext';
+import { SignInForm } from '@/components/account/SignInForm';
 import useDialogue from '@/hooks/useDialogue';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,6 +33,7 @@ export default function SleepReport() {
   const [currentSection, setCurrentSection] = useState<SectionType>(
     SLEEP_REPORT_SECTIONS[0].sectionId
   );
+  const { openSheet } = useSheet();
 
   const [storedDialogues, setStoredDialogues] = useLocalStorage<
     Record<string, Dialogue>
@@ -41,6 +44,13 @@ export default function SleepReport() {
   const currentSectionIndex = SLEEP_REPORT_SECTIONS.findIndex(
     section => section.sectionId === currentSection
   );
+
+  const handleOpenSheet = () => {
+    openSheet({
+      title: 'Sign in to save your sleep report',
+      content: <SignInForm />,
+    });
+  };
 
   const handleSectionComplete = async (
     dialogueId: string,
@@ -73,6 +83,7 @@ export default function SleepReport() {
       [storageKey]: dialogue,
     }));
 
+    handleOpenSheet();
     try {
       // Create new dialogue in the database with the submissionId
       await createDialogue(dialogue);

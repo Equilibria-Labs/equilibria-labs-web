@@ -1,25 +1,27 @@
-import { Sun, BookOpen, Grid, User } from 'lucide-react';
+import React from 'react';
+import { Sun, Grid, User } from 'lucide-react';
 import { NavConfigItem } from '@/types/navigation';
+import QuickReliefSheet from '@/components/sheets/QuickReliefSheet';
 
 export const mainNavConfig: NavConfigItem[] = [
   {
     icon: Sun,
     label: 'Today',
-    path: '/',
+    action: { type: 'navigation', path: '/' },
   },
-  {
-    icon: BookOpen,
-    label: 'Library',
-    path: '/resources',
-  },
+  // {
+  //   icon: BookOpen,
+  //   label: 'Library',
+  //   path: '/resources',
+  // },
   {
     icon: Grid,
-    label: 'Easy Wins',
-    path: '/easy-wins',
+    label: 'Quick Relief',
+    action: { type: 'sheet', content: QuickReliefSheet, title: 'Quick Relief' },
   },
   {
     icon: User,
     label: 'You',
-    path: '/you',
+    action: { type: 'navigation', path: '/you' },
   },
 ];
