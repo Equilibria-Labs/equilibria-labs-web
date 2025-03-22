@@ -1,9 +1,9 @@
-import DarkDialogueLayout from '@/components/layouts/DarkDialogueLayout';
+import DialogueLayoutComponent from '@/components/layouts/DialogueLayout';
 
 export default function DialogueLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <DarkDialogueLayout>{children}</DarkDialogueLayout>;
+  return <DialogueLayoutComponent>{children}</DialogueLayoutComponent>;
 }
