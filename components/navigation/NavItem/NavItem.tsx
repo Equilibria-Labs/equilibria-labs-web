@@ -1,18 +1,22 @@
+'use client';
+
+import React from 'react';
 import { LucideIcon } from 'lucide-react';
 
-interface BottomNavItemProps {
+export type NavItemProps = {
   icon: LucideIcon;
   label: string;
   isActive?: boolean;
   onClick?: () => void;
-}
+};
 
-export default function BottomNavItem({
+export default function NavItem({
   icon: Icon,
   label,
   isActive = false,
   onClick,
-}: BottomNavItemProps) {
+}: NavItemProps) {
+  console.log(onClick);
   return (
     <button
       onClick={onClick}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Sun, Grid, User } from 'lucide-react';
 import { NavConfigItem } from '@/types/navigation';
 import QuickReliefSheet from '@/components/sheets/QuickReliefSheet';

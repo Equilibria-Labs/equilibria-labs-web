@@ -2,9 +2,9 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import BottomNav from './BottomNav';
-import { mainNavConfig } from '@/config/navigation';
 import { useSheet } from '@/context/SheetContext';
 import { LucideIcon } from 'lucide-react';
+import { mainNavConfig } from '@/config/navigation';
 
 export default function BottomNavContainer() {
   const router = useRouter();
