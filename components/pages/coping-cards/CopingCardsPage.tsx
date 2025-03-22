@@ -6,6 +6,7 @@ import CategorySelector from '@/components/dialogue/coping-cards/CategorySelecto
 import { useState } from 'react';
 import { categories } from '@/config/coping-card-data';
 import { CardCategory } from '@/config/coping-card-data';
+import ContentPageHeader from '@/components/structure/ContentPageHeader';
 
 export const metadata: Metadata = {
   title: 'The Sleep Lab | Equilibria',
@@ -18,17 +19,20 @@ export default function CopingCardsPage() {
     categories[0]
   );
   return (
-    <Box shouldRise>
-      <main className='flex min-h-screen flex-col items-center bg-[#8a7bff]'>
-        <div className='w-full max-w-md flex flex-col items-center px-4 py-6'>
-          <CopingCards category={selectedCategory} />
-          <CategorySelector
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-          />
-        </div>
-      </main>
-    </Box>
+    <>
+      <ContentPageHeader
+        isBackButtonHome={false}
+        title='Coping Cards'
+        newItemHandler={() => {}}
+      />
+      <Box shouldRise>
+        <CopingCards category={selectedCategory} />
+        <CategorySelector
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+        />
+      </Box>
+    </>
   );
 }

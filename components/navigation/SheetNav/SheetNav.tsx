@@ -30,6 +30,7 @@ export default function BottomNav({
             isActive={activeLabel === item.label}
             onClick={() => {
               setActiveLabel(item.label);
+              item.onClick?.();
             }}
           />
         ))}

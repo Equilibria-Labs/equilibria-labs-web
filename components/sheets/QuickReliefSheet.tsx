@@ -1,3 +1,6 @@
+import SheetNav from '@/components/navigation/SheetNav';
+import { quickReliefNavConfig } from '@/config/navigation';
+
 export default function QuickReliefSheet() {
-  return <div>Hello</div>;
+  return <SheetNav config={quickReliefNavConfig} />;
 }

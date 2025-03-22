@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { CardCategory } from '@/config/coping-card-data';
+import Column from '@/components/structure/Column';
 
 interface CopingCardsProps {
   category: CardCategory;
@@ -22,25 +23,7 @@ export default function CopingCards({ category }: CopingCardsProps) {
   };
 
   return (
-    <div className='w-full flex flex-col items-center'>
-      <div className='w-full flex items-center justify-between py-4'>
-        <button
-          onClick={() => {}}
-          className='text-white p-2'
-          aria-label='Go back'
-        >
-          <ChevronLeft className='h-6 w-6' />
-        </button>
-        <h1 className='text-white text-2xl font-medium'>Coping Cards</h1>
-        <button
-          onClick={() => {}}
-          className='text-white p-2'
-          aria-label='Add new card'
-        >
-          <Plus className='h-6 w-6' />
-        </button>
-      </div>
-
+    <Column hasSmallGap>
       <p className='text-white text-center mb-6'>
         Read through these cards to help you ride out your anxiety
       </p>
@@ -79,6 +62,6 @@ export default function CopingCards({ category }: CopingCardsProps) {
           />
         ))}
       </div>
-    </div>
+    </Column>
   );
 }

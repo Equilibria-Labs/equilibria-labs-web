@@ -16,7 +16,6 @@ export default function NavItem({
   isActive = false,
   onClick,
 }: NavItemProps) {
-  console.log(onClick);
   return (
     <button
       onClick={onClick}

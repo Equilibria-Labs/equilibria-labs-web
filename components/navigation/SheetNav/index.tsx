@@ -1,39 +1,30 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
-import BottomNav from './SheetNav';
+import { useRouter } from 'next/navigation';
 import { useSheet } from '@/context/SheetContext';
 import { LucideIcon } from 'lucide-react';
 import { NavConfigItem } from '@/types/navigation';
+import SheetNav from './SheetNav';
 
-interface GridNavContainerProps {
-  mainNavConfig: NavConfigItem[];
+interface SheetNavContainerProps {
+  config: NavConfigItem[];
 }
 
-export default function GridNavContainer({
-  mainNavConfig,
-}: GridNavContainerProps) {
+export default function SheetNavContainer({ config }: SheetNavContainerProps) {
   const router = useRouter();
-  const pathname = usePathname();
-  const { openSheet } = useSheet();
+  const { closeSheet } = useSheet();
 
-  const navItems = mainNavConfig.map(item => ({
+  const navItems = config.map(item => ({
     icon: item.icon as LucideIcon,
     label: item.label,
-    isActive:
-      item.action.type === 'navigation' && pathname === item.action.path,
     onClick: () => {
+      console.log('click');
       if (item.action.type === 'navigation') {
         router.push(item.action.path);
-      } else if (item.action.type === 'sheet') {
-        const Content = item.action.content;
-        openSheet({
-          title: item.action.title,
-          content: <Content />,
-        });
       }
+      closeSheet();
     },
   }));
 
-  return <BottomNav items={navItems} />;
+  return <SheetNav items={navItems} />;
 }
