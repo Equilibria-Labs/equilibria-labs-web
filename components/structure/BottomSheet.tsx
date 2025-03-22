@@ -16,6 +16,7 @@ interface BottomSheetProps {
   description?: string;
   children: React.ReactNode;
   className?: string;
+  height?: string; // can be vh, px, or auto
 }
 
 export default function BottomSheet({
@@ -25,12 +26,13 @@ export default function BottomSheet({
   description,
   children,
   className = '',
+  height = 'auto',
 }: BottomSheetProps) {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent
         side='bottom'
-        className={`h-[95vh] overflow-y-auto rounded-t-[10px] ${className}`}
+        className={`h-[${height}] overflow-y-auto rounded-t-[10px] ${className}`}
       >
         {(title || description) && (
           <SheetHeader>
