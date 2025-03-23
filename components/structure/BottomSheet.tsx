@@ -11,7 +11,7 @@ import {
 
 interface BottomSheetProps {
   isOpen: boolean;
-  onClose: () => void;
+  onCloseAction: () => void;
   title?: string;
   description?: string;
   children: React.ReactNode;
@@ -21,7 +21,7 @@ interface BottomSheetProps {
 
 export default function BottomSheet({
   isOpen,
-  onClose,
+  onCloseAction,
   title,
   description,
   children,
@@ -29,10 +29,10 @@ export default function BottomSheet({
   height = 'auto',
 }: BottomSheetProps) {
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
+    <Sheet open={isOpen} onOpenChange={onCloseAction}>
       <SheetContent
         side='bottom'
-        className={`h-[${height}] overflow-y-auto rounded-t-[10px] ${className}`}
+        className={`h-[${height}] overflow-y-auto rounded-t-[10px] mx-auto max-w-maxWidth ${className}`}
       >
         {(title || description) && (
           <SheetHeader>
