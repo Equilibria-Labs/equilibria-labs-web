@@ -24,7 +24,7 @@ const buttonVariants = cva(
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+          'border border-foreground/50 text-foreground/50 hover:bg-accent hover:bg-foreground/10',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost: 'hover:bg-foreground/10 hover:text-foreground',
@@ -35,6 +35,7 @@ const buttonVariants = cva(
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-full px-8',
         icon: 'h-10 w-10 ',
+        iconCircle: 'h-11 w-11 rounded-full',
       },
     },
     defaultVariants: {
@@ -89,7 +90,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const Comp = asChild ? Slot : 'button';
     const Icon = iconName ? iconMap[iconName] : null;
-    const iconSize = size === 'icon' ? 'h-6 w-6' : 'h-4 w-4';
+    const iconSize =
+      size === 'icon' || size === 'iconCircle' ? 'h-6 w-6' : 'h-4 w-4';
 
     return (
       <Comp

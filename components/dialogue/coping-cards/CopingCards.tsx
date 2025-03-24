@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { CardCategory } from '@/config/coping-card-data';
 import Column from '@/components/structure/Column';
+import CopingCard from './CopingCard';
+import { Button } from '@/components/ui/button';
 
 interface CopingCardsProps {
   category: CardCategory;
@@ -24,32 +26,26 @@ export default function CopingCards({ category }: CopingCardsProps) {
 
   return (
     <Column hasSmallGap>
-      <p className='text-white text-center mb-6'>
-        Read through these cards to help you ride out your anxiety
-      </p>
-
       <div className='relative w-full'>
-        <button
+        <Button
           onClick={goToPrevCard}
           className='absolute left-0 top-1/2 -translate-y-1/2 z-10 text-gray-400 p-2'
           aria-label='Previous card'
-        >
-          <ChevronLeft className='h-6 w-6' />
-        </button>
+          iconName='chevronLeft'
+          size='iconCircle'
+          variant='outline'
+        />
 
-        <div className='bg-white rounded-xl p-8 mx-8 min-h-[300px] flex items-center justify-center shadow-lg'>
-          <p className='text-gray-700 text-xl text-center font-medium'>
-            {category.cards[currentCardIndex].text}
-          </p>
-        </div>
+        <CopingCard text={category.cards[currentCardIndex].text} />
 
-        <button
+        <Button
           onClick={goToNextCard}
           className='absolute right-0 top-1/2 -translate-y-1/2 z-10 text-gray-400 p-2'
           aria-label='Next card'
-        >
-          <ChevronRight className='h-6 w-6' />
-        </button>
+          iconName='chevronRight'
+          size='iconCircle'
+          variant='outline'
+        />
       </div>
 
       <div className='flex space-x-2 mt-4'>
