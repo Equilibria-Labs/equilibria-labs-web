@@ -4,6 +4,7 @@ interface RowProps {
   children: React.ReactNode;
   className?: string;
   hasNoGap?: boolean;
+  hasSmallGap?: boolean;
   isFullWidth?: boolean;
   justify?:
     | 'flex-start'
@@ -20,22 +21,26 @@ export default function Row({
   children,
   className = '',
   hasNoGap = false,
+  hasSmallGap = false,
   isFullWidth = false,
   justify = 'flex-start',
   align = 'flex-start',
   gridTemplateColumns = '',
   gapInPercent,
 }: RowProps) {
+  const gapClass = hasNoGap ? '' : hasSmallGap ? 'gap-2' : 'gap-4';
+  const widthClass = isFullWidth ? 'w-full' : 'max-w-5xl';
+
   return (
     <div
-      className={`grid grid-flow-col ${!hasNoGap ? 'gap-4' : ''} ${
-        isFullWidth ? 'w-full' : 'max-w-5xl'
-      } ${className}`}
+      className={['grid grid-flow-col', gapClass, widthClass, className]
+        .filter(Boolean)
+        .join(' ')}
       style={{
         justifyContent: justify,
         alignItems: align,
         gridTemplateColumns,
-        gap: gapInPercent ? `${gapInPercent}%` : 'inherit',
+        gap: gapInPercent ? `${gapInPercent}%` : undefined,
       }}
     >
       {children}
