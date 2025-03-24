@@ -81,15 +81,15 @@ const config: Config = {
       fontSize: {
         title: '50px',
         'heading-lg': '30px',
-        heading: '24px',
+        heading: '22px',
         'body-lg': '18px',
         'body-md': '14px',
         button: '16px',
       },
       lineHeight: {
         title: '50px',
-        'heading-lg': '40px',
-        heading: '32px',
+        'heading-lg': '36px',
+        heading: '28px',
         'body-lg': '24px',
         'body-md': '18px',
         button: '16px',
