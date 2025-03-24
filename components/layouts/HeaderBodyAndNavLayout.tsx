@@ -10,9 +10,7 @@ export default function HeaderBodyAndNavLayout({
 }) {
   return (
     <>
-      <SunriseHeader>
-        <Header />
-      </SunriseHeader>
+      <Header />
       <Body>{children}</Body>
       <BottomNav />
     </>
