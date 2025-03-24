@@ -14,7 +14,7 @@ import Box from '@/components/structure/Box';
 // import List, { ListItem } from '@/components/common/List';
 import { EmotionSlider } from '@/components/dialogue/EmotionSlider/EmotionSlider';
 import { useEffect, useState } from 'react';
-
+import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 const getTimeOfDayGreeting = () => {
   const hour = new Date().getHours();
   if (hour >= 3 && hour < 12) return 'this morning';
@@ -31,6 +31,11 @@ export const metadata: Metadata = {
 
 export default function TodayPage() {
   const [timeGreeting, setTimeGreeting] = useState('');
+  const { setRandomTheme } = useAlternativeTheme();
+
+  useEffect(() => {
+    setRandomTheme();
+  }, [setRandomTheme]);
 
   useEffect(() => {
     setTimeGreeting(getTimeOfDayGreeting());
