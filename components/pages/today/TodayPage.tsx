@@ -39,12 +39,7 @@ export default function TodayPage() {
 
   useEffect(() => {
     setTimeGreeting(getTimeOfDayGreeting());
-    // Update every minute to ensure it changes at the right time
-    const interval = setInterval(() => {
-      setTimeGreeting(getTimeOfDayGreeting());
-    }, 60000);
-    return () => clearInterval(interval);
-  }, []);
+  }, [setTimeGreeting]);
 
   return (
     <Box hasLargePadding shouldRise>
