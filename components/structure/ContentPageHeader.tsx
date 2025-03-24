@@ -1,4 +1,4 @@
-import { BodyText } from '../common/Typography';
+import { BodyText, Heading } from '../common/Typography';
 import BackButton from '../navigation/BackButton';
 import Row from './Row';
 import { Button } from '../ui/button';
@@ -17,7 +17,7 @@ export default function ContentPageHeader({
   return (
     <Row justify='space-between' align='center'>
       <BackButton isHome={isBackButtonHome} />
-      <BodyText>{title}</BodyText>
+      <Heading>{title}</Heading>
       {newItemHandler && (
         <Button
           variant='ghost'

@@ -11,15 +11,10 @@ export default function BottomNav({
   items,
   initialActiveLabel,
 }: BottomNavProps) {
-  const [activeLabel, setActiveLabel] = useState(
-    initialActiveLabel || items[0]?.label
-  );
+  const [activeLabel, setActiveLabel] = useState(initialActiveLabel);
 
   return (
-    <nav
-      data-component='SheetNav'
-      className='fixed bottom-0 left-0 right-0 bg-background text-foreground'
-    >
+    <nav data-component='SheetNav' className='bg-background text-foreground'>
       <div className='flex justify-around items-center p-4  max-w-maxWidth mx-auto'>
         {items.map(item => (
           <NavItem

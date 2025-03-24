@@ -13,9 +13,8 @@ const Header = async () => {
   } = await supabase.auth.getUser();
 
   return (
-    <header className='px-4 py-2 max-w-maxWidth mx-auto'>
-      <Row isFullWidth justify='space-between' align='center'>
-        <Logo />
+    <header className='w-full relative h-[theme(spacing.headerHeightMobile)] md:h-[theme(spacing.headerHeightDesktop)] px-4 py-2 max-w-maxWidth mx-auto'>
+      <Row isFullWidth justify='flex-end' align='center'>
         {user ? (
           <Avatar>
             <AvatarImage

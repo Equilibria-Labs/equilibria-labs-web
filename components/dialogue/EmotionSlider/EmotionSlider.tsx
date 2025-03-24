@@ -117,7 +117,12 @@ export function EmotionSlider() {
         className='py-4'
       />
 
-      <Button iconName='chevronRight' onClick={handleSubmit}>
+      <Button
+        iconName='chevronRight'
+        onClick={handleSubmit}
+        size='lg'
+        variant='secondary'
+      >
         Check-in
       </Button>
     </Column>

@@ -25,14 +25,12 @@ export default function CopingCardsPage() {
         title='Coping Cards'
         newItemHandler={() => {}}
       />
-      <Box shouldRise>
-        <CopingCards category={selectedCategory} />
-        <CategorySelector
-          categories={categories}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-        />
-      </Box>
+      <CopingCards category={selectedCategory} />
+      <CategorySelector
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+      />
     </>
   );
 }
