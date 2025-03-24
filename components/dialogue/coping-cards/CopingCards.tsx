@@ -6,6 +6,7 @@ import Column from '@/components/structure/Column';
 import CopingCard from './CopingCard';
 import { Button } from '@/components/ui/button';
 import Row from '@/components/structure/Row';
+import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 
 interface CopingCardsProps {
   category: CardCategory;
@@ -13,15 +14,23 @@ interface CopingCardsProps {
 
 export default function CopingCards({ category }: CopingCardsProps) {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const { setNextTheme } = useAlternativeTheme();
 
   const goToNextCard = () => {
+    setNextTheme();
     setCurrentCardIndex(prev => (prev + 1) % category.cards.length);
   };
 
   const goToPrevCard = () => {
+    setNextTheme();
     setCurrentCardIndex(
       prev => (prev - 1 + category.cards.length) % category.cards.length
     );
+  };
+
+  const goToCard = (index: number) => {
+    setNextTheme();
+    setCurrentCardIndex(index);
   };
 
   return (
@@ -40,7 +49,7 @@ export default function CopingCards({ category }: CopingCardsProps) {
           {category.cards.map((_, index) => (
             <button
               key={index}
-              onClick={() => setCurrentCardIndex(index)}
+              onClick={() => goToCard(index)}
               className={`w-3 h-3 rounded-full ${index === currentCardIndex ? 'bg-white' : 'bg-white/40'}`}
               aria-label={`Go to card ${index + 1}`}
             />
