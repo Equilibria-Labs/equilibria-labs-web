@@ -136,8 +136,8 @@ export default function ThoughtJournal() {
             process:
             <ol className='list-decimal pl-5 mt-2 space-y-2'>
               <li>
-                <strong>Define Worries:</strong> Identify and articulate what's
-                bothering you.
+                <strong>Define Worries:</strong> Identify and articulate
+                what&apos;s bothering you.
               </li>
               <li>
                 <strong>Identify Thinking Traps:</strong> Recognize patterns of

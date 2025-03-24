@@ -77,9 +77,10 @@ export default function BalanceThought({
 
         <div className='bg-gray-50 p-4 rounded-lg mt-2'>
           <p className='text-gray-500 italic'>
-            e.g. I'm not 100% sure I'm going to fail the exam on Monday. Chances
-            are I can answer some questions. Even if I don't do well it doesn't
-            mean I can't make up the marks.
+            e.g. I&apos;m not 100% sure I&apos;m going to fail the exam on
+            Monday. Chances are I can answer some questions. Even if I
+            don&apos;t do well it doesn&apos;t mean I can&apos;t make up the
+            marks.
           </p>
         </div>
 

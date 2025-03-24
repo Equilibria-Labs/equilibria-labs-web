@@ -46,7 +46,7 @@ export default function ThinkingTrapSelector({
         <h3 className='text-gray-500 font-medium'>Worry</h3>
         <p className='text-lg font-medium mt-2'>{worry}</p>
         <div className='h-px bg-gray-200 w-full my-4' />
-        <p className='text-gray-500'>Let's challenge that worry.</p>
+        <p className='text-gray-500'>Let&apos;s challenge that worry.</p>
       </div>
 
       <div className='flex justify-center space-x-2 py-2'>
