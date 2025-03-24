@@ -1,4 +1,4 @@
-import { Sun, Grid, User, Lightbulb } from 'lucide-react';
+import { Sun, Grid, User, Lightbulb, BookOpen } from 'lucide-react';
 import { NavConfigItem } from '@/types/navigation';
 import QuickReliefSheet from '@/components/sheets/QuickReliefSheet';
 
@@ -27,8 +27,13 @@ export const mainNavConfig: NavConfigItem[] = [
 
 export const quickReliefNavConfig: NavConfigItem[] = [
   {
+    icon: BookOpen,
+    label: 'Thought Journal',
+    action: { type: 'navigation', path: '/thought-journal' },
+  },
+  {
     icon: Lightbulb,
-    label: 'Shift Your Thinking',
+    label: 'Coping Cards',
     action: { type: 'navigation', path: '/coping-cards' },
   },
 ];

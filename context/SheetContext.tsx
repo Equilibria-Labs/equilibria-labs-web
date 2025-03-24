@@ -36,7 +36,7 @@ export function SheetProvider({ children }: { children: ReactNode }) {
       {sheetContent && (
         <BottomSheet
           isOpen={isOpen}
-          onClose={closeSheet}
+          onCloseAction={closeSheet}
           title={sheetContent.title}
           description={sheetContent.description}
           className={sheetContent.className}

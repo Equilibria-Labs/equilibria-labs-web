@@ -9,9 +9,9 @@ import { CardCategory } from '@/config/coping-card-data';
 import ContentPageHeader from '@/components/structure/ContentPageHeader';
 
 export const metadata: Metadata = {
-  title: 'The Sleep Lab | Equilibria',
+  title: 'Coping Cards | Equilibria Labs',
   description:
-    'Take a sleep test to see how you sleep and get a personalized sleep report',
+    'A collection of coping cards to help you through difficult times',
 };
 
 export default function CopingCardsPage() {
