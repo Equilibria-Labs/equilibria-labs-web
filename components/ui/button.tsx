@@ -27,7 +27,7 @@ const buttonVariants = cva(
           'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        ghost: 'hover:bg-foreground/10 hover:text-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
@@ -89,6 +89,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const Comp = asChild ? Slot : 'button';
     const Icon = iconName ? iconMap[iconName] : null;
+    const iconSize = size === 'icon' ? 'h-6 w-6' : 'h-4 w-4';
 
     return (
       <Comp
@@ -97,14 +98,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {isIconFirst && Icon && (
-          <Icon className={cn('h-4 w-4', iconClassName)} />
+          <Icon className={cn(iconSize, iconClassName)} />
         )}
         {children && Icon && (
           <span className={cn(isIconFirst ? 'ml-2' : 'mr-2')}>{children}</span>
         )}
         {!Icon && children}
         {!isIconFirst && Icon && (
-          <Icon className={cn('h-4 w-4', iconClassName)} />
+          <Icon className={cn(iconSize, iconClassName)} />
         )}
       </Comp>
     );
