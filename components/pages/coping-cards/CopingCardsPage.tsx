@@ -1,6 +1,5 @@
 'use client';
 import { Metadata } from 'next';
-import Box from '@/components/structure/Box';
 import CopingCards from '@/components/dialogue/coping-cards/CopingCards';
 import CategorySelector from '@/components/dialogue/coping-cards/CategorySelector';
 import { useState } from 'react';

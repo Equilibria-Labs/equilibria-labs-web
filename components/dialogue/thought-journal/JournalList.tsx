@@ -1,7 +1,7 @@
 'use client';
 
 import { format } from 'date-fns';
-import { ChevronRight, Plus } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { JournalEntry } from '@/types/shared/thought-journal';
 import { Button } from '@/components/ui/button';
 
@@ -18,14 +18,6 @@ export default function JournalList({
 }: JournalListProps) {
   return (
     <div className='flex flex-col min-h-screen'>
-      <header className='bg-gradient-to-r from-violet-400 to-violet-500 p-4 flex items-center justify-between'>
-        <div className='w-6' /> {/* Spacer */}
-        <h1 className='text-xl font-semibold text-white'>Thought Journal</h1>
-        <button onClick={onNewEntryAction} className='text-white'>
-          <Plus className='h-6 w-6' />
-        </button>
-      </header>
-
       <div className='p-4'>
         <h2 className='text-gray-500 font-medium mb-4'>
           {format(new Date(), 'EEEE, MMMM d, yyyy')}

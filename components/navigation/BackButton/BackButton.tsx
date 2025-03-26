@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 interface BackButtonProps {
-  isHome: boolean;
+  isHome?: boolean;
 }
 
 export default function BackButton({ isHome }: BackButtonProps) {

@@ -1,10 +1,10 @@
-import { BodyText, Heading } from '../common/Typography';
+import { Heading } from '../common/Typography';
 import BackButton from '../navigation/BackButton';
 import Row from './Row';
 import { Button } from '../ui/button';
 
 interface ContentPageHeaderProps {
-  isBackButtonHome: boolean;
+  isBackButtonHome?: boolean;
   title: string;
   newItemHandler?: () => void;
 }
@@ -15,10 +15,14 @@ export default function ContentPageHeader({
   newItemHandler,
 }: ContentPageHeaderProps) {
   return (
-    <Row justify='space-between' align='center'>
+    <Row
+      justify='space-between'
+      align='center'
+      gridTemplateColumns='40px 1fr 40px'
+    >
       <BackButton isHome={isBackButtonHome} />
-      <Heading>{title}</Heading>
-      {newItemHandler && (
+      <Heading className='text-center'>{title}</Heading>
+      {newItemHandler ? (
         <Button
           variant='ghost'
           size='icon'
@@ -26,6 +30,8 @@ export default function ContentPageHeader({
           iconName='plus'
           aria-label='Add new card'
         />
+      ) : (
+        <div />
       )}
     </Row>
   );
