@@ -70,90 +70,74 @@ export default function ThoughtJournal() {
   };
 
   return (
-    <div className='flex flex-col min-h-screen'>
+    <>
       <ContentPageHeader title='Thought Journal' />
-      {showJournalList ? (
-        <JournalList
-          entries={journalEntries}
-          onNewEntryAction={startNewEntry}
-          onEntryClickAction={entry => {
-            setCurrentEntry(entry);
-            setShowJournalList(false);
-            setStep(1);
-          }}
-        />
-      ) : (
-        <>
-          <header className='bg-gradient-to-r from-violet-400 to-violet-500 p-4 flex items-center justify-between'>
-            <button
-              onClick={() => setShowJournalList(true)}
-              className='text-white'
-            >
-              <ChevronLeft className='h-6 w-6' />
-            </button>
-            <h1 className='text-xl font-semibold text-white'>
-              Thought Journal
-            </h1>
-            <button
-              onClick={() => setShowHelpDialog(true)}
-              className='text-white'
-            >
-              <HelpCircle className='h-6 w-6' />
-            </button>
-          </header>
+      <div className='flex flex-col min-h-screen'>
+        {showJournalList ? (
+          <JournalList
+            entries={journalEntries}
+            onNewEntryAction={startNewEntry}
+            onEntryClickAction={entry => {
+              setCurrentEntry(entry);
+              setShowJournalList(false);
+              setStep(1);
+            }}
+          />
+        ) : (
+          <>
+            <ProgressSteps currentStep={step} />
 
-          <ProgressSteps currentStep={step} />
+            <div className='flex-1 p-4'>
+              {step === 1 && (
+                <DefineWorry
+                  initialWorry={currentEntry.worry || ''}
+                  onSubmit={handleWorrySubmit}
+                />
+              )}
+              {step === 2 && (
+                <ThinkingTrapSelector
+                  worry={currentEntry.worry || ''}
+                  selectedTraps={currentEntry.traps || []}
+                  onSubmitAction={handleTrapsSubmit}
+                />
+              )}
+              {step === 3 && (
+                <BalanceThought
+                  worry={currentEntry.worry || ''}
+                  traps={currentEntry.traps || []}
+                  initialRewrite={currentEntry.rewrite || ''}
+                  onSubmitAction={handleRewriteSubmit}
+                />
+              )}
+            </div>
+          </>
+        )}
 
-          <div className='flex-1 p-4'>
-            {step === 1 && (
-              <DefineWorry
-                initialWorry={currentEntry.worry || ''}
-                onSubmit={handleWorrySubmit}
-              />
-            )}
-            {step === 2 && (
-              <ThinkingTrapSelector
-                worry={currentEntry.worry || ''}
-                selectedTraps={currentEntry.traps || []}
-                onSubmitAction={handleTrapsSubmit}
-              />
-            )}
-            {step === 3 && (
-              <BalanceThought
-                worry={currentEntry.worry || ''}
-                traps={currentEntry.traps || []}
-                initialRewrite={currentEntry.rewrite || ''}
-                onSubmitAction={handleRewriteSubmit}
-              />
-            )}
-          </div>
-        </>
-      )}
-
-      <Dialog open={showHelpDialog} onOpenChange={setShowHelpDialog}>
-        <DialogContent>
-          <DialogTitle>About Thought Journal</DialogTitle>
-          <DialogDescription>
-            This journal helps you manage negative thoughts through a three-step
-            process:
-            <ol className='list-decimal pl-5 mt-2 space-y-2'>
-              <li>
-                <strong>Define Worries:</strong> Identify and articulate
-                what&apos;s bothering you.
-              </li>
-              <li>
-                <strong>Identify Thinking Traps:</strong> Recognize patterns of
-                distorted thinking.
-              </li>
-              <li>
-                <strong>Balance Thought:</strong> Rewrite your thought in a more
-                balanced, realistic way.
-              </li>
-            </ol>
-            Regular practice can help improve your thought patterns over time.
-          </DialogDescription>
-        </DialogContent>
-      </Dialog>
-    </div>
+        <Dialog open={showHelpDialog} onOpenChange={setShowHelpDialog}>
+          <DialogContent>
+            <DialogTitle>About Thought Journal</DialogTitle>
+            <DialogDescription>
+              This journal helps you manage negative thoughts through a
+              three-step process:
+              <ol className='list-decimal pl-5 mt-2 space-y-2'>
+                <li>
+                  <strong>Define Worries:</strong> Identify and articulate
+                  what&apos;s bothering you.
+                </li>
+                <li>
+                  <strong>Identify Thinking Traps:</strong> Recognize patterns
+                  of distorted thinking.
+                </li>
+                <li>
+                  <strong>Balance Thought:</strong> Rewrite your thought in a
+                  more balanced, realistic way.
+                </li>
+              </ol>
+              Regular practice can help improve your thought patterns over time.
+            </DialogDescription>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </>
   );
 }
