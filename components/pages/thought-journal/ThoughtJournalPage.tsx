@@ -16,6 +16,7 @@ import ProgressSteps from '@/components/dialogue/thought-journal/ProgressSteps';
 import DefineWorry from '@/components/dialogue/thought-journal/DefineWorry';
 import ThinkingTrapSelector from '@/components/dialogue/thought-journal/ThinkingTrapSelector';
 import BalanceThought from '@/components/dialogue/thought-journal/BalanceThought';
+import ContentPageHeader from '@/components/structure/ContentPageHeader';
 
 export const metadata: Metadata = {
   title: 'Thought Journal | Equilibria Labs',
@@ -70,6 +71,7 @@ export default function ThoughtJournal() {
 
   return (
     <div className='flex flex-col min-h-screen'>
+      <ContentPageHeader title='Thought Journal' />
       {showJournalList ? (
         <JournalList
           entries={journalEntries}

@@ -1,5 +1,4 @@
 import React from 'react';
-import Logo from './Logo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Row from '@/components/structure/Row';
 import { createClient } from '@/utils/supabase/server';
