@@ -1,14 +1,14 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import BottomNav from './BottomNav';
 import { useSheet } from '@/context/SheetContext';
 import { LucideIcon } from 'lucide-react';
 import { mainNavConfig } from '@/config/navigation';
 import { sheets } from '@/config/sheets';
 
-export default function BottomNavContainer() {
+function BottomNavContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -52,4 +52,12 @@ export default function BottomNavContainer() {
   }));
 
   return <BottomNav items={navItems} />;
+}
+
+export default function BottomNavContainer() {
+  return (
+    <Suspense fallback={<BottomNav items={[]} />}>
+      <BottomNavContent />
+    </Suspense>
+  );
 }
