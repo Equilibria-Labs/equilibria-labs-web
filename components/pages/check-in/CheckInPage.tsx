@@ -3,7 +3,6 @@
 import { Metadata } from 'next';
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 import AnySymptoms from '@/components/dialogue/check-in/AnySymptoms';
 import WhatsYourMood from '@/components/dialogue/check-in/WhatsYourMood';
 import WhatAreYouDoing from '@/components/dialogue/check-in/WhatAreYouDoing';
@@ -23,7 +22,6 @@ type CheckInState = {
 };
 
 export default function CheckInPage() {
-  const { setRandomTheme } = useAlternativeTheme();
   const searchParams = useSearchParams();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<CheckInStep>('symptoms');
@@ -67,11 +65,11 @@ export default function CheckInPage() {
   const renderCurrentStep = () => {
     switch (currentStep) {
       case 'symptoms':
-        return <AnySymptoms onSubmit={handleSymptomsSubmit} />;
+        return <AnySymptoms onSubmitAction={handleSymptomsSubmit} />;
       case 'mood':
-        return <WhatsYourMood onSubmit={handleMoodSubmit} />;
+        return <WhatsYourMood onSubmitAction={handleMoodSubmit} />;
       case 'activity':
-        return <WhatAreYouDoing onSubmit={handleActivitySubmit} />;
+        return <WhatAreYouDoing onSubmitAction={handleActivitySubmit} />;
       default:
         return null;
     }

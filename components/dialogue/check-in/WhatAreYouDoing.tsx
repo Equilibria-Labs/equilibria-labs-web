@@ -7,10 +7,12 @@ import { Button } from '@/components/ui/button';
 import { SelectableButton } from '@/components/common/SelectableButton';
 
 interface WhatAreYouDoingProps {
-  onSubmit: (activities: string[]) => void;
+  onSubmitAction: (activities: string[]) => void;
 }
 
-export default function WhatAreYouDoing({ onSubmit }: WhatAreYouDoingProps) {
+export default function WhatAreYouDoing({
+  onSubmitAction,
+}: WhatAreYouDoingProps) {
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
 
   const activities = [
@@ -59,7 +61,7 @@ export default function WhatAreYouDoing({ onSubmit }: WhatAreYouDoingProps) {
 
       <Button
         className='mt-4'
-        onClick={() => onSubmit(selectedActivities)}
+        onClick={() => onSubmitAction(selectedActivities)}
         disabled={selectedActivities.length === 0}
       >
         Complete Check-in

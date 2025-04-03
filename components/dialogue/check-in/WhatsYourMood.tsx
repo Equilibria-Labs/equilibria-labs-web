@@ -7,10 +7,10 @@ import { Button } from '@/components/ui/button';
 import { SelectableButton } from '@/components/common/SelectableButton';
 
 interface WhatsYourMoodProps {
-  onSubmit: (moods: string[]) => void;
+  onSubmitAction: (moods: string[]) => void;
 }
 
-export default function WhatsYourMood({ onSubmit }: WhatsYourMoodProps) {
+export default function WhatsYourMood({ onSubmitAction }: WhatsYourMoodProps) {
   const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
 
   const moods = [
@@ -61,7 +61,7 @@ export default function WhatsYourMood({ onSubmit }: WhatsYourMoodProps) {
 
       <Button
         className='mt-4'
-        onClick={() => onSubmit(selectedMoods)}
+        onClick={() => onSubmitAction(selectedMoods)}
         disabled={selectedMoods.length === 0}
       >
         Continue

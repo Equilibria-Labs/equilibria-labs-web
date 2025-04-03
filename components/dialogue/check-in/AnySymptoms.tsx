@@ -2,16 +2,15 @@
 
 import { HeadingLarge } from '@/components/common/Typography';
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
 import Column from '@/components/structure/Column';
 import { Button } from '@/components/ui/button';
 import { SelectableButton } from '@/components/common/SelectableButton';
 
 interface AnySymptomProps {
-  onSubmit: (symptoms: string[]) => void;
+  onSubmitAction: (symptoms: string[]) => void;
 }
 
-export default function AnySymptoms({ onSubmit }: AnySymptomProps) {
+export default function AnySymptoms({ onSubmitAction }: AnySymptomProps) {
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
 
   const symptoms = [
@@ -62,7 +61,7 @@ export default function AnySymptoms({ onSubmit }: AnySymptomProps) {
         <Button size='iconCircle' iconName='plus' />
       </div>
 
-      <Button className='mt-4' onClick={() => onSubmit(selectedSymptoms)}>
+      <Button className='mt-4' onClick={() => onSubmitAction(selectedSymptoms)}>
         Continue
       </Button>
     </Column>
