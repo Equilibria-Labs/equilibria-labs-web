@@ -3,7 +3,6 @@
 import type React from 'react';
 
 import { useState, useRef, useEffect } from 'react';
-import { ArrowUp } from 'lucide-react';
 import { useChat } from 'ai/react';
 import Column from '@/components/structure/Column';
 import { HeadingLarge } from '@/components/common/Typography';
@@ -38,6 +37,7 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
 
   const { setRandomTheme } = useAlternativeTheme();
 
+  console.log(onComplete);
   // Get the current question from the messages
   const currentQuestion =
     messages.length > 0 && messages[messages.length - 1].role === 'assistant'
