@@ -1,6 +1,6 @@
 import { Sun, Grid, User, Lightbulb, BookOpen } from 'lucide-react';
 import { NavConfigItem } from '@/types/navigation';
-import ReliefSheet from '@/components/sheets/Relief';
+import { sheets } from './sheets';
 
 export const mainNavConfig: NavConfigItem[] = [
   {
@@ -16,7 +16,11 @@ export const mainNavConfig: NavConfigItem[] = [
   {
     icon: Grid,
     label: 'Get Relief',
-    action: { type: 'sheet', content: ReliefSheet, title: 'Get Relief' },
+    action: {
+      type: 'sheet',
+      sheetId: sheets.relief.id,
+      title: sheets.relief.title,
+    },
   },
   {
     icon: User,

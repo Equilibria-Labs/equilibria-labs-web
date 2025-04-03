@@ -3,6 +3,7 @@
 import type React from 'react';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { CloudLightning, Sun, CloudSun, Cloud, CloudRain } from 'lucide-react';
@@ -64,6 +65,7 @@ const emotionBands: EmotionBand[] = [
 ];
 
 export function EmotionSlider() {
+  const router = useRouter();
   const [value, setValue] = useState<number>(90);
 
   // Initialize currentEmotion with the correct emotion based on initial value
@@ -87,8 +89,7 @@ export function EmotionSlider() {
 
   const handleSubmit = () => {
     if (!currentEmotion) return;
-    console.log(`Submitted feeling: ${currentEmotion.name} (${value}%)`);
-    // Here you would typically send this data to your backend
+    router.push(`/check-in?wellness=${value}`);
   };
 
   if (!currentEmotion) return null;

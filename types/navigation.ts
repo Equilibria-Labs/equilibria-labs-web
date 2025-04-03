@@ -2,12 +2,19 @@ import { Sun, Book, Grid, User, LucideIcon } from 'lucide-react';
 
 export type NavIcon = typeof Sun | typeof Book | typeof Grid | typeof User;
 
-export type NavAction =
-  | { type: 'navigation'; path: string }
-  | { type: 'sheet'; content: React.ComponentType; title?: string };
+type NavigationAction = {
+  type: 'navigation';
+  path: string;
+};
 
-export interface NavConfigItem {
+type SheetAction = {
+  type: 'sheet';
+  sheetId: string;
+  title?: string;
+};
+
+export type NavConfigItem = {
   icon: LucideIcon;
   label: string;
-  action: NavAction;
-}
+  action: NavigationAction | SheetAction;
+};

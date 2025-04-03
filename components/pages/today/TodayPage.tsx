@@ -1,27 +1,9 @@
 'use client';
 
 import { Metadata } from 'next';
-import {
-  // Heading,
-  HeadingLarge,
-  // BodyText,
-  // HeadingSmall,
-  // SmallText,
-} from '@/components/common/Typography';
-// import Link from 'next/link';
-// import { Button } from '@/components/ui/button';
-import Box from '@/components/structure/Box';
-// import List, { ListItem } from '@/components/common/List';
-import { EmotionSlider } from '@/components/dialogue/EmotionSlider/EmotionSlider';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
-const getTimeOfDayGreeting = () => {
-  const hour = new Date().getHours();
-  if (hour >= 3 && hour < 12) return 'this morning';
-  if (hour >= 12 && hour < 18) return 'this afternoon';
-  if (hour >= 18 && hour < 23) return 'this evening';
-  return 'tonight';
-};
+import HowAreYou from '@/components/dialogue/check-in/HowAreYou';
 
 export const metadata: Metadata = {
   title: 'The Sleep Lab | Equilibria',
@@ -30,23 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default function TodayPage() {
-  const [timeGreeting, setTimeGreeting] = useState('');
   const { setRandomTheme } = useAlternativeTheme();
 
   useEffect(() => {
     setRandomTheme();
   }, [setRandomTheme]);
 
-  useEffect(() => {
-    setTimeGreeting(getTimeOfDayGreeting());
-  }, [setTimeGreeting]);
-
-  return (
-    <Box hasLargePadding shouldRise>
-      <HeadingLarge className='text-center'>
-        How are you feeling {timeGreeting}?
-      </HeadingLarge>
-      <EmotionSlider />
-    </Box>
-  );
+  return <HowAreYou />;
 }
