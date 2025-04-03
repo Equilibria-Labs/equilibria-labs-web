@@ -20,10 +20,5 @@ export default function TodayPage() {
     setRandomTheme();
   }, []);
 
-  // return <HowAreYou />;
-  return (
-    <Box hasLargePadding shouldRise>
-      <AnySymptoms />
-    </Box>
-  );
+  return <HowAreYou />;
 }

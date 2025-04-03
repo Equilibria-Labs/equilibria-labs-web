@@ -1,6 +1,13 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useCallback,
+} from 'react';
 import BottomSheet from '@/components/structure/BottomSheet';
 
 type SheetContent = {
@@ -13,6 +20,7 @@ type SheetContent = {
 interface SheetContextType {
   openSheet: (content: SheetContent) => void;
   closeSheet: () => void;
+  isSheetOpen: boolean;
 }
 
 const SheetContext = createContext<SheetContextType | undefined>(undefined);
@@ -21,17 +29,29 @@ export function SheetProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [sheetContent, setSheetContent] = useState<SheetContent | null>(null);
 
-  const openSheet = (content: SheetContent) => {
+  const closeSheet = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const openSheet = useCallback((content: SheetContent) => {
     setSheetContent(content);
     setIsOpen(true);
-  };
+  }, []);
 
-  const closeSheet = () => {
-    setIsOpen(false);
-  };
+  // Handle content cleanup after sheet is closed
+  useEffect(() => {
+    if (!isOpen && sheetContent) {
+      const timeout = setTimeout(() => {
+        setSheetContent(null);
+      }, 300); // Match your animation duration
+      return () => clearTimeout(timeout);
+    }
+  }, [isOpen]);
 
   return (
-    <SheetContext.Provider value={{ openSheet, closeSheet }}>
+    <SheetContext.Provider
+      value={{ openSheet, closeSheet, isSheetOpen: isOpen }}
+    >
       {children}
       {sheetContent && (
         <BottomSheet
