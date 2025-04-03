@@ -28,9 +28,16 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
   } = useChat({
     api: '/api/critical-friend',
     onFinish: () => {
-      setIsTyping(true);
-      setTypingIndex(0);
-      setDisplayedQuestion('');
+      // Wait for fade out to complete, then clear content and start new sequence
+      setTimeout(() => {
+        setDisplayedQuestion('');
+        setRandomTheme();
+        setFadeIn(true);
+        setTimeout(() => {
+          setIsTyping(true);
+          setTypingIndex(0);
+        }, 300); // Start typing after fade in
+      }, 300); // Wait for fade out
     },
   });
 
@@ -85,21 +92,20 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
     }
   }, []);
 
-  // Handle fade-in effect
+  // Remove the automatic fade-in effect since we're handling it manually
   useEffect(() => {
     if (!fadeIn) {
-      const timer = setTimeout(() => setFadeIn(true), 100);
+      const timer = setTimeout(() => {
+        setDisplayedQuestion(''); // Clear the text when fade out completes
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [fadeIn]);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setFadeIn(false);
-    setRandomTheme();
-    setTimeout(() => {
-      handleSubmit(e);
-    }, 300);
+    setFadeIn(false); // Start by fading out
+    handleSubmit(e);
   };
 
   return (
