@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { useEffect } from 'react';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 import CriticalFriendStarter from '@/components/dialogue/check-in/CriticalFriendStarter';
+import Column from '@/components/structure/Column';
 export const metadata: Metadata = {
   title: 'The Sleep Lab | Equilibria',
   description:

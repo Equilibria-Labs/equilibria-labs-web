@@ -7,7 +7,9 @@ interface ColumnProps {
   hasLargeGap?: boolean;
   hasSmallGap?: boolean;
   justifyItems?: 'start' | 'center' | 'end';
+  alignItems?: 'start' | 'center' | 'end';
   fadeIn?: boolean;
+  isFullHeight?: boolean;
 }
 
 const getGapClass = (
@@ -29,6 +31,8 @@ export default function Column({
   hasSmallGap = false,
   justifyItems,
   fadeIn,
+  alignItems,
+  isFullHeight = false,
 }: ColumnProps) {
   const fadeClass =
     fadeIn === undefined ? '' : fadeIn ? 'opacity-100' : 'opacity-0';
@@ -41,7 +45,11 @@ export default function Column({
         hasNoGap,
         hasSmallGap
       )} w-full max-w-5xl ${fadeClass} ${className}`}
-      style={justifyItems ? { justifyItems: justifyItems } : {}}
+      style={{
+        ...(justifyItems ? { justifyItems } : {}),
+        ...(alignItems ? { alignItems } : {}),
+        ...(isFullHeight ? { height: '100%' } : {}),
+      }}
     >
       {children}
     </div>

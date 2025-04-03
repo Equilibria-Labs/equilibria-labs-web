@@ -57,7 +57,7 @@ export default function CriticalFriendStarter() {
         isLoading={false}
         fadeIn={fadeIn}
         inputRef={inputRef}
-        buttonText='Get clarity'
+        buttonText='Get Clarity'
       />
     </Box>
   );
