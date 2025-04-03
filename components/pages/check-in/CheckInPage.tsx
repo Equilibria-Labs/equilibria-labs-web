@@ -1,7 +1,7 @@
 'use client';
 
 import { Metadata } from 'next';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import AnySymptoms from '@/components/dialogue/check-in/AnySymptoms';
 import WhatsYourMood from '@/components/dialogue/check-in/WhatsYourMood';
@@ -21,7 +21,7 @@ type CheckInState = {
   activities: string[];
 };
 
-export default function CheckInPage() {
+function CheckInContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<CheckInStep>('symptoms');
@@ -79,5 +79,19 @@ export default function CheckInPage() {
     <Box hasLargePadding shouldRise>
       {renderCurrentStep()}
     </Box>
+  );
+}
+
+export default function CheckInPage() {
+  return (
+    <Suspense
+      fallback={
+        <Box hasLargePadding shouldRise>
+          Loading...
+        </Box>
+      }
+    >
+      <CheckInContent />
+    </Suspense>
   );
 }
