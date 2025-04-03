@@ -10,6 +10,7 @@ import {
   Minus,
   X,
   Check,
+  Loader2,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -57,9 +58,11 @@ export interface ButtonProps
     | 'plus'
     | 'minus'
     | 'x'
-    | 'check';
+    | 'check'
+    | 'loader2';
   iconClassName?: string;
   isIconFirst?: boolean;
+  isLoading?: boolean;
 }
 
 const iconMap: Record<NonNullable<ButtonProps['iconName']>, LucideIcon> = {
@@ -71,6 +74,7 @@ const iconMap: Record<NonNullable<ButtonProps['iconName']>, LucideIcon> = {
   minus: Minus,
   x: X,
   check: Check,
+  loader2: Loader2,
 };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -83,32 +87,35 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       iconName,
       iconClassName,
       isIconFirst = false,
+      isLoading = false,
       children,
       ...props
     },
     ref
   ) => {
     const Comp = asChild ? Slot : 'button';
-    const Icon = iconName ? iconMap[iconName] : null;
+    const Icon = isLoading ? Loader2 : iconName ? iconMap[iconName] : null;
     const iconSize =
       size === 'icon' || size === 'iconCircle' ? 'h-6 w-6' : 'h-4 w-4';
+    const iconClasses = cn(
+      iconSize,
+      iconClassName,
+      isLoading && 'animate-spin'
+    );
 
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        disabled={isLoading || props.disabled}
         {...props}
       >
-        {isIconFirst && Icon && (
-          <Icon className={cn(iconSize, iconClassName)} />
-        )}
+        {isIconFirst && Icon && <Icon className={iconClasses} />}
         {children && Icon && (
           <span className={cn(isIconFirst ? 'ml-2' : 'mr-2')}>{children}</span>
         )}
         {!Icon && children}
-        {!isIconFirst && Icon && (
-          <Icon className={cn(iconSize, iconClassName)} />
-        )}
+        {!isIconFirst && Icon && <Icon className={iconClasses} />}
       </Comp>
     );
   }

@@ -44,7 +44,7 @@ export default function WhatAreYouDoing({
 
   return (
     <Column hasLargeGap>
-      <HeadingLarge className='text-center'>What are you up to?</HeadingLarge>
+      <HeadingLarge>What are you up to?</HeadingLarge>
 
       <div className='flex flex-wrap gap-2'>
         {activities.map(activity => (

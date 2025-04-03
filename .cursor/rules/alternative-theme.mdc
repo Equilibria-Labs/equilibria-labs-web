@@ -1,0 +1,42 @@
+---
+description: Using Alternative Themes
+globs: *.tsx
+---
+# Alternative Theme Hook Usage
+
+## Rule: Use Alternative Theme Hook for Theme Changes
+
+When implementing theme changes in the application, always use the `useAlternativeTheme` hook from `hooks/useAlternativeTheme.ts`. This hook provides a standardized way to handle theme switching with the following features:
+
+### Available Functions:
+- `setSpecificTheme(themeNumber)`: Set a specific theme (1-4)
+- `setRandomTheme()`: Set a random theme
+- `setNextTheme()`: Cycle to the next theme
+- `currentThemeIndex`: Get the current theme number
+
+### Implementation Example:
+```typescript
+const { setSpecificTheme, setRandomTheme, setNextTheme, currentThemeIndex } = useAlternativeTheme();
+
+// To set a specific theme (1-4)
+setSpecificTheme(2);
+
+// To set a random theme
+setRandomTheme();
+
+// To cycle to the next theme
+setNextTheme();
+```
+
+### Important Notes:
+- There are 4 available themes (1-4)
+- Theme numbers must be between 1 and 4
+- Theme changes are persisted using next-themes
+- Always import from 'hooks/useAlternativeTheme'
+
+### When to Use:
+- Theme toggle buttons
+- Theme switchers
+- Random theme generators
+- Theme cycling functionality
+- Any component that needs to modify the application theme 

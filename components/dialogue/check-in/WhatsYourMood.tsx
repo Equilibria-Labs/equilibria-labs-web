@@ -42,9 +42,7 @@ export default function WhatsYourMood({ onSubmitAction }: WhatsYourMoodProps) {
 
   return (
     <Column hasLargeGap>
-      <HeadingLarge className='text-center'>
-        How are you feeling today?
-      </HeadingLarge>
+      <HeadingLarge>How are you feeling today?</HeadingLarge>
 
       <div className='flex flex-wrap gap-2'>
         {moods.map(mood => (

@@ -15,9 +15,7 @@ export default function HowAreYou() {
 
   return (
     <Box hasLargePadding shouldRise>
-      <HeadingLarge className='text-center'>
-        How are you feeling {timeGreeting}?
-      </HeadingLarge>
+      <HeadingLarge>How are you feeling {timeGreeting}?</HeadingLarge>
       <EmotionSlider />
     </Box>
   );

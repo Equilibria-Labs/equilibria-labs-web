@@ -6,14 +6,16 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import AnySymptoms from '@/components/dialogue/check-in/AnySymptoms';
 import WhatsYourMood from '@/components/dialogue/check-in/WhatsYourMood';
 import WhatAreYouDoing from '@/components/dialogue/check-in/WhatAreYouDoing';
+import CriticalFriend from '@/components/dialogue/check-in/CriticalFriend';
 import Box from '@/components/structure/Box';
+import Loading from '@/components/structure/Loading';
 
 export const metadata: Metadata = {
   title: 'Check In | Equilibria',
   description: 'Daily check-in to track your symptoms, mood, and activities',
 };
 
-type CheckInStep = 'symptoms' | 'mood' | 'activity';
+type CheckInStep = 'critical-friend' | 'symptoms' | 'mood' | 'activity';
 type CheckInState = {
   wellness?: number;
   symptoms: string[];
@@ -24,7 +26,8 @@ type CheckInState = {
 function CheckInContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState<CheckInStep>('symptoms');
+  const [currentStep, setCurrentStep] =
+    useState<CheckInStep>('critical-friend');
   const [checkInState, setCheckInState] = useState<CheckInState>({
     symptoms: [],
     moods: [],
@@ -46,6 +49,10 @@ function CheckInContent() {
     router.push('/?sheet=relief');
   };
 
+  const handleCriticalFriendComplete = () => {
+    setCurrentStep('symptoms');
+  };
+
   const handleSymptomsSubmit = (symptoms: string[]) => {
     setCheckInState(prev => ({ ...prev, symptoms }));
     setCurrentStep('mood');
@@ -57,9 +64,8 @@ function CheckInContent() {
   };
 
   const handleActivitySubmit = (activities: string[]) => {
-    const finalState = { ...checkInState, activities };
-    setCheckInState(finalState);
-    handleCompletion(finalState);
+    setCheckInState(prev => ({ ...prev, activities }));
+    handleCompletion(checkInState);
   };
 
   const renderCurrentStep = () => {
@@ -70,13 +76,15 @@ function CheckInContent() {
         return <WhatsYourMood onSubmitAction={handleMoodSubmit} />;
       case 'activity':
         return <WhatAreYouDoing onSubmitAction={handleActivitySubmit} />;
+      case 'critical-friend':
+        return <CriticalFriend onComplete={handleCriticalFriendComplete} />;
       default:
         return null;
     }
   };
 
   return (
-    <Box hasLargePadding shouldRise>
+    <Box hasNoBg shouldRise>
       {renderCurrentStep()}
     </Box>
   );
@@ -84,13 +92,7 @@ function CheckInContent() {
 
 export default function CheckInPage() {
   return (
-    <Suspense
-      fallback={
-        <Box hasLargePadding shouldRise>
-          Loading...
-        </Box>
-      }
-    >
+    <Suspense fallback={<Loading />}>
       <CheckInContent />
     </Suspense>
   );
