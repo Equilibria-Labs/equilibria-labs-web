@@ -44,9 +44,7 @@ export default function AnySymptoms({ onSubmitAction }: AnySymptomProps) {
 
   return (
     <Column hasLargeGap>
-      <HeadingLarge className='text-center'>
-        Any physical symptoms?
-      </HeadingLarge>
+      <HeadingLarge>Any physical symptoms?</HeadingLarge>
 
       <div className='flex flex-wrap gap-2'>
         {symptoms.map(symptom => (

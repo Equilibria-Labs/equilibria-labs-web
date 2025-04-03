@@ -1,0 +1,55 @@
+---
+description: Use Typography Components
+globs: *.tsx
+---
+```mdc
+name: Use Typography Components
+description: Ensures consistent typography by using components from Typography.tsx instead of native HTML elements or incorrect imports
+
+triggers:
+  - type: pattern
+    pattern: <(h1|h2|h3|h4|p|small|label)(\s|>)
+    locations:
+      - "**/*.tsx"
+      - "**/*.jsx"
+    exclude:
+      - "**/Typography.tsx"
+
+  - type: pattern
+    pattern: import.*[Tt]ypography.*from.*(?!.*components/common/Typography)
+    locations:
+      - "**/*.tsx"
+      - "**/*.jsx"
+    exclude:
+      - "**/Typography.tsx"
+
+suggestions:
+  - title: Use Typography Components
+    description: |
+      Please use the appropriate Typography component from 'components/common/Typography':
+      - For main titles (h1), use `Title`
+      - For large headings (h2), use `HeadingLarge`
+      - For regular headings (h3), use `Heading`
+      - For small headings (h4), use `HeadingSmall`
+      - For body text (p), use `BodyText`
+      - For small text, use `SmallText`
+      - For button text, use `ButtonText`
+      - For label text, use `LabelText` or `LabelTextBold`
+      - For input text, use `InputText`
+
+      Import example:
+      ```tsx
+      import { Title, HeadingLarge, Heading, BodyText } from '@/components/common/Typography';
+      ```
+
+    replace:
+      h1: <Title>
+      h2: <HeadingLarge>
+      h3: <Heading>
+      h4: <HeadingSmall>
+      p: <BodyText>
+      small: <SmallText>
+      label: <LabelText>
+
+severity: warning
+```
