@@ -1,0 +1,91 @@
+---
+description: 
+globs: 
+---
+```mdc
+name: Use Button Component
+description: Ensures consistent button usage by following the defined props and variants from the Button component
+
+triggers:
+  - type: pattern
+    pattern: <button(\s|>)
+    locations:
+      - "**/*.tsx"
+      - "**/*.jsx"
+    exclude:
+      - "**/button.tsx"
+
+suggestions:
+  - title: Use Button Component
+    description: |
+      Please use the Button component from '@/components/ui/button' with the appropriate props and variants:
+
+      ### Basic Import:
+      ```tsx
+      import { Button } from '@/components/ui/button';
+      ```
+
+      ### Available Variants:
+      - `default`: Primary button with background color
+      - `destructive`: For dangerous actions
+      - `outline`: Bordered button with transparent background
+      - `secondary`: Alternative style button
+      - `ghost`: Transparent button with hover effect
+      - `link`: Underlined text button
+
+      ### Available Sizes:
+      - `default`: Standard size (h-10 px-4 py-2)
+      - `sm`: Small size (h-9 px-3)
+      - `lg`: Large size (h-11 px-8)
+      - `icon`: Square icon button (h-10 w-10)
+      - `iconCircle`: Circular icon button (h-11 w-11)
+
+      ### Icon Support:
+      Available icons via iconName prop:
+      - `chevronRight`
+      - `chevronLeft`
+      - `chevronUp`
+      - `chevronDown`
+      - `plus`
+      - `minus`
+      - `x`
+      - `check`
+
+      ### Props:
+      - `variant`: Button style variant (see above)
+      - `size`: Button size (see above)
+      - `asChild`: Boolean to render as child component
+      - `iconName`: Name of the icon to display
+      - `iconClassName`: Custom classes for the icon
+      - `isIconFirst`: Boolean to place icon before text
+      - All standard button HTML attributes
+
+      ### Usage Examples:
+      ```tsx
+      // Default button
+      <Button>Click me</Button>
+
+      // Destructive large button
+      <Button variant="destructive" size="lg">Delete</Button>
+
+      // Outline button with icon
+      <Button variant="outline" iconName="chevronRight">Next</Button>
+
+      // Icon only button
+      <Button size="icon" iconName="plus" />
+
+      // Secondary button with custom icon styling
+      <Button 
+        variant="secondary" 
+        iconName="check" 
+        iconClassName="text-green-500"
+      >
+        Confirm
+      </Button>
+      ```
+
+    replace:
+      button: Button
+
+severity: warning
+``` 
