@@ -10,6 +10,7 @@ import {
   Minus,
   X,
   Check,
+  Loader2,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -24,17 +25,18 @@ const buttonVariants = cva(
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+          'border border-foreground/50 text-foreground/50 hover:bg-accent hover:bg-foreground/10',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        ghost: 'hover:bg-foreground/10 hover:text-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-10 px-4 py-2',
         sm: 'h-9 rounded-md px-3',
-        lg: 'h-11 rounded-md px-8',
-        icon: 'h-10 w-10',
+        lg: 'h-11 rounded-full px-8',
+        icon: 'h-10 w-10 ',
+        iconCircle: 'h-11 w-11 rounded-full',
       },
     },
     defaultVariants: {
@@ -56,9 +58,11 @@ export interface ButtonProps
     | 'plus'
     | 'minus'
     | 'x'
-    | 'check';
+    | 'check'
+    | 'loader2';
   iconClassName?: string;
   isIconFirst?: boolean;
+  isLoading?: boolean;
 }
 
 const iconMap: Record<NonNullable<ButtonProps['iconName']>, LucideIcon> = {
@@ -70,6 +74,7 @@ const iconMap: Record<NonNullable<ButtonProps['iconName']>, LucideIcon> = {
   minus: Minus,
   x: X,
   check: Check,
+  loader2: Loader2,
 };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -82,30 +87,35 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       iconName,
       iconClassName,
       isIconFirst = false,
+      isLoading = false,
       children,
       ...props
     },
     ref
   ) => {
     const Comp = asChild ? Slot : 'button';
-    const Icon = iconName ? iconMap[iconName] : null;
+    const Icon = isLoading ? Loader2 : iconName ? iconMap[iconName] : null;
+    const iconSize =
+      size === 'icon' || size === 'iconCircle' ? 'h-6 w-6' : 'h-4 w-4';
+    const iconClasses = cn(
+      iconSize,
+      iconClassName,
+      isLoading && 'animate-spin'
+    );
 
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        disabled={isLoading || props.disabled}
         {...props}
       >
-        {isIconFirst && Icon && (
-          <Icon className={cn('h-4 w-4', iconClassName)} />
-        )}
+        {isIconFirst && Icon && <Icon className={iconClasses} />}
         {children && Icon && (
           <span className={cn(isIconFirst ? 'ml-2' : 'mr-2')}>{children}</span>
         )}
         {!Icon && children}
-        {!isIconFirst && Icon && (
-          <Icon className={cn('h-4 w-4', iconClassName)} />
-        )}
+        {!isIconFirst && Icon && <Icon className={iconClasses} />}
       </Comp>
     );
   }

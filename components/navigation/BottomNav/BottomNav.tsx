@@ -1,15 +1,11 @@
-import { LucideIcon } from 'lucide-react';
-import { useState } from 'react';
-import BottomNavItem from './BottomNavItem';
+'use client';
 
-interface NavItem {
-  icon: LucideIcon;
-  label: string;
-  onClick: () => void;
-}
+import { useState } from 'react';
+import NavItem from '@/components/navigation/NavItem';
+import { NavItemProps } from '@/components/navigation/NavItem/NavItem';
 
 interface BottomNavProps {
-  items: NavItem[];
+  items: NavItemProps[];
   initialActiveLabel?: string;
 }
 
@@ -28,7 +24,7 @@ export default function BottomNav({
     >
       <div className='flex justify-around items-center p-4  max-w-maxWidth mx-auto'>
         {items.map(item => (
-          <BottomNavItem
+          <NavItem
             data-component='BottomNavItem'
             key={item.label}
             icon={item.icon}
@@ -36,7 +32,7 @@ export default function BottomNav({
             isActive={activeLabel === item.label}
             onClick={() => {
               setActiveLabel(item.label);
-              item.onClick();
+              item.onClick?.();
             }}
           />
         ))}

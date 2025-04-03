@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { BodyText, Title } from '@/components/common/Typography';
-import EquilibriaIcon from '@/components/common/EquilibriaIcon';
+// import { BodyText, Title } from '@/components/common/Typography';
+// import EquilibriaIcon from '@/components/common/EquilibriaIcon';
+import Logo from '@/components/structure/Logo';
 
 export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
@@ -13,6 +14,8 @@ export default function SplashScreen() {
     return () => clearTimeout(timer);
   }, []);
 
+  console.log('rendering splash screen');
+
   return (
     <div
       className={clsx(
@@ -20,7 +23,7 @@ export default function SplashScreen() {
         isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
       )}
     >
-      <div className='flex flex-col gap-4 items-center -mt-20'>
+      {/* <div className='flex flex-col gap-4 items-center -mt-20'>
         <div className='flex flex-col'>
           <div className='font-heading text-heading-sm ml-2'>The</div>
           <Title className='-mt-3'>Sleep Lab</Title>
@@ -31,7 +34,8 @@ export default function SplashScreen() {
           <span className='font-label font-bold'>Equilibria</span>
           <span className='font-title font-light italic ml-1'>Labs</span>
         </div>
-      </div>
+      </div> */}
+      <Logo size={150} />
     </div>
   );
 }

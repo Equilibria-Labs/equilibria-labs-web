@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useTheme } from 'next-themes';
 import {
   QuestionnaireConfig,
   ChoiceValue,
@@ -18,6 +17,8 @@ import { BodyText } from '@/components/common/Typography';
 import Column from '@/components/structure/Column';
 import Box from '@/components/structure/Box';
 import { getScoreFromAnswersWithFormula } from './helpers/getScoreFromAnswersWithFormula';
+import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
+
 interface QuestionnaireProps {
   config: QuestionnaireConfig;
   onCompleteAction: (answers: Answer[], score?: number) => void;
@@ -29,15 +30,13 @@ export function Questionnaire({
 }: QuestionnaireProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
-  const { setTheme } = useTheme();
+  const { setNextTheme } = useAlternativeTheme();
 
   const handleNext = () => {
     const nextStepIndex = currentStepIndex + 1;
     const allSteps = [...config.steps, ...config.resultsSteps];
 
-    // Cycle through themes based on step index
-    const themeNumber = (nextStepIndex % 4) + 1; // We have theme-1 through theme-4
-    setTheme(`theme-${themeNumber}`);
+    setNextTheme();
 
     // Move to next step if it exists
     if (nextStepIndex < allSteps.length) {

@@ -1,18 +1,9 @@
 'use client';
 
 import { Metadata } from 'next';
-import {
-  // Heading,
-  HeadingLarge,
-  // BodyText,
-  // HeadingSmall,
-  // SmallText,
-} from '@/components/common/Typography';
-// import Link from 'next/link';
-// import { Button } from '@/components/ui/button';
-import Box from '@/components/structure/Box';
-// import List, { ListItem } from '@/components/common/List';
-import { EmotionSlider } from '@/components/dialogue/EmotionSlider/EmotionSlider';
+import { useEffect } from 'react';
+import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
+import HowAreYou from '@/components/dialogue/check-in/HowAreYou';
 
 export const metadata: Metadata = {
   title: 'The Sleep Lab | Equilibria',
@@ -21,10 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default function TodayPage() {
-  return (
-    <Box shouldRise>
-      <HeadingLarge className='text-center'>How are you feeling?</HeadingLarge>
-      <EmotionSlider />
-    </Box>
-  );
+  const { setRandomTheme } = useAlternativeTheme();
+
+  useEffect(() => {
+    setRandomTheme();
+  }, [setRandomTheme]);
+
+  return <HowAreYou />;
 }

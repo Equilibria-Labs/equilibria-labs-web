@@ -1,7 +1,6 @@
 import Header from '@/components/structure/Header';
-import SunriseHeader from '@/components/graphics/SunriseHeader';
 import Body from '@/components/structure/Body';
-import BottomNav from '@/components/structure/BottomNav';
+import BottomNav from '@/components/navigation/BottomNav';
 
 export default function HeaderBodyAndNavLayout({
   children,
@@ -10,9 +9,7 @@ export default function HeaderBodyAndNavLayout({
 }) {
   return (
     <>
-      <SunriseHeader>
-        <Header />
-      </SunriseHeader>
+      <Header />
       <Body>{children}</Body>
       <BottomNav />
     </>
