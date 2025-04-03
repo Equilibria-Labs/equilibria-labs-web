@@ -36,7 +36,28 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
 
   const { setRandomTheme } = useAlternativeTheme();
 
-  console.log(onComplete);
+  // Initial setup effect
+  useEffect(() => {
+    if (messages.length === 0) {
+      const initialResponse = sessionStorage.getItem('initialResponse');
+      if (initialResponse) {
+        // Add the initial response and trigger the assistant
+        append({
+          role: 'user',
+          content: initialResponse,
+        });
+        // Clean up after using
+        sessionStorage.removeItem('initialResponse');
+      } else {
+        // If no initial response, start with empty message to trigger AI
+        append({
+          role: 'user',
+          content: '',
+        });
+      }
+    }
+  }, [messages, append]);
+
   // Get the current question from the messages
   const currentQuestion =
     messages.length > 0 && messages[messages.length - 1].role === 'assistant'
@@ -56,16 +77,6 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
       setIsTyping(false);
     }
   }, [isTyping, typingIndex, currentQuestion]);
-
-  // Initial question setup
-  useEffect(() => {
-    if (messages.length === 0) {
-      append({
-        role: 'assistant',
-        content: '',
-      });
-    }
-  }, [messages, append]);
 
   // Focus input on load
   useEffect(() => {
