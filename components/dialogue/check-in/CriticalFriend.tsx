@@ -4,10 +4,9 @@ import type React from 'react';
 
 import { useState, useRef, useEffect } from 'react';
 import { useChat } from 'ai/react';
-import Column from '@/components/structure/Column';
-import { HeadingLarge } from '@/components/common/Typography';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
-import { Button } from '@/components/ui/button';
+import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
+
 interface CriticalFriendProps {
   onComplete?: () => void;
 }
@@ -93,56 +92,16 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
   };
 
   return (
-    <Column
-      hasLargeGap
-      className={`w-full max-w-2xl transition-opacity duration-300 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}
-    >
-      <HeadingLarge className='text-secondary'>
-        {isTyping || messages[messages.length - 1]?.role !== 'assistant' ? (
-          <>
-            {displayedQuestion}
-            <span className='inline-block w-2 h-5 ml-1 bg-black animate-pulse'></span>
-          </>
-        ) : displayedQuestion ? (
-          displayedQuestion
-        ) : null}
-      </HeadingLarge>
-
-      <form onSubmit={handleFormSubmit} className='relative flex flex-col'>
-        <Column hasNoGap justifyItems='end'>
-          <textarea
-            ref={inputRef}
-            value={input}
-            onChange={e => {
-              handleInputChange(e);
-              // Auto-expand height
-              e.target.style.height = 'auto';
-              e.target.style.height = `${e.target.scrollHeight}px`;
-            }}
-            onKeyDown={e => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                if (!isLoading && !isTyping && input.trim()) {
-                  handleFormSubmit(e);
-                }
-              }
-            }}
-            placeholder='Type your response...'
-            className='w-full min-h-[64px] p-0 text-heading bg-transparent border-none outline-none resize-none font-input'
-            disabled={isLoading || isTyping}
-            rows={1}
-          />
-          <Button
-            type='submit'
-            variant='secondary'
-            size='iconCircle'
-            className='rounded-full self-end'
-            isLoading={isLoading}
-            iconName='chevronUp'
-            disabled={isLoading || isTyping || !input.trim()}
-          />
-        </Column>
-      </form>
-    </Column>
+    <QuestionAnswerChat
+      displayedQuestion={displayedQuestion}
+      isTyping={isTyping}
+      isAssistantMessage={messages[messages.length - 1]?.role === 'assistant'}
+      input={input}
+      onInputChange={handleInputChange}
+      onSubmit={handleFormSubmit}
+      isLoading={isLoading}
+      fadeIn={fadeIn}
+      inputRef={inputRef}
+    />
   );
 }

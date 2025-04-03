@@ -7,6 +7,7 @@ interface ColumnProps {
   hasLargeGap?: boolean;
   hasSmallGap?: boolean;
   justifyItems?: 'start' | 'center' | 'end';
+  fadeIn?: boolean;
 }
 
 const getGapClass = (
@@ -27,15 +28,19 @@ export default function Column({
   hasLargeGap = false,
   hasSmallGap = false,
   justifyItems,
+  fadeIn,
 }: ColumnProps) {
+  const fadeClass =
+    fadeIn === undefined ? '' : fadeIn ? 'opacity-100' : 'opacity-0';
+
   return (
     <div
       data-component='Column'
-      className={`grid grid-cols-1 ${getGapClass(
+      className={`grid grid-cols-1 transition-opacity duration-300 ${getGapClass(
         hasLargeGap,
         hasNoGap,
         hasSmallGap
-      )} w-full max-w-5xl ${className}`}
+      )} w-full max-w-5xl ${fadeClass} ${className}`}
       style={justifyItems ? { justifyItems: justifyItems } : {}}
     >
       {children}
