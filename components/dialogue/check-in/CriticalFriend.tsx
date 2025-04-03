@@ -86,6 +86,12 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
       return () => clearTimeout(timer);
     } else if (isTyping && typingIndex >= currentQuestion.length) {
       setIsTyping(false);
+      // Focus the input after typing animation completes with a delay
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 100); // Add delay before focusing
     }
   }, [isTyping, typingIndex, currentQuestion]);
 
