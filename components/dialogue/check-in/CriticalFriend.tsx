@@ -36,6 +36,10 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
         setTimeout(() => {
           setIsTyping(true);
           setTypingIndex(0);
+          // Refocus the input after the animation sequence
+          if (inputRef.current) {
+            inputRef.current.focus();
+          }
         }, 300); // Start typing after fade in
       }, 300); // Wait for fade out
     },
