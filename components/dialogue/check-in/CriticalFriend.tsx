@@ -79,7 +79,7 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
   useEffect(() => {
     if (isTyping && typingIndex < currentQuestion.length) {
       const timer = setTimeout(() => {
-        setDisplayedQuestion(prev => prev + currentQuestion[typingIndex]);
+        setDisplayedQuestion(currentQuestion.substring(0, typingIndex + 1));
         setTypingIndex(typingIndex + 1);
       }, 10); // Speed of typing
 
