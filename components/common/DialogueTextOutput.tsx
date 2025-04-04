@@ -15,14 +15,7 @@ export default function DialogueTextOutput({
 }: DialogueTextOutputProps) {
   return (
     <HeadingLarge className={`text-secondary ${className}`}>
-      {isTyping || !isAssistantMessage ? (
-        <>
-          {displayedQuestion}
-          <span className='inline-block w-2 h-5 ml-1 bg-black animate-pulse'></span>
-        </>
-      ) : displayedQuestion ? (
-        displayedQuestion
-      ) : null}
+      {displayedQuestion}
     </HeadingLarge>
   );
 }
