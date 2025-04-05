@@ -3,6 +3,7 @@ import Column from '@/components/structure/Column';
 import { Button } from '@/components/ui/button';
 import DialogueTextInput from '@/components/common/DialogueTextInput';
 import DialogueTextOutput from '@/components/common/DialogueTextOutput';
+import VoiceInput from '@/components/common/VoiceInput';
 
 interface QuestionAnswerChatProps {
   displayedQuestion: string;
@@ -36,10 +37,11 @@ export default function QuestionAnswerChat({
         isTyping={isTyping}
         isAssistantMessage={isAssistantMessage}
       />
+      <VoiceInput />
 
       <form onSubmit={onSubmit}>
         <Column hasNoGap justifyItems='end'>
-          <DialogueTextInput
+          {/* <DialogueTextInput
             ref={inputRef}
             value={input}
             onChange={onInputChange}
@@ -47,7 +49,7 @@ export default function QuestionAnswerChat({
             isLoading={isLoading}
             isTyping={isTyping}
             placeholder='Type your response...'
-          />
+          /> */}
           <Button
             type='submit'
             variant='secondary'
