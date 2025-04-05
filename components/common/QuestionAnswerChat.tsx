@@ -1,9 +1,6 @@
 import type React from 'react';
 import Column from '@/components/structure/Column';
-import { Button } from '@/components/ui/button';
-import DialogueTextInput from '@/components/common/DialogueTextInput';
 import DialogueTextOutput from '@/components/common/DialogueTextOutput';
-import VoiceInput from '@/components/common/VoiceInput';
 import DialogueTextOrVoiceInput from './DialogueTextOrVoiceInput';
 
 interface QuestionAnswerChatProps {

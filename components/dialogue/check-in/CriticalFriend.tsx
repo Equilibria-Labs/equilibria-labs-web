@@ -7,11 +7,7 @@ import { useChat } from 'ai/react';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
 
-interface CriticalFriendProps {
-  onComplete?: () => void;
-}
-
-export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
+export default function CriticalFriend() {
   const [isTyping, setIsTyping] = useState(false);
   const [displayedQuestion, setDisplayedQuestion] = useState('');
   const [typingIndex, setTypingIndex] = useState(0);

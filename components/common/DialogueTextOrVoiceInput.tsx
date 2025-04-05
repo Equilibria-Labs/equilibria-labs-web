@@ -54,7 +54,7 @@ const DialogueTextOrVoiceInput = forwardRef<
         // Clear the transcript after we've used it
         setTranscript('');
       }
-    }, [transcript, onChange, value]);
+    }, [transcript, onChange, value, setTranscript]);
 
     // Watch for value changes and adjust height
     useEffect(() => {
