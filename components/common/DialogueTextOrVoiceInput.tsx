@@ -71,6 +71,12 @@ const DialogueTextOrVoiceInput = forwardRef<
       adjustTextareaHeight(e.target);
     };
 
+    const getPlaceholderText = () => {
+      if (listening) return 'Listening...';
+      if (supported) return 'Type or click the mic...';
+      return 'Type your reply...';
+    };
+
     return (
       <Column justifyItems='end'>
         <textarea
@@ -88,7 +94,7 @@ const DialogueTextOrVoiceInput = forwardRef<
               }
             }
           }}
-          placeholder={listening ? 'Listening...' : 'Type or click the mic...'}
+          placeholder={getPlaceholderText()}
           className='w-full min-h-[64px] p-0 text-heading bg-transparent border-none outline-none resize-none font-input pr-12'
           disabled={isLoading || isTyping}
           rows={1}
