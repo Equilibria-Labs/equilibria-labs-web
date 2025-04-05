@@ -90,11 +90,7 @@ const DialogueTextOrVoiceInput = forwardRef<
           }}
           placeholder={listening ? 'Listening...' : 'Type your reply...'}
           className='w-full min-h-[64px] p-0 text-heading bg-transparent border-none outline-none resize-none font-input pr-12'
-          disabled={
-            isLoading ||
-            isTyping ||
-            (typeof value === 'string' ? !value.trim() : !value)
-          }
+          disabled={isLoading || isTyping}
           rows={1}
           {...props}
         />
