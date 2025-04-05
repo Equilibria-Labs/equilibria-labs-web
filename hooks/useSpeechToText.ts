@@ -36,6 +36,7 @@ export function useSpeechToText() {
   }, []);
 
   const startListening = () => {
+    console.log('startListening');
     if (!recognitionRef.current || listening) return;
     setTranscript('');
     recognitionRef.current.start();
@@ -43,6 +44,7 @@ export function useSpeechToText() {
   };
 
   const stopListening = () => {
+    console.log('stopListening');
     if (!recognitionRef.current || !listening) return;
     recognitionRef.current.stop();
     setListening(false);

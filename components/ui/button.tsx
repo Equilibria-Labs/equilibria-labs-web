@@ -89,6 +89,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       isIconFirst = false,
       isLoading = false,
       children,
+      type = 'button',
       ...props
     },
     ref
@@ -108,6 +109,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         disabled={isLoading || props.disabled}
+        type={type}
         {...props}
       >
         {isIconFirst && Icon && <Icon className={iconClasses} />}
