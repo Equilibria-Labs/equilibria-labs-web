@@ -9,7 +9,7 @@ import WhatAreYouDoing from '@/components/dialogue/check-in/WhatAreYouDoing';
 import CriticalFriend from '@/components/dialogue/check-in/CriticalFriend';
 import Box from '@/components/structure/Box';
 import Loading from '@/components/structure/Loading';
-
+import ContentPageHeader from '@/components/structure/ContentPageHeader';
 export const metadata: Metadata = {
   title: 'Check In | Equilibria',
   description: 'Daily check-in to track your symptoms, mood, and activities',
@@ -84,9 +84,10 @@ function CheckInContent() {
   };
 
   return (
-    <Box hasNoBg shouldRise>
-      {renderCurrentStep()}
-    </Box>
+    <>
+      <ContentPageHeader isBackButtonHome={false} title='Clarity' />
+      <Box hasNoBg>{renderCurrentStep()}</Box>
+    </>
   );
 }
 

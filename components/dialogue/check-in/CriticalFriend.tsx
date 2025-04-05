@@ -4,10 +4,9 @@ import type React from 'react';
 
 import { useState, useRef, useEffect } from 'react';
 import { useChat } from 'ai/react';
-import Column from '@/components/structure/Column';
-import { HeadingLarge } from '@/components/common/Typography';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
-import { Button } from '@/components/ui/button';
+import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
+
 interface CriticalFriendProps {
   onComplete?: () => void;
 }
@@ -29,15 +28,47 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
   } = useChat({
     api: '/api/critical-friend',
     onFinish: () => {
-      setIsTyping(true);
-      setTypingIndex(0);
-      setDisplayedQuestion('');
+      // Wait for fade out to complete, then clear content and start new sequence
+      setTimeout(() => {
+        setDisplayedQuestion('');
+        setRandomTheme();
+        setFadeIn(true);
+        setTimeout(() => {
+          setIsTyping(true);
+          setTypingIndex(0);
+          // Refocus the input after the animation sequence
+          if (inputRef.current) {
+            inputRef.current.focus();
+          }
+        }, 300); // Start typing after fade in
+      }, 300); // Wait for fade out
     },
   });
 
   const { setRandomTheme } = useAlternativeTheme();
 
-  console.log(onComplete);
+  // Initial setup effect
+  useEffect(() => {
+    if (messages.length === 0) {
+      const initialResponse = sessionStorage.getItem('initialResponse');
+      if (initialResponse) {
+        // Add the initial response and trigger the assistant
+        append({
+          role: 'user',
+          content: initialResponse,
+        });
+        // Clean up after using
+        sessionStorage.removeItem('initialResponse');
+      } else {
+        // If no initial response, start with empty message to trigger AI
+        append({
+          role: 'user',
+          content: '',
+        });
+      }
+    }
+  }, [messages, append]);
+
   // Get the current question from the messages
   const currentQuestion =
     messages.length > 0 && messages[messages.length - 1].role === 'assistant'
@@ -48,25 +79,21 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
   useEffect(() => {
     if (isTyping && typingIndex < currentQuestion.length) {
       const timer = setTimeout(() => {
-        setDisplayedQuestion(prev => prev + currentQuestion[typingIndex]);
+        setDisplayedQuestion(currentQuestion.substring(0, typingIndex + 1));
         setTypingIndex(typingIndex + 1);
       }, 10); // Speed of typing
 
       return () => clearTimeout(timer);
     } else if (isTyping && typingIndex >= currentQuestion.length) {
       setIsTyping(false);
+      // Focus the input after typing animation completes with a delay
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 100); // Add delay before focusing
     }
   }, [isTyping, typingIndex, currentQuestion]);
-
-  // Initial question setup
-  useEffect(() => {
-    if (messages.length === 0) {
-      append({
-        role: 'assistant',
-        content: '',
-      });
-    }
-  }, [messages, append]);
 
   // Focus input on load
   useEffect(() => {
@@ -75,74 +102,33 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
     }
   }, []);
 
-  // Handle fade-in effect
+  // Remove the automatic fade-in effect since we're handling it manually
   useEffect(() => {
     if (!fadeIn) {
-      const timer = setTimeout(() => setFadeIn(true), 100);
+      const timer = setTimeout(() => {
+        setDisplayedQuestion(''); // Clear the text when fade out completes
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [fadeIn]);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setFadeIn(false);
-    setRandomTheme();
-    setTimeout(() => {
-      handleSubmit(e);
-    }, 300);
+    setFadeIn(false); // Start by fading out
+    handleSubmit(e);
   };
 
   return (
-    <Column
-      hasLargeGap
-      className={`w-full max-w-2xl transition-opacity duration-300 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}
-    >
-      <HeadingLarge className='text-secondary'>
-        {isTyping || messages[messages.length - 1]?.role !== 'assistant' ? (
-          <>
-            {displayedQuestion}
-            <span className='inline-block w-2 h-5 ml-1 bg-black animate-pulse'></span>
-          </>
-        ) : displayedQuestion ? (
-          displayedQuestion
-        ) : null}
-      </HeadingLarge>
-
-      <form onSubmit={handleFormSubmit} className='relative flex flex-col'>
-        <Column hasNoGap justifyItems='end'>
-          <textarea
-            ref={inputRef}
-            value={input}
-            onChange={e => {
-              handleInputChange(e);
-              // Auto-expand height
-              e.target.style.height = 'auto';
-              e.target.style.height = `${e.target.scrollHeight}px`;
-            }}
-            onKeyDown={e => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                if (!isLoading && !isTyping && input.trim()) {
-                  handleFormSubmit(e);
-                }
-              }
-            }}
-            placeholder='Type your response...'
-            className='w-full min-h-[64px] p-0 text-heading bg-transparent border-none outline-none resize-none font-input'
-            disabled={isLoading || isTyping}
-            rows={1}
-          />
-          <Button
-            type='submit'
-            variant='secondary'
-            size='iconCircle'
-            className='rounded-full self-end'
-            isLoading={isLoading}
-            iconName='chevronUp'
-            disabled={isLoading || isTyping || !input.trim()}
-          />
-        </Column>
-      </form>
-    </Column>
+    <QuestionAnswerChat
+      displayedQuestion={displayedQuestion}
+      isTyping={isTyping}
+      isAssistantMessage={messages[messages.length - 1]?.role === 'assistant'}
+      input={input}
+      onInputChange={handleInputChange}
+      onSubmit={handleFormSubmit}
+      isLoading={isLoading}
+      fadeIn={fadeIn}
+      inputRef={inputRef}
+    />
   );
 }
