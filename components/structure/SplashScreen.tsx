@@ -14,8 +14,6 @@ export default function SplashScreen() {
     return () => clearTimeout(timer);
   }, []);
 
-  console.log('rendering splash screen');
-
   return (
     <div
       className={clsx(

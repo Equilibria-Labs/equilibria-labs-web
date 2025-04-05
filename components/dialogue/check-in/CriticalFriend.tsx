@@ -7,16 +7,13 @@ import { useChat } from 'ai/react';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
 
-interface CriticalFriendProps {
-  onComplete?: () => void;
-}
-
-export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
+export default function CriticalFriend() {
   const [isTyping, setIsTyping] = useState(false);
   const [displayedQuestion, setDisplayedQuestion] = useState('');
   const [typingIndex, setTypingIndex] = useState(0);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [fadeIn, setFadeIn] = useState(true);
+  const [hasInitialResponse, setHasInitialResponse] = useState(false);
 
   const {
     messages,
@@ -52,19 +49,12 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
     if (messages.length === 0) {
       const initialResponse = sessionStorage.getItem('initialResponse');
       if (initialResponse) {
-        // Add the initial response and trigger the assistant
+        setHasInitialResponse(true);
         append({
           role: 'user',
           content: initialResponse,
         });
-        // Clean up after using
         sessionStorage.removeItem('initialResponse');
-      } else {
-        // If no initial response, start with empty message to trigger AI
-        append({
-          role: 'user',
-          content: '',
-        });
       }
     }
   }, [messages, append]);
@@ -118,7 +108,7 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
     handleSubmit(e);
   };
 
-  return (
+  return hasInitialResponse ? (
     <QuestionAnswerChat
       displayedQuestion={displayedQuestion}
       isTyping={isTyping}
@@ -130,5 +120,5 @@ export default function CriticalFriend({ onComplete }: CriticalFriendProps) {
       fadeIn={fadeIn}
       inputRef={inputRef}
     />
-  );
+  ) : null;
 }
