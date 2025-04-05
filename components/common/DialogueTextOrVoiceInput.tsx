@@ -108,6 +108,7 @@ const DialogueTextOrVoiceInput = forwardRef<
               size='iconCircle'
               iconName={listening ? 'check' : 'mic'}
               onClick={listening ? stopListening : startListening}
+              className={`${listening ? 'animate-pulse' : ''}`}
             />
           )}
           <Button
