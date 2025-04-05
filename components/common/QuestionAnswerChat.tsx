@@ -40,15 +40,21 @@ export default function QuestionAnswerChat({
       />
 
       <form onSubmit={onSubmit}>
-        <DialogueTextOrVoiceInput
-          ref={inputRef}
-          value={input}
-          onChange={onInputChange}
-          onSubmit={onSubmit}
-          isLoading={isLoading}
-          isTyping={isTyping}
-          buttonText={buttonText}
-        />
+        <div
+          className={`transition-opacity duration-1000 ${
+            !isTyping && displayedQuestion ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <DialogueTextOrVoiceInput
+            ref={inputRef}
+            value={input}
+            onChange={onInputChange}
+            onSubmit={onSubmit}
+            isLoading={isLoading}
+            isTyping={isTyping}
+            buttonText={buttonText}
+          />
+        </div>
       </form>
     </Column>
   );

@@ -88,7 +88,7 @@ const DialogueTextOrVoiceInput = forwardRef<
               }
             }
           }}
-          placeholder={listening ? 'Listening...' : 'Type your reply...'}
+          placeholder={listening ? 'Listening...' : 'Type or click the mic...'}
           className='w-full min-h-[64px] p-0 text-heading bg-transparent border-none outline-none resize-none font-input pr-12'
           disabled={isLoading || isTyping}
           rows={1}
