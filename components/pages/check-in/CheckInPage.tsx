@@ -49,10 +49,6 @@ function CheckInContent() {
     router.push('/?sheet=relief');
   };
 
-  const handleCriticalFriendComplete = () => {
-    setCurrentStep('symptoms');
-  };
-
   const handleSymptomsSubmit = (symptoms: string[]) => {
     setCheckInState(prev => ({ ...prev, symptoms }));
     setCurrentStep('mood');
@@ -77,7 +73,7 @@ function CheckInContent() {
       case 'activity':
         return <WhatAreYouDoing onSubmitAction={handleActivitySubmit} />;
       case 'critical-friend':
-        return <CriticalFriend onComplete={handleCriticalFriendComplete} />;
+        return <CriticalFriend />;
       default:
         return null;
     }

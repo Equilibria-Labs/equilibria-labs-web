@@ -21,3 +21,11 @@ export type {
   BaseStep,
   Choice,
 } from './shared/dialogue';
+
+export type {
+  SpeechRecognition,
+  SpeechRecognitionEvent,
+  SpeechRecognitionResult,
+  SpeechRecognitionResultList,
+  SpeechRecognitionAlternative,
+} from './speechToText';

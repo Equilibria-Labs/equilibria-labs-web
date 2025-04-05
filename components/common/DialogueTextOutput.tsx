@@ -9,8 +9,6 @@ interface DialogueTextOutputProps {
 
 export default function DialogueTextOutput({
   displayedQuestion,
-  isTyping,
-  isAssistantMessage,
   className = '',
 }: DialogueTextOutputProps) {
   return (
