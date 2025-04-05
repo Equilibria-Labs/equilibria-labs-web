@@ -1,12 +1,15 @@
 import React, { forwardRef, useEffect, ChangeEvent, RefObject } from 'react';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { Button } from '@/components/ui/button';
+import Column from '../structure/Column';
+import Row from '../structure/Row';
 
 interface DialogueTextOrVoiceInputProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   onSubmit?: (e: React.FormEvent) => void;
   isLoading?: boolean;
   isTyping?: boolean;
+  buttonText?: string;
 }
 
 const DialogueTextOrVoiceInput = forwardRef<
@@ -14,7 +17,16 @@ const DialogueTextOrVoiceInput = forwardRef<
   DialogueTextOrVoiceInputProps
 >(
   (
-    { onSubmit, isLoading, isTyping, onChange, onKeyDown, value, ...props },
+    {
+      onSubmit,
+      isLoading,
+      isTyping,
+      onChange,
+      onKeyDown,
+      value,
+      buttonText,
+      ...props
+    },
     ref
   ) => {
     const {
@@ -60,7 +72,7 @@ const DialogueTextOrVoiceInput = forwardRef<
     };
 
     return (
-      <>
+      <Column justifyItems='end'>
         <textarea
           ref={ref}
           value={value || ''}
@@ -76,20 +88,47 @@ const DialogueTextOrVoiceInput = forwardRef<
               }
             }
           }}
+          placeholder={listening ? 'Listening...' : 'Type your reply...'}
           className='w-full min-h-[64px] p-0 text-heading bg-transparent border-none outline-none resize-none font-input pr-12'
-          disabled={isLoading || isTyping || listening}
+          disabled={
+            isLoading ||
+            isTyping ||
+            (typeof value === 'string' ? !value.trim() : !value)
+          }
           rows={1}
           {...props}
         />
-        {supported && (
+        <Row justify='space-between' isFullWidth>
+          {supported && (
+            <Button
+              type='button'
+              variant='secondary'
+              size='iconCircle'
+              iconName={listening ? 'check' : 'mic'}
+              onClick={listening ? stopListening : startListening}
+            />
+          )}
           <Button
-            type='button'
-            onClick={listening ? stopListening : startListening}
+            type='submit'
+            variant='secondary'
+            size={buttonText ? 'lg' : 'iconCircle'}
+            className='rounded-full'
+            isLoading={isLoading}
+            iconName='chevronRight'
+            disabled={
+              isLoading ||
+              isTyping ||
+              (typeof value === 'string' ? !value.trim() : !value)
+            }
+            onClick={e => {
+              e.preventDefault();
+              onSubmit?.(e);
+            }}
           >
-            {listening ? 'Stop' : 'Start'} Recording
+            {buttonText && <span className='mr-2'>{buttonText}</span>}
           </Button>
-        )}
-      </>
+        </Row>
+      </Column>
     );
   }
 );

@@ -40,28 +40,15 @@ export default function QuestionAnswerChat({
       />
 
       <form onSubmit={onSubmit}>
-        <Column hasNoGap justifyItems='end'>
-          <DialogueTextOrVoiceInput
-            ref={inputRef}
-            value={input}
-            onChange={onInputChange}
-            onSubmit={onSubmit}
-            isLoading={isLoading}
-            isTyping={isTyping}
-            placeholder='Type your response...'
-          />
-          <Button
-            type='submit'
-            variant='secondary'
-            size={buttonText ? 'lg' : 'iconCircle'}
-            className='rounded-full self-end'
-            isLoading={isLoading}
-            iconName='chevronRight'
-            disabled={isLoading || isTyping || !input.trim()}
-          >
-            {buttonText && <span className='mr-2'>{buttonText}</span>}
-          </Button>
-        </Column>
+        <DialogueTextOrVoiceInput
+          ref={inputRef}
+          value={input}
+          onChange={onInputChange}
+          onSubmit={onSubmit}
+          isLoading={isLoading}
+          isTyping={isTyping}
+          buttonText={buttonText}
+        />
       </form>
     </Column>
   );

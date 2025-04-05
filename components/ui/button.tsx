@@ -11,6 +11,7 @@ import {
   X,
   Check,
   Loader2,
+  Mic,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -59,7 +60,8 @@ export interface ButtonProps
     | 'minus'
     | 'x'
     | 'check'
-    | 'loader2';
+    | 'loader2'
+    | 'mic';
   iconClassName?: string;
   isIconFirst?: boolean;
   isLoading?: boolean;
@@ -75,6 +77,7 @@ const iconMap: Record<NonNullable<ButtonProps['iconName']>, LucideIcon> = {
   x: X,
   check: Check,
   loader2: Loader2,
+  mic: Mic,
 };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
