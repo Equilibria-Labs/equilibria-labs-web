@@ -11,9 +11,11 @@ export default function CriticalFriend() {
   const [isTyping, setIsTyping] = useState(false);
   const [displayedQuestion, setDisplayedQuestion] = useState('');
   const [typingIndex, setTypingIndex] = useState(0);
+  const [messageCount, setMessageCount] = useState(0);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [fadeIn, setFadeIn] = useState(true);
   const [hasInitialResponse, setHasInitialResponse] = useState(false);
+  const MAX_MESSAGES = 6;
 
   const {
     messages,
@@ -104,7 +106,13 @@ export default function CriticalFriend() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (messageCount >= MAX_MESSAGES) {
+      // Optionally handle max messages reached
+      console.log('Max messages reached');
+      return;
+    }
     setFadeIn(false); // Start by fading out
+    setMessageCount(prev => prev + 1);
     handleSubmit(e);
   };
 
