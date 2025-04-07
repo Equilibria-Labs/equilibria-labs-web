@@ -3,7 +3,7 @@
 import { Metadata } from 'next';
 import { useEffect } from 'react';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
-import CriticalFriendStarter from '@/components/dialogue/check-in/CriticalFriendStarter';
+import ReframeStarter from '@/components/dialogue/check-in/ReframeStarter';
 export const metadata: Metadata = {
   title: 'The Sleep Lab | Equilibria',
   description:
@@ -17,5 +17,5 @@ export default function TodayPage() {
     setRandomTheme();
   }, [setRandomTheme]);
 
-  return <CriticalFriendStarter />;
+  return <ReframeStarter />;
 }

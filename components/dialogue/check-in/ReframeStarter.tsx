@@ -8,7 +8,7 @@ import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
 import Box from '@/components/structure/Box';
 import { getTimeOfDayGreeting } from '@/helpers/time';
 
-export default function CriticalFriendStarter() {
+export default function ReframeStarter() {
   const [input, setInput] = useState('');
   const [fadeIn, setFadeIn] = useState(true);
   const inputRef = useRef<HTMLTextAreaElement>(null);

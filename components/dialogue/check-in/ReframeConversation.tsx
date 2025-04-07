@@ -8,7 +8,7 @@ import { REFRAME_MAX_MESSAGES } from '@/config/reframe';
 import { Heading } from '@/components/common/Typography';
 
 /**
- * CriticalFriend - A component that manages a conversational experience with an AI assistant
+ * ReframeConversation - A component that manages a conversational experience with an AI assistant
  *
  * Flow Overview:
  * 1. Initialize state and hooks
@@ -19,15 +19,15 @@ import { Heading } from '@/components/common/Typography';
  * 6. End session when maximum messages are reached
  */
 
-interface CriticalFriendProps {
+interface ReframeConversationProps {
   onCompleteAction: (
     transcript: Array<{ role: string; content: string }>
   ) => void;
 }
 
-export default function CriticalFriend({
+export default function ReframeConversation({
   onCompleteAction,
-}: CriticalFriendProps) {
+}: ReframeConversationProps) {
   // --- INITIALIZATION PHASE: Define all state variables ---
   const [isTyping, setIsTyping] = useState(false);
   const [displayedQuestion, setDisplayedQuestion] = useState('');
