@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import AnySymptoms from '@/components/dialogue/check-in/AnySymptoms';
 import WhatsYourMood from '@/components/dialogue/check-in/WhatsYourMood';
 import WhatAreYouDoing from '@/components/dialogue/check-in/WhatAreYouDoing';
-import CriticalFriend from '@/components/dialogue/check-in/CriticalFriend';
+import ReframeConversation from '@/components/dialogue/check-in/ReframeConversation';
 import Box from '@/components/structure/Box';
 import Loading from '@/components/structure/Loading';
 import ContentPageHeader from '@/components/structure/ContentPageHeader';
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: 'Daily check-in to track your symptoms, mood, and activities',
 };
 
-type CheckInStep = 'critical-friend' | 'symptoms' | 'mood' | 'activity';
+type CheckInStep = 'reframe' | 'symptoms' | 'mood' | 'activity';
 type CheckInState = {
   wellness?: number;
   symptoms: string[];
@@ -26,8 +26,7 @@ type CheckInState = {
 function CheckInContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [currentStep, setCurrentStep] =
-    useState<CheckInStep>('critical-friend');
+  const [currentStep, setCurrentStep] = useState<CheckInStep>('reframe');
   const [checkInState, setCheckInState] = useState<CheckInState>({
     symptoms: [],
     moods: [],
@@ -64,6 +63,12 @@ function CheckInContent() {
     handleCompletion(checkInState);
   };
 
+  const handleCompleteAction = (
+    transcript: Array<{ role: string; content: string }>
+  ) => {
+    console.log('Transcript:', transcript);
+  };
+
   const renderCurrentStep = () => {
     switch (currentStep) {
       case 'symptoms':
@@ -72,8 +77,8 @@ function CheckInContent() {
         return <WhatsYourMood onSubmitAction={handleMoodSubmit} />;
       case 'activity':
         return <WhatAreYouDoing onSubmitAction={handleActivitySubmit} />;
-      case 'critical-friend':
-        return <CriticalFriend />;
+      case 'reframe':
+        return <ReframeConversation onCompleteAction={handleCompleteAction} />;
       default:
         return null;
     }
@@ -81,7 +86,7 @@ function CheckInContent() {
 
   return (
     <>
-      <ContentPageHeader isBackButtonHome={false} title='Clarity' />
+      <ContentPageHeader isBackButtonHome={false} title='Reframe' />
       <Box hasNoBg>{renderCurrentStep()}</Box>
     </>
   );

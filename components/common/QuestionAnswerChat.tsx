@@ -2,6 +2,7 @@ import type React from 'react';
 import Column from '@/components/structure/Column';
 import DialogueTextOutput from '@/components/common/DialogueTextOutput';
 import DialogueTextOrVoiceInput from './DialogueTextOrVoiceInput';
+import { BodyText } from '@/components/common/Typography';
 
 interface QuestionAnswerChatProps {
   displayedQuestion: string;
@@ -28,7 +29,9 @@ export default function QuestionAnswerChat({
   inputRef,
   buttonText,
 }: QuestionAnswerChatProps) {
-  return (
+  return isLoading ? (
+    <BodyText className='animate-pulse'>Thinking...</BodyText>
+  ) : (
     <Column hasLargeGap fadeIn={fadeIn}>
       <DialogueTextOutput
         displayedQuestion={displayedQuestion}
