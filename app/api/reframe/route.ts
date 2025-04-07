@@ -1,7 +1,7 @@
 import { openai } from '@ai-sdk/openai';
 import { togetherai } from '@ai-sdk/togetherai';
 import { streamText } from 'ai';
-import { CRITICAL_FRIEND_INSTRUCTIONS } from '@/ai/system-instructions/critical-friend';
+import { REFRAME_SYSTEM_PROMPT } from '@/config/ai/system-prompt/reframe/v1';
 
 // Configure the AI provider here
 type Provider = 'openai' | 'togetherai';
@@ -23,7 +23,7 @@ export const maxDuration = 30;
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
-  const systemPrompt = CRITICAL_FRIEND_INSTRUCTIONS;
+  const systemPrompt = REFRAME_SYSTEM_PROMPT;
 
   const config = PROVIDER_CONFIGS[PROVIDER];
   const result = streamText({

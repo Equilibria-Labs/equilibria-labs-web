@@ -28,7 +28,9 @@ export default function QuestionAnswerChat({
   inputRef,
   buttonText,
 }: QuestionAnswerChatProps) {
-  return (
+  return isLoading ? (
+    <div>Streaming...</div>
+  ) : (
     <Column hasLargeGap fadeIn={fadeIn}>
       <DialogueTextOutput
         displayedQuestion={displayedQuestion}

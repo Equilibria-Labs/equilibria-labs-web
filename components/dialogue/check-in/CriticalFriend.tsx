@@ -1,26 +1,48 @@
 'use client';
 
-import type React from 'react';
-
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, FormEvent } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
-import { CRITICAL_FRIEND_MAX_MESSAGES } from '@/config/critical-friend';
+import { REFRAME_MAX_MESSAGES } from '@/config/reframe';
+import { Heading } from '@/components/common/Typography';
 
 export default function CriticalFriend() {
   const [isTyping, setIsTyping] = useState(false);
   const [displayedQuestion, setDisplayedQuestion] = useState('');
   const [typingIndex, setTypingIndex] = useState(0);
   const [messageCount, setMessageCount] = useState(0);
+  const [isSessionComplete, setIsSessionComplete] = useState(false);
+  const [conversationTranscript, setConversationTranscript] = useState<
+    Array<{ role: string; content: string }>
+  >([]);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [fadeIn, setFadeIn] = useState(true);
   const [hasInitialResponse, setHasInitialResponse] = useState(false);
-  const MAX_MESSAGES = CRITICAL_FRIEND_MAX_MESSAGES; // @todo: make this dynamic
+  const MAX_MESSAGES = REFRAME_MAX_MESSAGES; // @todo: make this dynamic
+  const isMaxMessagesReached = messageCount >= MAX_MESSAGES;
+  const updateConversationTranscript = async (message: {
+    role: string;
+    content: string;
+  }) => {
+    await setConversationTranscript(prevTranscript => [
+      ...prevTranscript,
+      message,
+    ]);
+    // Debug logging with labels
+    console.log('CriticalFriend State:', {
+      'Current Displayed Question': displayedQuestion,
+      'Total Message Count': messageCount,
+      'Conversation Transcript': conversationTranscript,
+      'Is Max Messages Reached': isMaxMessagesReached,
+      messageCount: messageCount,
+      MAX_MESSAGES: MAX_MESSAGES,
+    });
+  };
 
   const { messages, input, handleInputChange, handleSubmit, status, append } =
     useChat({
-      api: '/api/critical-friend',
+      api: '/api/reframe',
       onFinish: () => {
         // Wait for fade out to complete, then clear content and start new sequence
         setTimeout(() => {
@@ -51,6 +73,10 @@ export default function CriticalFriend() {
           role: 'user',
           content: initialResponse,
         });
+        updateConversationTranscript({
+          role: 'user',
+          content: initialResponse,
+        });
         sessionStorage.removeItem('initialResponse');
       }
     }
@@ -72,6 +98,10 @@ export default function CriticalFriend() {
 
       return () => clearTimeout(timer);
     } else if (isTyping && typingIndex >= currentQuestion.length) {
+      updateConversationTranscript({
+        role: 'assistant',
+        content: currentQuestion,
+      });
       setIsTyping(false);
       // Focus the input after typing animation completes with a delay
       setTimeout(() => {
@@ -99,39 +129,44 @@ export default function CriticalFriend() {
     }
   }, [fadeIn]);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleComplete = (e: FormEvent) => {
     e.preventDefault();
-    if (messageCount >= MAX_MESSAGES) {
-      // Optionally handle max messages reached
-      console.log('Max messages reached');
-      return;
-    }
+    setIsSessionComplete(true);
+    console.log('event', e);
+    console.log('handleComplete');
+    return; // Early return to prevent further execution
+  };
 
-    // Log the current conversation history before submitting new message
-    console.log(
-      'Current conversation history:',
-      messages.map(msg => ({
-        role: msg.role,
-        content: msg.content,
-      }))
-    );
-
+  const handleFormSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    updateConversationTranscript({
+      role: 'user',
+      content: input,
+    });
     setFadeIn(false); // Start by fading out
     setMessageCount(prev => prev + 1);
-    handleSubmit(e);
+    if (isMaxMessagesReached) {
+      handleComplete(e);
+    } else {
+      handleSubmit(e);
+    }
   };
 
   return hasInitialResponse ? (
-    <QuestionAnswerChat
-      displayedQuestion={displayedQuestion}
-      isTyping={isTyping}
-      isAssistantMessage={messages[messages.length - 1]?.role === 'assistant'}
-      input={input}
-      onInputChange={handleInputChange}
-      onSubmit={handleFormSubmit}
-      isLoading={status === 'streaming'}
-      fadeIn={fadeIn}
-      inputRef={inputRef}
-    />
+    isSessionComplete ? (
+      <Heading>Complete</Heading>
+    ) : (
+      <QuestionAnswerChat
+        displayedQuestion={displayedQuestion}
+        isTyping={isTyping}
+        isAssistantMessage={messages[messages.length - 1]?.role === 'assistant'}
+        input={input}
+        onInputChange={handleInputChange}
+        onSubmit={handleFormSubmit}
+        isLoading={status === 'streaming' || status === 'submitted'}
+        fadeIn={fadeIn}
+        inputRef={inputRef}
+      />
+    )
   ) : null;
 }
