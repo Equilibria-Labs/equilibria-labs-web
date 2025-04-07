@@ -134,6 +134,7 @@ export default function CriticalFriend() {
     setIsSessionComplete(true);
     console.log('event', e);
     console.log('handleComplete');
+    console.log('transcript', conversationTranscript);
     return; // Early return to prevent further execution
   };
 
