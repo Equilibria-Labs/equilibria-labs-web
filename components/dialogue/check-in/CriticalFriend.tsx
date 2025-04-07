@@ -7,11 +7,32 @@ import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
 import { REFRAME_MAX_MESSAGES } from '@/config/reframe';
 import { Heading } from '@/components/common/Typography';
 
-export default function CriticalFriend() {
+/**
+ * CriticalFriend - A component that manages a conversational experience with an AI assistant
+ *
+ * Flow Overview:
+ * 1. Initialize state and hooks
+ * 2. Check for existing session data on load
+ * 3. Render chat interface based on session state
+ * 4. Handle typing animations for assistant responses
+ * 5. Process user submissions and update the conversation
+ * 6. End session when maximum messages are reached
+ */
+
+interface CriticalFriendProps {
+  onCompleteAction: (
+    transcript: Array<{ role: string; content: string }>
+  ) => void;
+}
+
+export default function CriticalFriend({
+  onCompleteAction,
+}: CriticalFriendProps) {
+  // --- INITIALIZATION PHASE: Define all state variables ---
   const [isTyping, setIsTyping] = useState(false);
   const [displayedQuestion, setDisplayedQuestion] = useState('');
   const [typingIndex, setTypingIndex] = useState(0);
-  const [messageCount, setMessageCount] = useState(0);
+  const [questionCount, setQuestionCount] = useState(0);
   const [isSessionComplete, setIsSessionComplete] = useState(false);
   const [conversationTranscript, setConversationTranscript] = useState<
     Array<{ role: string; content: string }>
@@ -20,30 +41,20 @@ export default function CriticalFriend() {
   const [fadeIn, setFadeIn] = useState(true);
   const [hasInitialResponse, setHasInitialResponse] = useState(false);
   const MAX_MESSAGES = REFRAME_MAX_MESSAGES; // @todo: make this dynamic
-  const isMaxMessagesReached = messageCount >= MAX_MESSAGES;
-  const updateConversationTranscript = async (message: {
+
+  const updateConversationTranscript = (message: {
     role: string;
     content: string;
   }) => {
-    await setConversationTranscript(prevTranscript => [
-      ...prevTranscript,
-      message,
-    ]);
-    // Debug logging with labels
-    console.log('CriticalFriend State:', {
-      'Current Displayed Question': displayedQuestion,
-      'Total Message Count': messageCount,
-      'Conversation Transcript': conversationTranscript,
-      'Is Max Messages Reached': isMaxMessagesReached,
-      messageCount: messageCount,
-      MAX_MESSAGES: MAX_MESSAGES,
-    });
+    setConversationTranscript(prevTranscript => [...prevTranscript, message]);
   };
 
+  // --- CHAT CONFIGURATION: Setup AI chat with API endpoint and callbacks ---
   const { messages, input, handleInputChange, handleSubmit, status, append } =
     useChat({
       api: '/api/reframe',
       onFinish: () => {
+        // CONVERSATION CYCLE - STEP 5: After assistant responds, prepare for next exchange
         // Wait for fade out to complete, then clear content and start new sequence
         setTimeout(() => {
           setDisplayedQuestion('');
@@ -63,12 +74,14 @@ export default function CriticalFriend() {
 
   const { setRandomTheme } = useAlternativeTheme();
 
-  // Initial setup effect
+  // --- INITIAL LOAD SEQUENCE - STEP 1: Check for existing session data ---
   useEffect(() => {
     if (messages.length === 0) {
+      // On first load, check if there's an initial response in sessionStorage
       const initialResponse = sessionStorage.getItem('initialResponse');
       if (initialResponse) {
         setHasInitialResponse(true);
+        // Initialize conversation with the stored initial response
         append({
           role: 'user',
           content: initialResponse,
@@ -82,13 +95,12 @@ export default function CriticalFriend() {
     }
   }, [messages, append]);
 
-  // Get the current question from the messages
   const currentQuestion =
     messages.length > 0 && messages[messages.length - 1].role === 'assistant'
       ? messages[messages.length - 1].content
       : '';
 
-  // Typing animation effect
+  // --- CONVERSATION CYCLE - STEP 3: Handle typing animation for assistant responses ---
   useEffect(() => {
     if (isTyping && typingIndex < currentQuestion.length) {
       const timer = setTimeout(() => {
@@ -103,23 +115,24 @@ export default function CriticalFriend() {
         content: currentQuestion,
       });
       setIsTyping(false);
+      setQuestionCount(prev => prev + 1);
       // Focus the input after typing animation completes with a delay
       setTimeout(() => {
         if (inputRef.current) {
           inputRef.current.focus();
         }
-      }, 100); // Add delay before focusing
+      }, 100);
     }
   }, [isTyping, typingIndex, currentQuestion]);
 
-  // Focus input on load
+  // --- INITIAL LOAD SEQUENCE - STEP 2: Focus input element ---
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
 
-  // Remove the automatic fade-in effect since we're handling it manually
+  // --- CONVERSATION CYCLE - STEP 4: Handle fade animations ---
   useEffect(() => {
     if (!fadeIn) {
       const timer = setTimeout(() => {
@@ -129,34 +142,40 @@ export default function CriticalFriend() {
     }
   }, [fadeIn]);
 
-  const handleComplete = (e: FormEvent) => {
-    e.preventDefault();
-    setIsSessionComplete(true);
-    console.log('event', e);
-    console.log('handleComplete');
-    console.log('transcript', conversationTranscript);
-    return; // Early return to prevent further execution
-  };
+  // Effect to handle calling onComplete when session ends
+  useEffect(() => {
+    if (isSessionComplete && conversationTranscript.length > 0) {
+      onCompleteAction(conversationTranscript);
+    }
+  }, [isSessionComplete, conversationTranscript, onCompleteAction]);
 
+  /**
+   * --- CONVERSATION CYCLE - STEP 1 & 2: Process user submissions ---
+   * Handles form submission when user sends a message
+   * Updates transcript, manages animations, and tracks message count
+   */
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     updateConversationTranscript({
       role: 'user',
       content: input,
     });
-    setFadeIn(false); // Start by fading out
-    setMessageCount(prev => prev + 1);
-    if (isMaxMessagesReached) {
-      handleComplete(e);
+    setFadeIn(false);
+
+    if (questionCount >= MAX_MESSAGES) {
+      setIsSessionComplete(true);
     } else {
       handleSubmit(e);
     }
   };
 
+  // --- RENDER PHASE: Conditionally render based on session state ---
   return hasInitialResponse ? (
     isSessionComplete ? (
+      // CONVERSATION CYCLE - END: Show completion message when session is over
       <Heading>Complete</Heading>
     ) : (
+      // CONVERSATION CYCLE - ACTIVE: Show chat interface during active session
       <QuestionAnswerChat
         displayedQuestion={displayedQuestion}
         isTyping={isTyping}
@@ -169,5 +188,5 @@ export default function CriticalFriend() {
         inputRef={inputRef}
       />
     )
-  ) : null;
+  ) : null; // Show nothing if initial response hasn't been processed yet
 }

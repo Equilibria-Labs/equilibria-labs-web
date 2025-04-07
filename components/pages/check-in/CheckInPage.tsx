@@ -64,6 +64,12 @@ function CheckInContent() {
     handleCompletion(checkInState);
   };
 
+  const handleCompleteAction = (
+    transcript: Array<{ role: string; content: string }>
+  ) => {
+    console.log('Transcript:', transcript);
+  };
+
   const renderCurrentStep = () => {
     switch (currentStep) {
       case 'symptoms':
@@ -73,7 +79,7 @@ function CheckInContent() {
       case 'activity':
         return <WhatAreYouDoing onSubmitAction={handleActivitySubmit} />;
       case 'critical-friend':
-        return <CriticalFriend />;
+        return <CriticalFriend onCompleteAction={handleCompleteAction} />;
       default:
         return null;
     }
