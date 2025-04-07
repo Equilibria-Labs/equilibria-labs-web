@@ -106,6 +106,16 @@ export default function CriticalFriend() {
       console.log('Max messages reached');
       return;
     }
+
+    // Log the current conversation history before submitting new message
+    console.log(
+      'Current conversation history:',
+      messages.map(msg => ({
+        role: msg.role,
+        content: msg.content,
+      }))
+    );
+
     setFadeIn(false); // Start by fading out
     setMessageCount(prev => prev + 1);
     handleSubmit(e);

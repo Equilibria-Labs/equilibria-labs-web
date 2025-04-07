@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
 import Box from '@/components/structure/Box';
+import { getTimeOfDayGreeting } from '@/helpers/time';
 
 export default function CriticalFriendStarter() {
   const [input, setInput] = useState('');
@@ -48,7 +49,7 @@ export default function CriticalFriendStarter() {
   return (
     <Box>
       <QuestionAnswerChat
-        displayedQuestion='How have you been?'
+        displayedQuestion={`What's on your mind ${getTimeOfDayGreeting()}?`}
         isTyping={false}
         isAssistantMessage={true}
         input={input}
@@ -57,7 +58,6 @@ export default function CriticalFriendStarter() {
         isLoading={false}
         fadeIn={fadeIn}
         inputRef={inputRef}
-        buttonText='Get Clarity'
       />
     </Box>
   );
