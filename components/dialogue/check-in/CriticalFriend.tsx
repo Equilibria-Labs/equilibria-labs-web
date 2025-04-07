@@ -3,9 +3,10 @@
 import type React from 'react';
 
 import { useState, useRef, useEffect } from 'react';
-import { useChat } from 'ai/react';
+import { useChat } from '@ai-sdk/react';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
+import { CRITICAL_FRIEND_MAX_MESSAGES } from '@/config/critical-friend';
 
 export default function CriticalFriend() {
   const [isTyping, setIsTyping] = useState(false);
@@ -15,34 +16,28 @@ export default function CriticalFriend() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [fadeIn, setFadeIn] = useState(true);
   const [hasInitialResponse, setHasInitialResponse] = useState(false);
-  const MAX_MESSAGES = 6;
+  const MAX_MESSAGES = CRITICAL_FRIEND_MAX_MESSAGES; // @todo: make this dynamic
 
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-    append,
-  } = useChat({
-    api: '/api/critical-friend',
-    onFinish: () => {
-      // Wait for fade out to complete, then clear content and start new sequence
-      setTimeout(() => {
-        setDisplayedQuestion('');
-        setRandomTheme();
-        setFadeIn(true);
+  const { messages, input, handleInputChange, handleSubmit, status, append } =
+    useChat({
+      api: '/api/critical-friend',
+      onFinish: () => {
+        // Wait for fade out to complete, then clear content and start new sequence
         setTimeout(() => {
-          setIsTyping(true);
-          setTypingIndex(0);
-          // Refocus the input after the animation sequence
-          if (inputRef.current) {
-            inputRef.current.focus();
-          }
-        }, 300); // Start typing after fade in
-      }, 300); // Wait for fade out
-    },
-  });
+          setDisplayedQuestion('');
+          setRandomTheme();
+          setFadeIn(true);
+          setTimeout(() => {
+            setIsTyping(true);
+            setTypingIndex(0);
+            // Refocus the input after the animation sequence
+            if (inputRef.current) {
+              inputRef.current.focus();
+            }
+          }, 300); // Start typing after fade in
+        }, 300); // Wait for fade out
+      },
+    });
 
   const { setRandomTheme } = useAlternativeTheme();
 
@@ -124,7 +119,7 @@ export default function CriticalFriend() {
       input={input}
       onInputChange={handleInputChange}
       onSubmit={handleFormSubmit}
-      isLoading={isLoading}
+      isLoading={status === 'streaming'}
       fadeIn={fadeIn}
       inputRef={inputRef}
     />

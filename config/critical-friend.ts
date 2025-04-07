@@ -1,0 +1,1 @@
+export const CRITICAL_FRIEND_MAX_MESSAGES = 3;

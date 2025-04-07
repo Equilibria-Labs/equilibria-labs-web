@@ -5,7 +5,7 @@ import { CRITICAL_FRIEND_INSTRUCTIONS } from '@/ai/system-instructions/critical-
 
 // Configure the AI provider here
 type Provider = 'openai' | 'togetherai';
-const PROVIDER: Provider = 'openai';
+const PROVIDER: Provider = 'togetherai';
 
 // Provider-specific configurations
 const PROVIDER_CONFIGS = {
