@@ -86,7 +86,7 @@ function CheckInContent() {
 
   return (
     <>
-      <ContentPageHeader isBackButtonHome={false} title='Clarity' />
+      <ContentPageHeader isBackButtonHome={false} title='Reframe' />
       <Box hasNoBg>{renderCurrentStep()}</Box>
     </>
   );
