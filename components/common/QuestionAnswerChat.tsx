@@ -3,6 +3,7 @@ import Column from '@/components/structure/Column';
 import DialogueTextOutput from '@/components/common/DialogueTextOutput';
 import DialogueTextOrVoiceInput from './DialogueTextOrVoiceInput';
 import { BodyText } from '@/components/common/Typography';
+import TextLoader from '@/components/common/TextLoader';
 
 interface QuestionAnswerChatProps {
   displayedQuestion: string;
@@ -15,6 +16,7 @@ interface QuestionAnswerChatProps {
   fadeIn: boolean;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
   buttonText?: string;
+  loadingText?: string;
 }
 
 export default function QuestionAnswerChat({
@@ -28,9 +30,10 @@ export default function QuestionAnswerChat({
   fadeIn,
   inputRef,
   buttonText,
+  loadingText = 'Thinking...',
 }: QuestionAnswerChatProps) {
   return isLoading ? (
-    <BodyText className='animate-pulse'>Thinking...</BodyText>
+    <TextLoader text={loadingText} />
   ) : (
     <Column hasLargeGap fadeIn={fadeIn}>
       <DialogueTextOutput
