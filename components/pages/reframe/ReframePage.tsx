@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 interface ReframeSummaryResponse {
   originalThought: string;
   reframedThought: string;
+  helpfulness?: string;
 }
 
 type ReframeStep = 'reframe' | 'symptoms' | 'mood' | 'activity' | 'summary';
@@ -99,6 +100,14 @@ function ReframeContent() {
     setCurrentStep('summary');
   };
 
+  const handleHelpfulnessChange = (helpfulness: string) => {
+    setReframeState(prev => ({
+      ...prev,
+      summary: prev.summary ? { ...prev.summary, helpfulness } : undefined,
+    }));
+    handleCompletion(ReframeState);
+  };
+
   const renderCurrentStep = () => {
     switch (currentStep) {
       case 'symptoms':
@@ -119,6 +128,7 @@ function ReframeContent() {
             summary={summary}
             error={error}
             isLoading={isLoading}
+            onHelpfulnessChangeAction={handleHelpfulnessChange}
           />
         );
       default:
