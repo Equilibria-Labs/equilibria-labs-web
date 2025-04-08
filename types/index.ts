@@ -29,3 +29,5 @@ export type {
   SpeechRecognitionResultList,
   SpeechRecognitionAlternative,
 } from './speechToText';
+
+export type { ThinkingTrapId, ThinkingTrap } from './thinking-trap';

@@ -5,10 +5,12 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import ReframeConversation from '@/components/dialogue/reframe/ReframeConversation';
 import ReframeConversationSummary from '@/components/dialogue/reframe/ReframeConversationSummary';
+import ThinkingTraps from '@/components/dialogue/reframe/ThinkingTraps';
 import Box from '@/components/structure/Box';
 import Loading from '@/components/structure/Loading';
 import ContentPageHeader from '@/components/structure/ContentPageHeader';
 import { useReframeSummary } from '@/hooks/useReframeSummary';
+import { useThinkingTraps } from '@/hooks/useThinkingTraps';
 import { Suspense } from 'react';
 
 export const metadata: Metadata = {
@@ -22,10 +24,17 @@ interface ReframeSummaryResponse {
   helpfulness?: string;
 }
 
-type ReframeStep = 'reframe' | 'summary';
+interface ThinkingTrap {
+  name: string;
+  description: string;
+  agreedWithUser: boolean;
+}
+
+type ReframeStep = 'reframe' | 'summary' | 'thinking-traps';
 type ReframeState = {
   reframeTranscript: Array<{ role: string; content: string }>;
   summary?: ReframeSummaryResponse;
+  thinkingTrap?: ThinkingTrap;
 };
 
 function ReframeContent() {
@@ -70,6 +79,15 @@ function ReframeContent() {
       ...prev,
       summary: prev.summary ? { ...prev.summary, helpfulness } : undefined,
     }));
+  };
+
+  const handleAgreeDisagreeSelect = (selected: string) => {
+    setReframeState(prev => ({
+      ...prev,
+      thinkingTrap: prev.thinkingTrap
+        ? { ...prev.thinkingTrap, agreedWithUser: selected === 'agree' }
+        : undefined,
+    }));
     handleCompletion(ReframeState);
   };
 
@@ -88,6 +106,15 @@ function ReframeContent() {
             error={error}
             isLoading={isLoading}
             onHelpfulnessChangeAction={handleHelpfulnessChange}
+          />
+        );
+      case 'thinking-traps':
+        return (
+          <ThinkingTraps
+            thinkingTrap={summary}
+            error={error}
+            isLoading={isLoading}
+            onAgreeDisagreeSelect={handleAgreeDisagreeSelect}
           />
         );
       default:
