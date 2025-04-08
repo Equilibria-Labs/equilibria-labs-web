@@ -4,7 +4,7 @@ import { ConversationSummaryResponseSchema } from '@/config/ai/response-schema/r
 import { REFRAME_CONVERSATION_SUMMARY_SYSTEM_PROMPT } from '@/config/ai/system-prompt/reframe/summary';
 
 // Configure which AI provider to use for generating summaries
-const PROVIDER: Provider = 'openai';
+const PROVIDER: Provider = 'objects';
 
 /**
  * POST endpoint that generates an AI summary of a conversation transcript
