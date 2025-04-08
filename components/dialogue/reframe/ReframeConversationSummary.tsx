@@ -1,55 +1,27 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Heading, BodyText } from '@/components/common/Typography';
 
 interface ReframeConversationProps {
-  transcript: Array<{ role: string; content: string }>;
-}
-
-interface SummaryResponse {
-  originalThought: string;
-  reframedThought: string;
+  summary: {
+    originalThought: string;
+    reframedThought: string;
+  } | null;
+  error: string | null;
+  isLoading: boolean;
 }
 
 export default function ReframeConversationSummary({
-  transcript,
+  summary,
+  error,
+  isLoading,
 }: ReframeConversationProps) {
-  const [summary, setSummary] = useState<SummaryResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchSummary = async () => {
-      try {
-        const response = await fetch('/api/reframe/summary', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ transcript }),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch summary');
-        }
-
-        const data = await response.json();
-        setSummary(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      }
-    };
-
-    if (transcript.length > 0) {
-      fetchSummary();
-    }
-  }, [transcript]);
-
   if (error) {
     return <BodyText>Error: {error}</BodyText>;
   }
 
-  if (!summary) {
+  if (isLoading || !summary) {
     return <BodyText>Loading summary...</BodyText>;
   }
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { Metadata } from 'next';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import AnySymptoms from '@/components/dialogue/reframe/AnySymptoms';
 import WhatsYourMood from '@/components/dialogue/reframe/WhatsYourMood';
@@ -11,10 +11,18 @@ import ReframeConversationSummary from '@/components/dialogue/reframe/ReframeCon
 import Box from '@/components/structure/Box';
 import Loading from '@/components/structure/Loading';
 import ContentPageHeader from '@/components/structure/ContentPageHeader';
+import { useReframeSummary } from '@/hooks/useReframeSummary';
+import { Suspense } from 'react';
+
 export const metadata: Metadata = {
   title: 'Check In | Equilibria',
   description: 'Daily check-in to track your symptoms, mood, and activities',
 };
+
+interface ReframeSummaryResponse {
+  originalThought: string;
+  reframedThought: string;
+}
 
 type ReframeStep = 'reframe' | 'symptoms' | 'mood' | 'activity' | 'summary';
 type ReframeState = {
@@ -23,6 +31,7 @@ type ReframeState = {
   moods: string[];
   activities: string[];
   reframeTranscript: Array<{ role: string; content: string }>;
+  summary?: ReframeSummaryResponse;
 };
 
 function ReframeContent() {
@@ -34,7 +43,12 @@ function ReframeContent() {
     moods: [],
     activities: [],
     reframeTranscript: [],
+    summary: undefined,
   });
+
+  const { summary, error, isLoading } = useReframeSummary(
+    ReframeState.reframeTranscript
+  );
 
   useEffect(() => {
     const wellnessValue = searchParams.get('wellness');
@@ -45,6 +59,15 @@ function ReframeContent() {
       }));
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    if (summary) {
+      setReframeState(prev => ({
+        ...prev,
+        summary: summary,
+      }));
+    }
+  }, [summary]);
 
   const handleCompletion = (finalState: ReframeState) => {
     console.log('Final reframe state:', finalState);
@@ -93,7 +116,9 @@ function ReframeContent() {
       case 'summary':
         return (
           <ReframeConversationSummary
-            transcript={ReframeState.reframeTranscript}
+            summary={summary}
+            error={error}
+            isLoading={isLoading}
           />
         );
       default:
