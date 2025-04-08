@@ -5,7 +5,7 @@ import { Provider, PROVIDER_CONFIGS } from '@/config/ai/providers.config';
 export const maxDuration = 30;
 
 // Configure the AI provider here
-const PROVIDER: Provider = 'togetherai';
+const PROVIDER: Provider = 'chat';
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
