@@ -1,7 +1,7 @@
 import { openai } from '@ai-sdk/openai';
 import { togetherai } from '@ai-sdk/togetherai';
 import { streamText } from 'ai';
-import { REFRAME_SYSTEM_PROMPT } from '@/config/ai/system-prompt/reframe/v1';
+import { REFRAME_CONVERSATION_SYSTEM_PROMPT } from '@/config/ai/system-prompt/reframe/conversation';
 
 // Configure the AI provider here
 type Provider = 'openai' | 'togetherai';
@@ -23,7 +23,7 @@ export const maxDuration = 30;
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
-  const systemPrompt = REFRAME_SYSTEM_PROMPT;
+  const systemPrompt = REFRAME_CONVERSATION_SYSTEM_PROMPT;
 
   const config = PROVIDER_CONFIGS[PROVIDER];
   const result = streamText({

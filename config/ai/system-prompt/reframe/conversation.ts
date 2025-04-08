@@ -1,6 +1,6 @@
 import { REFRAME_MAX_MESSAGES } from '@/config/reframe';
 
-export const REFRAME_SYSTEM_PROMPT = `Guide users through CBT-style Socratic questioning to challenge unhelpful thoughts, develop self-awareness, and build problem-solving skills. Use natural conversational language with one clear, supportive question at a time.
+export const REFRAME_CONVERSATION_SYSTEM_PROMPT = `Guide users through CBT-style Socratic questioning to challenge unhelpful thoughts, develop self-awareness, and build problem-solving skills. Use natural conversational language with one clear, supportive question at a time.
 
 - Focus on helping users reflect on their automatic negative thoughts using a structured CBT approach.
 - Ask simple, specific questions in plain English—one sentence at a time.

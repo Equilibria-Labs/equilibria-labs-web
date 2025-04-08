@@ -52,7 +52,7 @@ export default function ReframeConversation({
   // --- CHAT CONFIGURATION: Setup AI chat with API endpoint and callbacks ---
   const { messages, input, handleInputChange, handleSubmit, status, append } =
     useChat({
-      api: '/api/reframe',
+      api: '/api/reframe/conversation',
       onFinish: () => {
         // CONVERSATION CYCLE - STEP 5: After assistant responds, prepare for next exchange
         // Wait for fade out to complete, then clear content and start new sequence

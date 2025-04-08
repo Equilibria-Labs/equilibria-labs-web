@@ -3,11 +3,11 @@
 import { Metadata } from 'next';
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import AnySymptoms from '@/components/dialogue/check-in/AnySymptoms';
-import WhatsYourMood from '@/components/dialogue/check-in/WhatsYourMood';
-import WhatAreYouDoing from '@/components/dialogue/check-in/WhatAreYouDoing';
-import ReframeConversation from '@/components/dialogue/check-in/ReframeConversation';
-import ReframeConversationSummary from '@/components/dialogue/check-in/ReframeConversationSummary';
+import AnySymptoms from '@/components/dialogue/reframe/AnySymptoms';
+import WhatsYourMood from '@/components/dialogue/reframe/WhatsYourMood';
+import WhatAreYouDoing from '@/components/dialogue/reframe/WhatAreYouDoing';
+import ReframeConversation from '@/components/dialogue/reframe/ReframeConversation';
+import ReframeConversationSummary from '@/components/dialogue/reframe/ReframeConversationSummary';
 import Box from '@/components/structure/Box';
 import Loading from '@/components/structure/Loading';
 import ContentPageHeader from '@/components/structure/ContentPageHeader';
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   description: 'Daily check-in to track your symptoms, mood, and activities',
 };
 
-type CheckInStep = 'reframe' | 'symptoms' | 'mood' | 'activity' | 'summary';
-type CheckInState = {
+type ReframeStep = 'reframe' | 'symptoms' | 'mood' | 'activity' | 'summary';
+type ReframeState = {
   wellness?: number;
   symptoms: string[];
   moods: string[];
@@ -25,11 +25,11 @@ type CheckInState = {
   reframeTranscript: Array<{ role: string; content: string }>;
 };
 
-function CheckInContent() {
+function ReframeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState<CheckInStep>('reframe');
-  const [checkInState, setCheckInState] = useState<CheckInState>({
+  const [currentStep, setCurrentStep] = useState<ReframeStep>('reframe');
+  const [ReframeState, setReframeState] = useState<ReframeState>({
     symptoms: [],
     moods: [],
     activities: [],
@@ -39,37 +39,37 @@ function CheckInContent() {
   useEffect(() => {
     const wellnessValue = searchParams.get('wellness');
     if (wellnessValue) {
-      setCheckInState(prev => ({
+      setReframeState(prev => ({
         ...prev,
         wellness: parseInt(wellnessValue, 10),
       }));
     }
   }, [searchParams]);
 
-  const handleCompletion = (finalState: CheckInState) => {
-    console.log('Final check-in state:', finalState);
+  const handleCompletion = (finalState: ReframeState) => {
+    console.log('Final reframe state:', finalState);
     router.push('/?sheet=relief');
   };
 
   const handleSymptomsSubmit = (symptoms: string[]) => {
-    setCheckInState(prev => ({ ...prev, symptoms }));
+    setReframeState(prev => ({ ...prev, symptoms }));
     setCurrentStep('mood');
   };
 
   const handleMoodSubmit = (moods: string[]) => {
-    setCheckInState(prev => ({ ...prev, moods }));
+    setReframeState(prev => ({ ...prev, moods }));
     setCurrentStep('activity');
   };
 
   const handleActivitySubmit = (activities: string[]) => {
-    setCheckInState(prev => ({ ...prev, activities }));
-    handleCompletion(checkInState);
+    setReframeState(prev => ({ ...prev, activities }));
+    handleCompletion(ReframeState);
   };
 
   const handleCompleteReframeConversation = (
     transcript: Array<{ role: string; content: string }>
   ) => {
-    setCheckInState(prev => ({
+    setReframeState(prev => ({
       ...prev,
       reframeTranscript: transcript,
     }));
@@ -93,7 +93,7 @@ function CheckInContent() {
       case 'summary':
         return (
           <ReframeConversationSummary
-            transcript={checkInState.reframeTranscript}
+            transcript={ReframeState.reframeTranscript}
           />
         );
       default:
@@ -109,10 +109,10 @@ function CheckInContent() {
   );
 }
 
-export default function CheckInPage() {
+export default function ReframePage() {
   return (
     <Suspense fallback={<Loading />}>
-      <CheckInContent />
+      <ReframeContent />
     </Suspense>
   );
 }

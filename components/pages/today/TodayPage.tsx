@@ -3,7 +3,7 @@
 import { Metadata } from 'next';
 import { useEffect } from 'react';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
-import ReframeStarter from '@/components/dialogue/check-in/ReframeStarter';
+import ReframeStarter from '@/components/dialogue/reframe/ReframeStarter';
 export const metadata: Metadata = {
   title: 'The Sleep Lab | Equilibria',
   description:
