@@ -18,6 +18,8 @@ interface BoxProps {
   display?: 'flex' | 'grid' | 'block' | 'inline-block';
   shouldRise?: boolean;
   hasLargePadding?: boolean;
+  hasNoGap?: boolean;
+  isSecondaryBackground?: boolean;
 }
 
 export default function Box({
@@ -33,10 +35,12 @@ export default function Box({
   display = 'flex',
   shouldRise = false,
   hasLargePadding = false,
+  hasNoGap = false,
+  isSecondaryBackground = false,
 }: BoxProps) {
   const getBgColor = () => {
     if (hasNoBg) return '';
-
+    if (isSecondaryBackground) return 'bg-secondary';
     let opacity: string;
     switch (level) {
       case '1':
@@ -69,7 +73,7 @@ export default function Box({
         ...style,
       }}
     >
-      <Column>{children}</Column>
+      <Column hasNoGap={hasNoGap}>{children}</Column>
     </div>
   );
 }

@@ -171,22 +171,16 @@ export default function ReframeConversation({
 
   // --- RENDER PHASE: Conditionally render based on session state ---
   return hasInitialResponse ? (
-    isSessionComplete ? (
-      // CONVERSATION CYCLE - END: Show completion message when session is over
-      <Heading>Complete</Heading>
-    ) : (
-      // CONVERSATION CYCLE - ACTIVE: Show chat interface during active session
-      <QuestionAnswerChat
-        displayedQuestion={displayedQuestion}
-        isTyping={isTyping}
-        isAssistantMessage={messages[messages.length - 1]?.role === 'assistant'}
-        input={input}
-        onInputChange={handleInputChange}
-        onSubmit={handleFormSubmit}
-        isLoading={status === 'streaming' || status === 'submitted'}
-        fadeIn={fadeIn}
-        inputRef={inputRef}
-      />
-    )
+    <QuestionAnswerChat
+      displayedQuestion={displayedQuestion}
+      isTyping={isTyping}
+      isAssistantMessage={messages[messages.length - 1]?.role === 'assistant'}
+      input={input}
+      onInputChange={handleInputChange}
+      onSubmit={handleFormSubmit}
+      isLoading={status === 'streaming' || status === 'submitted'}
+      fadeIn={fadeIn}
+      inputRef={inputRef}
+    />
   ) : null; // Show nothing if initial response hasn't been processed yet
 }

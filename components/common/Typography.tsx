@@ -65,6 +65,11 @@ export const BodyText: React.FC<TypographyProps> = ({
   className = '',
 }) => <p className={`font-body text-body ${className}`}>{children}</p>;
 
+export const BodyTextLarge: React.FC<TypographyProps> = ({
+  children,
+  className = '',
+}) => <p className={`font-body text-heading ${className}`}>{children}</p>;
+
 export const InputText: React.FC<TypographyProps> = ({
   children,
   className = '',
