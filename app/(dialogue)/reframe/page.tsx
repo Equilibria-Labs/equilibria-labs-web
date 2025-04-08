@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import CheckInPage from '@/components/pages/check-in/CheckInPage';
+import ReframePage from '@/components/pages/reframe/ReframePage';
 
 export const metadata: Metadata = {
   title: 'Check In | Equilibria',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <CheckInPage />;
+  return <ReframePage />;
 }

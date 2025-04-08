@@ -6,8 +6,9 @@ import { useRouter } from 'next/navigation';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
 import Box from '@/components/structure/Box';
+import { getTimeOfDayGreeting } from '@/helpers/time';
 
-export default function CriticalFriendStarter() {
+export default function ReframeStarter() {
   const [input, setInput] = useState('');
   const [fadeIn, setFadeIn] = useState(true);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -41,14 +42,14 @@ export default function CriticalFriendStarter() {
     setTimeout(() => {
       // Store the response in sessionStorage before navigating
       sessionStorage.setItem('initialResponse', input);
-      router.push('/check-in');
+      router.push('/reframe');
     }, 300);
   };
 
   return (
     <Box>
       <QuestionAnswerChat
-        displayedQuestion='How have you been?'
+        displayedQuestion={`What's on your mind ${getTimeOfDayGreeting()}?`}
         isTyping={false}
         isAssistantMessage={true}
         input={input}
@@ -57,7 +58,6 @@ export default function CriticalFriendStarter() {
         isLoading={false}
         fadeIn={fadeIn}
         inputRef={inputRef}
-        buttonText='Get Clarity'
       />
     </Box>
   );
