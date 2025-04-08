@@ -19,6 +19,7 @@ interface BoxProps {
   shouldRise?: boolean;
   hasLargePadding?: boolean;
   hasNoGap?: boolean;
+  isSecondaryBackground?: boolean;
 }
 
 export default function Box({
@@ -35,10 +36,11 @@ export default function Box({
   shouldRise = false,
   hasLargePadding = false,
   hasNoGap = false,
+  isSecondaryBackground = false,
 }: BoxProps) {
   const getBgColor = () => {
     if (hasNoBg) return '';
-
+    if (isSecondaryBackground) return 'bg-secondary';
     let opacity: string;
     switch (level) {
       case '1':
