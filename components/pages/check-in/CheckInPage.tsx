@@ -7,6 +7,7 @@ import AnySymptoms from '@/components/dialogue/check-in/AnySymptoms';
 import WhatsYourMood from '@/components/dialogue/check-in/WhatsYourMood';
 import WhatAreYouDoing from '@/components/dialogue/check-in/WhatAreYouDoing';
 import ReframeConversation from '@/components/dialogue/check-in/ReframeConversation';
+import ReframeConversationSummary from '@/components/dialogue/check-in/ReframeConversationSummary';
 import Box from '@/components/structure/Box';
 import Loading from '@/components/structure/Loading';
 import ContentPageHeader from '@/components/structure/ContentPageHeader';
@@ -15,12 +16,13 @@ export const metadata: Metadata = {
   description: 'Daily check-in to track your symptoms, mood, and activities',
 };
 
-type CheckInStep = 'reframe' | 'symptoms' | 'mood' | 'activity';
+type CheckInStep = 'reframe' | 'symptoms' | 'mood' | 'activity' | 'summary';
 type CheckInState = {
   wellness?: number;
   symptoms: string[];
   moods: string[];
   activities: string[];
+  reframeTranscript: Array<{ role: string; content: string }>;
 };
 
 function CheckInContent() {
@@ -31,6 +33,7 @@ function CheckInContent() {
     symptoms: [],
     moods: [],
     activities: [],
+    reframeTranscript: [],
   });
 
   useEffect(() => {
@@ -63,10 +66,14 @@ function CheckInContent() {
     handleCompletion(checkInState);
   };
 
-  const handleCompleteAction = (
+  const handleCompleteReframeConversation = (
     transcript: Array<{ role: string; content: string }>
   ) => {
-    console.log('Transcript:', transcript);
+    setCheckInState(prev => ({
+      ...prev,
+      reframeTranscript: transcript,
+    }));
+    setCurrentStep('summary');
   };
 
   const renderCurrentStep = () => {
@@ -78,7 +85,17 @@ function CheckInContent() {
       case 'activity':
         return <WhatAreYouDoing onSubmitAction={handleActivitySubmit} />;
       case 'reframe':
-        return <ReframeConversation onCompleteAction={handleCompleteAction} />;
+        return (
+          <ReframeConversation
+            onCompleteAction={handleCompleteReframeConversation}
+          />
+        );
+      case 'summary':
+        return (
+          <ReframeConversationSummary
+            transcript={checkInState.reframeTranscript}
+          />
+        );
       default:
         return null;
     }
