@@ -1,1 +1,1 @@
-export const REFRAME_MAX_MESSAGES = 2;
+export const REFRAME_MAX_MESSAGES = 5;

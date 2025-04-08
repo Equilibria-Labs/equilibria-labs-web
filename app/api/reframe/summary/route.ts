@@ -1,36 +1,37 @@
-import { openai } from '@ai-sdk/openai';
-import { togetherai } from '@ai-sdk/togetherai';
-import { streamText } from 'ai';
-import { REFRAME_CONVERSATION_SYSTEM_PROMPT } from '@/config/ai/system-prompt/reframe/conversation';
+import { generateObject } from 'ai';
+import { Provider, PROVIDER_CONFIGS } from '@/config/ai/providers.config';
+import { ConversationSummaryResponseSchema } from '@/config/ai/response-schema/reframe/conversationSummary';
+import { REFRAME_CONVERSATION_SUMMARY_SYSTEM_PROMPT } from '@/config/ai/system-prompt/reframe/summary';
 
-// Configure the AI provider here
-type Provider = 'openai' | 'togetherai';
 const PROVIDER: Provider = 'togetherai';
 
-// Provider-specific configurations
-const PROVIDER_CONFIGS = {
-  openai: {
-    model: 'gpt-4o',
-    getModel: openai,
-  },
-  togetherai: {
-    model: 'deepseek-ai/DeepSeek-V3',
-    getModel: togetherai,
-  },
-} as const;
-
-export const maxDuration = 30;
-
 export async function POST(req: Request) {
-  const { messages } = await req.json();
-  const systemPrompt = REFRAME_CONVERSATION_SYSTEM_PROMPT;
+  try {
+    const { transcript } = await req.json();
 
-  const config = PROVIDER_CONFIGS[PROVIDER];
-  const result = streamText({
-    model: config.getModel(config.model),
-    messages,
-    system: systemPrompt,
-  });
+    if (!Array.isArray(transcript)) {
+      throw new Error('Transcript must be an array');
+    }
 
-  return result.toDataStreamResponse();
+    const config = PROVIDER_CONFIGS[PROVIDER];
+    const result = await generateObject({
+      model: config.getModel(config.model),
+      schema: ConversationSummaryResponseSchema,
+      system: REFRAME_CONVERSATION_SUMMARY_SYSTEM_PROMPT,
+      prompt: `Here is the conversation transcript to analyze:\n\n${transcript
+        .map(msg => `${msg.role}: ${msg.content}`)
+        .join('\n')}`,
+    });
+
+    return new Response(JSON.stringify(result.object), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error occurred';
+    return new Response(JSON.stringify({ error: errorMessage }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }

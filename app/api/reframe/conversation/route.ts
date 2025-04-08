@@ -1,25 +1,11 @@
-import { openai } from '@ai-sdk/openai';
-import { togetherai } from '@ai-sdk/togetherai';
 import { streamText } from 'ai';
 import { REFRAME_CONVERSATION_SYSTEM_PROMPT } from '@/config/ai/system-prompt/reframe/conversation';
-
-// Configure the AI provider here
-type Provider = 'openai' | 'togetherai';
-const PROVIDER: Provider = 'togetherai';
-
-// Provider-specific configurations
-const PROVIDER_CONFIGS = {
-  openai: {
-    model: 'gpt-4o',
-    getModel: openai,
-  },
-  togetherai: {
-    model: 'deepseek-ai/DeepSeek-V3',
-    getModel: togetherai,
-  },
-} as const;
+import { Provider, PROVIDER_CONFIGS } from '@/config/ai/providers.config';
 
 export const maxDuration = 30;
+
+// Configure the AI provider here
+const PROVIDER: Provider = 'togetherai';
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
