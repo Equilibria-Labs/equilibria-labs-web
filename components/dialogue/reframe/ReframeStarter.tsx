@@ -42,7 +42,7 @@ export default function ReframeStarter() {
     setTimeout(() => {
       // Store the response in sessionStorage before navigating
       sessionStorage.setItem('initialResponse', input);
-      router.push('/check-in');
+      router.push('/reframe');
     }, 300);
   };
 
