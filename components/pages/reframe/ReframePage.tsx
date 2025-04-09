@@ -25,9 +25,8 @@ interface ReframeSummaryResponse {
 }
 
 interface ThinkingTrap {
-  name: string;
-  description: string;
-  agreedWithUser: boolean;
+  id: string;
+  agreedWithUser?: boolean;
 }
 
 type ReframeStep = 'reframe' | 'summary' | 'thinking-traps';
@@ -65,6 +64,15 @@ function ReframeContent() {
       }));
     }
   }, [summary]);
+
+  useEffect(() => {
+    if (thinkingTrap) {
+      setReframeState(prev => ({
+        ...prev,
+        thinkingTrap: { id: thinkingTrap.id },
+      }));
+    }
+  }, [thinkingTrap]);
 
   const handleCompletion = (finalState: ReframeState) => {
     console.log('Final reframe state:', finalState);
