@@ -6,8 +6,11 @@ import {
   Filter,
   Hand,
   Heart,
-  PackageCheck,
   Boxes,
+  User,
+  Tag,
+  UserMinus,
+  ThumbsDown,
 } from 'lucide-react';
 import type { ThinkingTrap } from '@/types/thinking-trap';
 
@@ -102,12 +105,48 @@ export const thinkingTraps: ThinkingTrap[] = [
     icon: Heart,
   },
   {
-    id: 'not-sure',
-    name: "I'm Not Sure",
-    description: 'None of the thinking traps seem to apply.',
-    question: 'Take some time to reflect on your thought patterns.',
-    unbalancedExample: '',
-    balancedExample: '',
-    icon: PackageCheck,
+    id: 'disqualifying-the-positive',
+    name: 'Disqualifying the Positive',
+    description: `Rejecting positive experiences or achievements by insisting they don't count or weren't genuine.`,
+    question:
+      'Am I dismissing something positive? What would I say to a friend who achieved the same thing?',
+    unbalancedExample:
+      "That compliment doesn't count — they were just being nice.",
+    balancedExample: 'Maybe they genuinely meant the compliment.',
+    icon: ThumbsDown,
+  },
+  {
+    id: 'labelling',
+    name: 'Labelling',
+    description:
+      'Using harsh labels to define yourself or others rather than describing the specific behaviour.',
+    question:
+      "Am I describing a situation or labelling a person? What's a more accurate way to describe this?",
+    unbalancedExample: "I'm such a loser.",
+    balancedExample: "I made a mistake, but that doesn't define me.",
+    icon: Tag,
+  },
+  {
+    id: 'personalisation',
+    name: 'Personalisation',
+    description:
+      "Blaming yourself for things that weren't entirely your responsibility.",
+    question:
+      "Am I taking responsibility for something that's not mine? What part is really in my control?",
+    unbalancedExample: "It's my fault the team didn't succeed.",
+    balancedExample: 'I played a part, but others had responsibility too.',
+    icon: User,
+  },
+  {
+    id: 'blame',
+    name: 'Blame',
+    description:
+      'Holding others entirely responsible for negative situations or how you feel.',
+    question:
+      'Am I placing all the blame externally? What part do I have in this situation?',
+    unbalancedExample: "It's all their fault I'm miserable.",
+    balancedExample:
+      'Their actions affected me, but I can choose how to respond.',
+    icon: UserMinus,
   },
 ];

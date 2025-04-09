@@ -1,23 +1,29 @@
-# The Sleep Lab by Equilibria Labs
+# Equilibria Labs
 
-[Visit The Sleep Lab](https://thesleeplab.app)
+[Visit Equilibria Labs](https://equilibrialabs.app)
 
 ## Overview
 
-The Sleep Lab is a comprehensive sleep assessment and improvement platform that helps users understand and enhance their sleep quality using clinically validated methods and personalized recommendations.
+Equilibria Labs is an innovative mental health platform that leverages Large Language Models (LLMs) to deliver personalized Cognitive Behavioral Therapy (CBT) for anxiety and depression. Our platform helps users build and maintain an effective self-therapy routine through evidence-based techniques and interactive exercises.
 
 ## Features
 
-- **Sleep Assessments**: Evidence-based questionnaires including:
-  - Insomnia Severity Index (ISI)
-  - Pittsburgh Sleep Quality Index (PSQI)
-  - Epworth Sleepiness Scale (ESS)
+- **CBT Exercises & Techniques**: Evidence-based therapeutic tools including:
+  - Thought Records
+  - Behavioral Activation
+  - Cognitive Restructuring
+  - Guided Journaling
 
-- **Personalized Reports**: Get detailed insights about your sleep patterns and potential issues
+- **Psycho-Education**: Learn about mental health concepts, CBT principles, and evidence-based coping strategies
 
-- **CBT-i Based Recommendations**: Access proven cognitive behavioral therapy techniques for insomnia
+- **Personalized Self-Therapy**: Build a customized routine that fits your schedule and needs
 
-- **Progress Tracking**: Monitor your sleep improvements over time
+- **AI-Powered Guidance**: LLM-enhanced therapy exercises that adapt to your progress
+
+- **Flexible Subscription Options**:
+  - Monthly Plan
+  - Annual Plan (Best Value)
+  - Lifetime Access
 
 ## Tech Stack
 
@@ -69,6 +75,6 @@ This project is proprietary and confidential. All rights reserved.
 
 ## About Equilibria Labs
 
-Equilibria Labs is dedicated to improving mental health through evidence-based digital interventions. The Sleep Lab is our flagship product focusing on sleep improvement through cognitive behavioral therapy techniques.
+Equilibria Labs is dedicated to making mental health care more accessible through AI-enhanced cognitive behavioral therapy. Our platform combines the proven effectiveness of CBT with cutting-edge LLM technology to provide personalized support for anxiety and depression management.
 
-[Visit our website](https://thesleeplab.app) 
+[Visit our website](https://equilibrialabs.app) 
