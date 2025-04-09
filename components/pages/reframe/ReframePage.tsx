@@ -3,15 +3,14 @@
 import { Metadata } from 'next';
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import AnySymptoms from '@/components/dialogue/reframe/AnySymptoms';
-import WhatsYourMood from '@/components/dialogue/reframe/WhatsYourMood';
-import WhatAreYouDoing from '@/components/dialogue/reframe/WhatAreYouDoing';
 import ReframeConversation from '@/components/dialogue/reframe/ReframeConversation';
 import ReframeConversationSummary from '@/components/dialogue/reframe/ReframeConversationSummary';
+import ThinkingTraps from '@/components/dialogue/reframe/ThinkingTraps';
 import Box from '@/components/structure/Box';
 import Loading from '@/components/structure/Loading';
 import ContentPageHeader from '@/components/structure/ContentPageHeader';
 import { useReframeSummary } from '@/hooks/useReframeSummary';
+import { useThinkingTraps } from '@/hooks/useThinkingTraps';
 import { Suspense } from 'react';
 
 export const metadata: Metadata = {
@@ -25,14 +24,17 @@ interface ReframeSummaryResponse {
   helpfulness?: string;
 }
 
-type ReframeStep = 'reframe' | 'symptoms' | 'mood' | 'activity' | 'summary';
+interface ThinkingTrap {
+  name: string;
+  description: string;
+  agreedWithUser: boolean;
+}
+
+type ReframeStep = 'reframe' | 'summary' | 'thinking-traps';
 type ReframeState = {
-  wellness?: number;
-  symptoms: string[];
-  moods: string[];
-  activities: string[];
   reframeTranscript: Array<{ role: string; content: string }>;
   summary?: ReframeSummaryResponse;
+  thinkingTrap?: ThinkingTrap;
 };
 
 function ReframeContent() {
@@ -40,26 +42,21 @@ function ReframeContent() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<ReframeStep>('reframe');
   const [ReframeState, setReframeState] = useState<ReframeState>({
-    symptoms: [],
-    moods: [],
-    activities: [],
     reframeTranscript: [],
     summary: undefined,
   });
 
-  const { summary, error, isLoading } = useReframeSummary(
-    ReframeState.reframeTranscript
-  );
+  const {
+    summary,
+    error: summaryError,
+    isLoading: summaryIsLoading,
+  } = useReframeSummary(ReframeState.reframeTranscript);
 
-  useEffect(() => {
-    const wellnessValue = searchParams.get('wellness');
-    if (wellnessValue) {
-      setReframeState(prev => ({
-        ...prev,
-        wellness: parseInt(wellnessValue, 10),
-      }));
-    }
-  }, [searchParams]);
+  const {
+    thinkingTrap,
+    error: thinkingTrapError,
+    isLoading: thinkingTrapIsLoading,
+  } = useThinkingTraps(ReframeState.reframeTranscript);
 
   useEffect(() => {
     if (summary) {
@@ -73,21 +70,6 @@ function ReframeContent() {
   const handleCompletion = (finalState: ReframeState) => {
     console.log('Final reframe state:', finalState);
     router.push('/?sheet=relief');
-  };
-
-  const handleSymptomsSubmit = (symptoms: string[]) => {
-    setReframeState(prev => ({ ...prev, symptoms }));
-    setCurrentStep('mood');
-  };
-
-  const handleMoodSubmit = (moods: string[]) => {
-    setReframeState(prev => ({ ...prev, moods }));
-    setCurrentStep('activity');
-  };
-
-  const handleActivitySubmit = (activities: string[]) => {
-    setReframeState(prev => ({ ...prev, activities }));
-    handleCompletion(ReframeState);
   };
 
   const handleCompleteReframeConversation = (
@@ -105,17 +87,21 @@ function ReframeContent() {
       ...prev,
       summary: prev.summary ? { ...prev.summary, helpfulness } : undefined,
     }));
+    setCurrentStep('thinking-traps');
+  };
+
+  const handleAgreeDisagreeSelect = (selected: string) => {
+    setReframeState(prev => ({
+      ...prev,
+      thinkingTrap: prev.thinkingTrap
+        ? { ...prev.thinkingTrap, agreedWithUser: selected === 'agree' }
+        : undefined,
+    }));
     handleCompletion(ReframeState);
   };
 
   const renderCurrentStep = () => {
     switch (currentStep) {
-      case 'symptoms':
-        return <AnySymptoms onSubmitAction={handleSymptomsSubmit} />;
-      case 'mood':
-        return <WhatsYourMood onSubmitAction={handleMoodSubmit} />;
-      case 'activity':
-        return <WhatAreYouDoing onSubmitAction={handleActivitySubmit} />;
       case 'reframe':
         return (
           <ReframeConversation
@@ -126,9 +112,18 @@ function ReframeContent() {
         return (
           <ReframeConversationSummary
             summary={summary}
-            error={error}
-            isLoading={isLoading}
+            error={summaryError}
+            isLoading={summaryIsLoading}
             onHelpfulnessChangeAction={handleHelpfulnessChange}
+          />
+        );
+      case 'thinking-traps':
+        return (
+          <ThinkingTraps
+            thinkingTrap={thinkingTrap?.id ?? null}
+            error={thinkingTrapError}
+            isLoading={thinkingTrapIsLoading}
+            onAgreeDisagreeSelectAction={handleAgreeDisagreeSelect}
           />
         );
       default:
