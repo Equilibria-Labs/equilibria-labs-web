@@ -4,7 +4,7 @@ import { ThinkingTrapsResponseSchema } from '@/config/ai/response-schema/reframe
 import { THINKING_TRAPS_ANALYSIS_SYSTEM_PROMPT } from '@/config/ai/system-prompt/reframe/thinkingTraps';
 
 // Configure which AI provider to use for generating thinking trap analysis
-const PROVIDER: Provider = 'objects';
+const PROVIDER: Provider = 'openai';
 
 /**
  * POST endpoint that analyzes a conversation transcript to identify thinking traps
