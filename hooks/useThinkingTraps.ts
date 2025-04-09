@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { ThinkingTrapId } from '@/types/thinking-trap';
 
-type ThinkingTrapsResponse = ThinkingTrapId;
+type ThinkingTrapsResponse = {
+  id: ThinkingTrapId;
+};
 
 interface Transcript {
   role: string;

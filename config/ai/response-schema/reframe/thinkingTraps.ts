@@ -3,7 +3,7 @@ import { ThinkingTrapId } from '@/types/thinking-trap';
 
 // NOTE: This list needs to be kept in sync with the ThinkingTrapId type in @/types/thinking-trap.ts
 // If you modify the list of thinking traps, update both places
-export const ThinkingTrapsResponseSchema = z.enum([
+const ThinkingTrapEnum = z.enum([
   'catastrophizing',
   'fortune-telling',
   'black-and-white',
@@ -17,3 +17,7 @@ export const ThinkingTrapsResponseSchema = z.enum([
   'personalisation',
   'blame',
 ] as const satisfies readonly ThinkingTrapId[]);
+
+export const ThinkingTrapsResponseSchema = z.object({
+  id: ThinkingTrapEnum,
+});

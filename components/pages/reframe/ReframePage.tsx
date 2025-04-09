@@ -87,6 +87,7 @@ function ReframeContent() {
       ...prev,
       summary: prev.summary ? { ...prev.summary, helpfulness } : undefined,
     }));
+    setCurrentStep('thinking-traps');
   };
 
   const handleAgreeDisagreeSelect = (selected: string) => {
@@ -119,7 +120,7 @@ function ReframeContent() {
       case 'thinking-traps':
         return (
           <ThinkingTraps
-            thinkingTrap={thinkingTrap}
+            thinkingTrap={thinkingTrap?.id ?? null}
             error={thinkingTrapError}
             isLoading={thinkingTrapIsLoading}
             onAgreeDisagreeSelectAction={handleAgreeDisagreeSelect}
