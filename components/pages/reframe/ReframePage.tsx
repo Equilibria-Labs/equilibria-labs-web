@@ -38,7 +38,6 @@ type ReframeState = {
 };
 
 function ReframeContent() {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<ReframeStep>('reframe');
   const [ReframeState, setReframeState] = useState<ReframeState>({
