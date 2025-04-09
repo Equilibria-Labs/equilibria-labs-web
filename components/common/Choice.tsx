@@ -55,6 +55,7 @@ import {
   Meh,
   Frown,
   BedSingle,
+  X,
 } from 'lucide-react';
 import { Choice as ChoiceType, ChoiceValue } from '@/types';
 
@@ -127,6 +128,10 @@ const CHOICE_ICONS = {
   laugh: Laugh,
   meh: Meh,
   frown: Frown,
+
+  // Check and cross icons
+  check: Check,
+  x: X,
 } as const;
 
 export type ChoiceIconName = keyof typeof CHOICE_ICONS;

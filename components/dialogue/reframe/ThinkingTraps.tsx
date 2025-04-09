@@ -18,7 +18,7 @@ interface ThinkingTrapsProps {
   thinkingTrap: ThinkingTrapId | null;
   error: string | null;
   isLoading: boolean;
-  onAgreeDisagreeSelectAction: (helpfulness: string) => void;
+  onAgreeDisagreeSelectAction: (selected: string) => void;
 }
 
 export default function ThinkingTraps({
@@ -44,13 +44,13 @@ export default function ThinkingTraps({
       choiceId: 'agree',
       text: 'Agree',
       value: { stringValue: 'agree' },
-      iconName: 'smile' as const,
+      iconName: 'check' as const,
     },
     {
       choiceId: 'disagree',
       text: 'Disagree',
       value: { stringValue: 'disagree' },
-      iconName: 'frown' as const,
+      iconName: 'x' as const,
     },
   ];
 
@@ -72,7 +72,8 @@ export default function ThinkingTraps({
       </Box>
       <Column>
         <Heading className={`text-secondary`}>
-          Do you think you might have fallen into this thinking trap?
+          Do you think this is and example of{' '}
+          {getThinkingTrap(thinkingTrap)?.name}?
         </Heading>
         <ChoiceRadioGroup
           value={[]}

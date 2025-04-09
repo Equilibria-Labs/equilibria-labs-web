@@ -2,7 +2,6 @@
 
 import { Metadata } from 'next';
 import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
 import ReframeConversation from '@/components/dialogue/reframe/ReframeConversation';
 import ReframeConversationSummary from '@/components/dialogue/reframe/ReframeConversationSummary';
 import ThinkingTraps from '@/components/dialogue/reframe/ThinkingTraps';
@@ -12,6 +11,7 @@ import ContentPageHeader from '@/components/structure/ContentPageHeader';
 import { useReframeSummary } from '@/hooks/useReframeSummary';
 import { useThinkingTraps } from '@/hooks/useThinkingTraps';
 import { Suspense } from 'react';
+import { useRouter } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Check In | Equilibria',
@@ -25,9 +25,8 @@ interface ReframeSummaryResponse {
 }
 
 interface ThinkingTrap {
-  name: string;
-  description: string;
-  agreedWithUser: boolean;
+  id: string;
+  agreedWithUser?: boolean;
 }
 
 type ReframeStep = 'reframe' | 'summary' | 'thinking-traps';
@@ -38,7 +37,6 @@ type ReframeState = {
 };
 
 function ReframeContent() {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<ReframeStep>('reframe');
   const [ReframeState, setReframeState] = useState<ReframeState>({
@@ -66,6 +64,15 @@ function ReframeContent() {
       }));
     }
   }, [summary]);
+
+  useEffect(() => {
+    if (thinkingTrap) {
+      setReframeState(prev => ({
+        ...prev,
+        thinkingTrap: { id: thinkingTrap.id },
+      }));
+    }
+  }, [thinkingTrap]);
 
   const handleCompletion = (finalState: ReframeState) => {
     console.log('Final reframe state:', finalState);

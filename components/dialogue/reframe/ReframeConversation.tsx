@@ -5,7 +5,6 @@ import { useChat } from '@ai-sdk/react';
 import { useAlternativeTheme } from '@/hooks/useAlternativeTheme';
 import QuestionAnswerChat from '@/components/common/QuestionAnswerChat';
 import { REFRAME_MAX_MESSAGES } from '@/config/reframe';
-import { Heading } from '@/components/common/Typography';
 
 /**
  * ReframeConversation - A component that manages a conversational experience with an AI assistant

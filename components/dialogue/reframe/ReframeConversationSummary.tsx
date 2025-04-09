@@ -4,8 +4,6 @@ import React from 'react';
 import {
   Heading,
   BodyText,
-  HeadingSmall,
-  LabelText,
   BodyTextLarge,
 } from '@/components/common/Typography';
 import Column from '@/components/structure/Column';
