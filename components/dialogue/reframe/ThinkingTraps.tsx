@@ -12,6 +12,8 @@ import { ChoiceRadioGroup } from '@/components/common/ChoiceRadioGroup';
 import { ChoiceValue } from '@/types';
 import Box from '@/components/structure/Box';
 import { ThinkingTrapId } from '@/types/thinking-trap';
+import { thinkingTraps } from '@/config/thinking-traps';
+
 interface ThinkingTrapsProps {
   thinkingTrap: ThinkingTrapId | null;
   error: string | null;
@@ -32,6 +34,10 @@ export default function ThinkingTraps({
   if (isLoading || !thinkingTrap) {
     return <TextLoader text='Identifying thinking traps...' />;
   }
+
+  const getThinkingTrap = (id: ThinkingTrapId) => {
+    return thinkingTraps.find(trap => trap.id === id);
+  };
 
   const choices = [
     {
@@ -57,12 +63,12 @@ export default function ThinkingTraps({
   return (
     <Column hasLargeGap>
       <Box hasNoGap>
-        <Heading className={`text-secondary`}>Original Thought</Heading>
-        <BodyTextLarge>{thinkingTrap}</BodyTextLarge>
-      </Box>
-      <Box hasNoGap>
-        <Heading className={`text-secondary`}>Reframed Thought</Heading>
-        <BodyTextLarge>{summary.reframedThought}</BodyTextLarge>
+        <Heading className={`text-secondary`}>
+          {getThinkingTrap(thinkingTrap)?.name}
+        </Heading>
+        <BodyTextLarge>
+          {getThinkingTrap(thinkingTrap)?.description}
+        </BodyTextLarge>
       </Box>
       <Column>
         <Heading className={`text-secondary`}>

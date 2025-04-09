@@ -46,9 +46,17 @@ function ReframeContent() {
     summary: undefined,
   });
 
-  const { summary, error, isLoading } = useReframeSummary(
-    ReframeState.reframeTranscript
-  );
+  const {
+    summary,
+    error: summaryError,
+    isLoading: summaryIsLoading,
+  } = useReframeSummary(ReframeState.reframeTranscript);
+
+  const {
+    thinkingTrap,
+    error: thinkingTrapError,
+    isLoading: thinkingTrapIsLoading,
+  } = useThinkingTraps(ReframeState.reframeTranscript);
 
   useEffect(() => {
     if (summary) {
@@ -103,18 +111,18 @@ function ReframeContent() {
         return (
           <ReframeConversationSummary
             summary={summary}
-            error={error}
-            isLoading={isLoading}
+            error={summaryError}
+            isLoading={summaryIsLoading}
             onHelpfulnessChangeAction={handleHelpfulnessChange}
           />
         );
       case 'thinking-traps':
         return (
           <ThinkingTraps
-            thinkingTrap={summary}
-            error={error}
-            isLoading={isLoading}
-            onAgreeDisagreeSelect={handleAgreeDisagreeSelect}
+            thinkingTrap={thinkingTrap}
+            error={thinkingTrapError}
+            isLoading={thinkingTrapIsLoading}
+            onAgreeDisagreeSelectAction={handleAgreeDisagreeSelect}
           />
         );
       default:
