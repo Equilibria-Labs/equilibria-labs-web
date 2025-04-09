@@ -2,7 +2,6 @@ import type React from 'react';
 import Column from '@/components/structure/Column';
 import DialogueTextOutput from '@/components/common/DialogueTextOutput';
 import DialogueTextOrVoiceInput from './DialogueTextOrVoiceInput';
-import { BodyText } from '@/components/common/Typography';
 import TextLoader from '@/components/common/TextLoader';
 
 interface QuestionAnswerChatProps {
