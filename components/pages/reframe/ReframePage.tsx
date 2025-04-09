@@ -2,7 +2,6 @@
 
 import { Metadata } from 'next';
 import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
 import ReframeConversation from '@/components/dialogue/reframe/ReframeConversation';
 import ReframeConversationSummary from '@/components/dialogue/reframe/ReframeConversationSummary';
 import ThinkingTraps from '@/components/dialogue/reframe/ThinkingTraps';
@@ -12,6 +11,7 @@ import ContentPageHeader from '@/components/structure/ContentPageHeader';
 import { useReframeSummary } from '@/hooks/useReframeSummary';
 import { useThinkingTraps } from '@/hooks/useThinkingTraps';
 import { Suspense } from 'react';
+import { useRouter } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Check In | Equilibria',

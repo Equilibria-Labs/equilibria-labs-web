@@ -1,7 +1,7 @@
 'use client';
 
 import { HeadingLarge } from '@/components/common/Typography';
-import { EmotionSlider } from '@/components/dialogue/reframe/EmotionSlider';
+import { EmotionSlider } from '@/components/dialogue/check-in/EmotionSlider';
 import Box from '@/components/structure/Box';
 import { useEffect, useState } from 'react';
 import { getTimeOfDayGreeting } from '@/helpers/time';
