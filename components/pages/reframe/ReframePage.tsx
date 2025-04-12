@@ -12,6 +12,7 @@ import { useReframeSummary } from '@/hooks/useReframeSummary';
 import { useThinkingTraps } from '@/hooks/useThinkingTraps';
 import { Suspense } from 'react';
 import { useRouter } from 'next/navigation';
+import ReframeThoughtBeliefRating from '@/components/dialogue/reframe/ReframeThoughtBeliefRating';
 
 export const metadata: Metadata = {
   title: 'Check In | Equilibria',
@@ -29,11 +30,17 @@ interface ThinkingTrap {
   agreedWithUser?: boolean;
 }
 
-type ReframeStep = 'reframe' | 'summary' | 'thinking-traps';
+type ReframeStep =
+  | 'reframe'
+  | 'thought-belief-rating'
+  | 'summary'
+  | 'thinking-traps';
+
 type ReframeState = {
   reframeTranscript: Array<{ role: string; content: string }>;
   summary?: ReframeSummaryResponse;
   thinkingTrap?: ThinkingTrap;
+  beliefRating?: number;
 };
 
 function ReframeContent() {
@@ -42,6 +49,7 @@ function ReframeContent() {
   const [ReframeState, setReframeState] = useState<ReframeState>({
     reframeTranscript: [],
     summary: undefined,
+    beliefRating: 50,
   });
 
   const {
@@ -86,6 +94,14 @@ function ReframeContent() {
       ...prev,
       reframeTranscript: transcript,
     }));
+    setCurrentStep('thought-belief-rating');
+  };
+
+  const handleBeliefRatingSet = (beliefRating: number) => {
+    setReframeState(prev => ({
+      ...prev,
+      beliefRating: beliefRating,
+    }));
     setCurrentStep('summary');
   };
 
@@ -113,6 +129,15 @@ function ReframeContent() {
         return (
           <ReframeConversation
             onCompleteAction={handleCompleteReframeConversation}
+          />
+        );
+      case 'thought-belief-rating':
+        return (
+          <ReframeThoughtBeliefRating
+            originalThought={summary?.originalThought}
+            error={summaryError}
+            isLoading={summaryIsLoading}
+            onBeliefRatingSetAction={handleBeliefRatingSet}
           />
         );
       case 'summary':
