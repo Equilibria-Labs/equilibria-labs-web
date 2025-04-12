@@ -65,6 +65,7 @@ export interface ButtonProps
   iconClassName?: string;
   isIconFirst?: boolean;
   isLoading?: boolean;
+  isAlignedRight?: boolean;
 }
 
 const iconMap: Record<NonNullable<ButtonProps['iconName']>, LucideIcon> = {
@@ -91,6 +92,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       iconClassName,
       isIconFirst = false,
       isLoading = false,
+      isAlignedRight = false,
       children,
       type = 'button',
       ...props
@@ -109,7 +111,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(
+          buttonVariants({ variant, size, className }),
+          isAlignedRight && 'justify-self-end'
+        )}
         ref={ref}
         disabled={isLoading || props.disabled}
         type={type}
