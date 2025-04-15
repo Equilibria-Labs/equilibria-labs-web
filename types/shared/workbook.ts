@@ -12,17 +12,20 @@ export type BeforeAfterRating = {
   after: number;
 };
 
+export type BeliefRating = number;
+
 export type WorkbookEntry = {
   id: string;
   title: string;
   createdAt: string;
   updatedAt: string;
   summarisedThought?: SummarisedThought;
+  summarisedThoughtBeliefRating?: BeliefRating;
   adaptiveResponse?: AdaptiveResponse;
+  adaptiveResponseBeliefRating?: BeliefRating;
   reframeHelpfulness?: ReframeHelpfulness;
   cognitiveDistortionId?: CognitiveDistortionId;
   cognitiveDistortionAgreedWithUser?: boolean;
-  beliefRating?: BeforeAfterRating;
   emotion?: Emotion;
   specificEmotion?: SpecificEmotion;
   emotionRating?: BeforeAfterRating;

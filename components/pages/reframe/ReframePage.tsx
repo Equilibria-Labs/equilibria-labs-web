@@ -39,7 +39,6 @@ function ReframeContent() {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     reframeTranscript: [],
-    beliefRating: { before: 50, after: 50 },
   });
 
   const {
@@ -86,25 +85,13 @@ function ReframeContent() {
       reframeTranscript: transcript,
       updatedAt: new Date().toISOString(),
     }));
-    setCurrentStep('cognitive-distortions');
+    setCurrentStep('thought-belief-rating');
   };
 
   const handleBeliefRatingSet = (rating: number) => {
     setWorkbookEntryState(prev => ({
       ...prev,
-      beliefRating: {
-        before: prev.beliefRating?.before || 50,
-        after: rating,
-      },
-      updatedAt: new Date().toISOString(),
-    }));
-    setCurrentStep('summary');
-  };
-
-  const handleHelpfulnessChange = (helpfulness: ReframeHelpfulness) => {
-    setWorkbookEntryState(prev => ({
-      ...prev,
-      reframeHelpfulness: helpfulness,
+      summarisedThoughtBeliefRating: rating,
       updatedAt: new Date().toISOString(),
     }));
     setCurrentStep('cognitive-distortions');
@@ -114,6 +101,15 @@ function ReframeContent() {
     setWorkbookEntryState(prev => ({
       ...prev,
       cognitiveDistortionAgreedWithUser: selected === 'agree',
+      updatedAt: new Date().toISOString(),
+    }));
+    setCurrentStep('summary');
+  };
+
+  const handleHelpfulnessChange = (helpfulness: ReframeHelpfulness) => {
+    setWorkbookEntryState(prev => ({
+      ...prev,
+      reframeHelpfulness: helpfulness,
       updatedAt: new Date().toISOString(),
     }));
     setCurrentStep('save-to-workbook');
@@ -129,6 +125,15 @@ function ReframeContent() {
         return (
           <ReframeConversation
             onCompleteAction={handleCompleteReframeConversation}
+          />
+        );
+      case 'thought-belief-rating':
+        return (
+          <ReframeThoughtBeliefRating
+            onBeliefRatingSetAction={handleBeliefRatingSet}
+            originalThought={workbookEntryState.reframeTranscript?.[0]?.content}
+            error={cognitiveDistortionError}
+            isLoading={cognitiveDistortionIsLoading}
           />
         );
       case 'cognitive-distortions':
@@ -149,15 +154,6 @@ function ReframeContent() {
             onHelpfulnessChangeAction={(helpfulness: string) => {
               handleHelpfulnessChange(helpfulness as ReframeHelpfulness);
             }}
-          />
-        );
-      case 'thought-belief-rating':
-        return (
-          <ReframeThoughtBeliefRating
-            onBeliefRatingSetAction={handleBeliefRatingSet}
-            originalThought={workbookEntryState.reframeTranscript?.[0]?.content}
-            error={cognitiveDistortionError}
-            isLoading={cognitiveDistortionIsLoading}
           />
         );
       case 'save-to-workbook':
