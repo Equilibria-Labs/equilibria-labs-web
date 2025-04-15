@@ -12,9 +12,9 @@ import {
   UserMinus,
   ThumbsDown,
 } from 'lucide-react';
-import type { ThinkingTrap } from '@/types/thinking-trap';
+import type { CognitiveDistortion } from '@/types/shared/cognitive-distortion-id';
 
-export const thinkingTraps: ThinkingTrap[] = [
+export const cognitiveDistortions: CognitiveDistortion[] = [
   {
     id: 'catastrophizing',
     name: 'Catastrophizing',

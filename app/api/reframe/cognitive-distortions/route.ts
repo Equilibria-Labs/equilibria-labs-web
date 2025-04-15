@@ -1,14 +1,14 @@
 import { generateObject } from 'ai';
 import { Provider, PROVIDER_CONFIGS } from '@/config/ai/providers.config';
-import { ThinkingTrapsResponseSchema } from '@/config/ai/response-schema/reframe/thinkingTraps';
-import { THINKING_TRAPS_ANALYSIS_SYSTEM_PROMPT } from '@/config/ai/system-prompt/reframe/thinkingTraps';
+import { CognitiveDistortionsResponseSchema } from '@/config/ai/response-schema/reframe/cognitiveDistortions';
+import { COGNITIVE_DISTORTIONS_ANALYSIS_SYSTEM_PROMPT } from '@/config/ai/system-prompt/reframe/cognitiveDistortions';
 
 // Configure which AI provider to use for generating thinking trap analysis
 const PROVIDER: Provider = 'openai';
 
 /**
- * POST endpoint that analyzes a conversation transcript to identify thinking traps
- * The response follows a predefined schema (ThinkingTrapsResponseSchema)
+ * POST endpoint that analyzes a conversation transcript to identify cognitive distortions
+ * The response follows a predefined schema (CognitiveDistortionsResponseSchema)
  */
 export async function POST(req: Request) {
   try {
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
 
     // Get the AI provider configuration
     const config = PROVIDER_CONFIGS[PROVIDER];
-    console.log('📝 Processing thinking traps request with:', {
+    console.log('📝 Processing cognitive distortions request with:', {
       provider: PROVIDER,
       model: config.model,
       transcriptLength: transcript.length,
@@ -31,15 +31,17 @@ export async function POST(req: Request) {
     // The generateObject function ensures the response follows our schema
     const result = await generateObject({
       model: config.getModel(config.model),
-      schema: ThinkingTrapsResponseSchema,
-      system: THINKING_TRAPS_ANALYSIS_SYSTEM_PROMPT,
+      schema: CognitiveDistortionsResponseSchema,
+      system: COGNITIVE_DISTORTIONS_ANALYSIS_SYSTEM_PROMPT,
       prompt: `Here is the conversation transcript to analyze:\n\n${transcript
         .map(msg => `${msg.role}: ${msg.content}`)
         .join('\n')}`,
     });
 
     // Validate the AI response against our schema using Zod
-    const parsedResult = ThinkingTrapsResponseSchema.safeParse(result.object);
+    const parsedResult = CognitiveDistortionsResponseSchema.safeParse(
+      result.object
+    );
 
     // Handle validation failures
     if (!parsedResult.success) {
@@ -61,7 +63,7 @@ export async function POST(req: Request) {
     }
 
     // Log successful response and return the validated data
-    console.log('✅ Successfully identified thinking trap:', {
+    console.log('✅ Successfully identified cognitive distortion:', {
       data: parsedResult.data,
     });
 
@@ -70,7 +72,7 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     // Handle any unexpected errors during processing
-    console.error('Error in thinking traps analysis:', error);
+    console.error('Error in cognitive distortions analysis:', error);
     const errorMessage =
       error instanceof Error ? error.message : 'Unknown error occurred';
     console.error('Error details:', {

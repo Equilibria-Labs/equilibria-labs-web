@@ -2,125 +2,125 @@
 
 import { Metadata } from 'next';
 import { useState, useEffect } from 'react';
+import { WorkbookEntry, ReframeHelpfulness } from '@/types/shared/workbook';
 import ReframeConversation from '@/components/dialogue/reframe/ReframeConversation';
 import ReframeConversationSummary from '@/components/dialogue/reframe/ReframeConversationSummary';
-import ThinkingTraps from '@/components/dialogue/reframe/ThinkingTraps';
+import CognitiveDistortions from '@/components/dialogue/reframe/CognitiveDistortions';
 import Box from '@/components/structure/Box';
 import Loading from '@/components/structure/Loading';
 import ContentPageHeader from '@/components/structure/ContentPageHeader';
 import { useReframeSummary } from '@/hooks/useReframeSummary';
-import { useThinkingTraps } from '@/hooks/useThinkingTraps';
+import { useCognitiveDistortions } from '@/hooks/useCognitiveDistortions';
 import { Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import ReframeThoughtBeliefRating from '@/components/dialogue/reframe/ReframeThoughtBeliefRating';
+import { ChatTranscript } from '@/types/shared/chat-transcript';
+import SaveToWorkbook from '@/components/dialogue/reframe/SaveToWorkbook';
+import { AdaptiveResponse } from '@/types/shared/workbook';
 
 export const metadata: Metadata = {
-  title: 'Check In | Equilibria',
-  description: 'Daily check-in to track your symptoms, mood, and activities',
+  title: 'Reframe | Equilibria',
+  description: 'Reframe unhelpful thoughts and build your workbook',
 };
-
-interface ReframeSummaryResponse {
-  originalThought: string;
-  reframedThought: string;
-  helpfulness?: string;
-}
-
-interface ThinkingTrap {
-  id: string;
-  agreedWithUser?: boolean;
-}
 
 type ReframeStep =
   | 'reframe'
   | 'thought-belief-rating'
   | 'summary'
-  | 'thinking-traps';
-
-type ReframeState = {
-  reframeTranscript: Array<{ role: string; content: string }>;
-  summary?: ReframeSummaryResponse;
-  thinkingTrap?: ThinkingTrap;
-  beliefRating?: number;
-};
+  | 'cognitive-distortions'
+  | 'save-to-workbook';
 
 function ReframeContent() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState<ReframeStep>('reframe');
-  const [ReframeState, setReframeState] = useState<ReframeState>({
+  const [workbookEntryState, setWorkbookEntryState] = useState<WorkbookEntry>({
+    id: crypto.randomUUID(),
+    title: 'Reframe Exercise',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     reframeTranscript: [],
-    summary: undefined,
-    beliefRating: 50,
+    beliefRating: { before: 50, after: 50 },
   });
 
   const {
     summary,
     error: summaryError,
     isLoading: summaryIsLoading,
-  } = useReframeSummary(ReframeState.reframeTranscript);
+  } = useReframeSummary(workbookEntryState.reframeTranscript || []);
 
   const {
-    thinkingTrap,
-    error: thinkingTrapError,
-    isLoading: thinkingTrapIsLoading,
-  } = useThinkingTraps(ReframeState.reframeTranscript);
+    cognitiveDistortion,
+    error: cognitiveDistortionError,
+    isLoading: cognitiveDistortionIsLoading,
+  } = useCognitiveDistortions(workbookEntryState.reframeTranscript || []);
 
   useEffect(() => {
     if (summary) {
-      setReframeState(prev => ({
+      setWorkbookEntryState(prev => ({
         ...prev,
-        summary: summary,
+        summarisedThought: summary.originalThought,
+        adaptiveResponse: summary.reframedThought,
+        updatedAt: new Date().toISOString(),
       }));
     }
   }, [summary]);
 
   useEffect(() => {
-    if (thinkingTrap) {
-      setReframeState(prev => ({
+    if (cognitiveDistortion) {
+      setWorkbookEntryState(prev => ({
         ...prev,
-        thinkingTrap: { id: thinkingTrap.id },
+        cognitiveDistortionId: cognitiveDistortion.id,
+        updatedAt: new Date().toISOString(),
       }));
     }
-  }, [thinkingTrap]);
+  }, [cognitiveDistortion]);
 
-  const handleCompletion = (finalState: ReframeState) => {
-    console.log('Final reframe state:', finalState);
+  const handleCompletion = (finalState: WorkbookEntry) => {
+    console.log('Final workbook entry state:', finalState);
     router.push('/?sheet=relief');
   };
 
-  const handleCompleteReframeConversation = (
-    transcript: Array<{ role: string; content: string }>
-  ) => {
-    setReframeState(prev => ({
+  const handleCompleteReframeConversation = (transcript: ChatTranscript) => {
+    setWorkbookEntryState(prev => ({
       ...prev,
       reframeTranscript: transcript,
+      updatedAt: new Date().toISOString(),
     }));
-    setCurrentStep('thought-belief-rating');
+    setCurrentStep('cognitive-distortions');
   };
 
-  const handleBeliefRatingSet = (beliefRating: number) => {
-    setReframeState(prev => ({
+  const handleBeliefRatingSet = (rating: number) => {
+    setWorkbookEntryState(prev => ({
       ...prev,
-      beliefRating: beliefRating,
+      beliefRating: {
+        before: prev.beliefRating?.before || 50,
+        after: rating,
+      },
+      updatedAt: new Date().toISOString(),
     }));
     setCurrentStep('summary');
   };
 
-  const handleHelpfulnessChange = (helpfulness: string) => {
-    setReframeState(prev => ({
+  const handleHelpfulnessChange = (helpfulness: ReframeHelpfulness) => {
+    setWorkbookEntryState(prev => ({
       ...prev,
-      summary: prev.summary ? { ...prev.summary, helpfulness } : undefined,
+      reframeHelpfulness: helpfulness,
+      updatedAt: new Date().toISOString(),
     }));
-    setCurrentStep('thinking-traps');
+    setCurrentStep('cognitive-distortions');
   };
 
   const handleAgreeDisagreeSelect = (selected: string) => {
-    setReframeState(prev => ({
+    setWorkbookEntryState(prev => ({
       ...prev,
-      thinkingTrap: prev.thinkingTrap
-        ? { ...prev.thinkingTrap, agreedWithUser: selected === 'agree' }
-        : undefined,
+      cognitiveDistortionAgreedWithUser: selected === 'agree',
+      updatedAt: new Date().toISOString(),
     }));
-    handleCompletion(ReframeState);
+    setCurrentStep('save-to-workbook');
+  };
+
+  const handleSaveToWorkbook = () => {
+    handleCompletion(workbookEntryState);
   };
 
   const renderCurrentStep = () => {
@@ -131,13 +131,13 @@ function ReframeContent() {
             onCompleteAction={handleCompleteReframeConversation}
           />
         );
-      case 'thought-belief-rating':
+      case 'cognitive-distortions':
         return (
-          <ReframeThoughtBeliefRating
-            originalThought={summary?.originalThought}
-            error={summaryError}
-            isLoading={summaryIsLoading}
-            onBeliefRatingSetAction={handleBeliefRatingSet}
+          <CognitiveDistortions
+            cognitiveDistortion={cognitiveDistortion?.id ?? null}
+            error={cognitiveDistortionError}
+            isLoading={cognitiveDistortionIsLoading}
+            onAgreeDisagreeSelectAction={handleAgreeDisagreeSelect}
           />
         );
       case 'summary':
@@ -146,16 +146,25 @@ function ReframeContent() {
             summary={summary}
             error={summaryError}
             isLoading={summaryIsLoading}
-            onHelpfulnessChangeAction={handleHelpfulnessChange}
+            onHelpfulnessChangeAction={(helpfulness: string) => {
+              handleHelpfulnessChange(helpfulness as ReframeHelpfulness);
+            }}
           />
         );
-      case 'thinking-traps':
+      case 'thought-belief-rating':
         return (
-          <ThinkingTraps
-            thinkingTrap={thinkingTrap?.id ?? null}
-            error={thinkingTrapError}
-            isLoading={thinkingTrapIsLoading}
-            onAgreeDisagreeSelectAction={handleAgreeDisagreeSelect}
+          <ReframeThoughtBeliefRating
+            onBeliefRatingSetAction={handleBeliefRatingSet}
+            originalThought={workbookEntryState.reframeTranscript?.[0]?.content}
+            error={cognitiveDistortionError}
+            isLoading={cognitiveDistortionIsLoading}
+          />
+        );
+      case 'save-to-workbook':
+        return (
+          <SaveToWorkbook
+            reframeData={workbookEntryState}
+            onSaveAction={handleSaveToWorkbook}
           />
         );
       default:

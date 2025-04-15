@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { ThinkingTrapId } from '@/types/thinking-trap';
+import { CognitiveDistortionId } from '@/types/shared/cognitive-distortion-id';
 
-type ThinkingTrapsResponse = {
-  id: ThinkingTrapId;
+type CognitiveDistortionsResponse = {
+  id: CognitiveDistortionId;
 };
 
 interface Transcript {
@@ -10,31 +10,31 @@ interface Transcript {
   content: string;
 }
 
-interface UseThinkingTrapsResult {
-  thinkingTrap: ThinkingTrapsResponse | null;
+interface UseCognitiveDistortionsResult {
+  cognitiveDistortion: CognitiveDistortionsResponse | null;
   error: string | null;
   isLoading: boolean;
 }
 
-export function useThinkingTraps(
+export function useCognitiveDistortions(
   transcript: Transcript[]
-): UseThinkingTrapsResult {
-  const [thinkingTrap, setThinkingTrap] =
-    useState<ThinkingTrapsResponse | null>(null);
+): UseCognitiveDistortionsResult {
+  const [cognitiveDistortion, setCognitiveDistortion] =
+    useState<CognitiveDistortionsResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchThinkingTraps = async () => {
+    const fetchCognitiveDistortions = async () => {
       // Prevent API calls when we already have data or are loading
-      if (isLoading || thinkingTrap || transcript.length === 0) {
+      if (isLoading || cognitiveDistortion || transcript.length === 0) {
         return;
       }
 
       setIsLoading(true);
 
       try {
-        const response = await fetch('/api/reframe/thinking-traps', {
+        const response = await fetch('/api/reframe/cognitive-distortions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -43,11 +43,13 @@ export function useThinkingTraps(
         });
 
         if (!response.ok) {
-          throw new Error(`Failed to fetch thinking traps: ${response.status}`);
+          throw new Error(
+            `Failed to fetch cognitive distortions: ${response.status}`
+          );
         }
 
         const data = await response.json();
-        setThinkingTrap(data);
+        setCognitiveDistortion(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
@@ -55,8 +57,8 @@ export function useThinkingTraps(
       }
     };
 
-    fetchThinkingTraps();
+    fetchCognitiveDistortions();
   }, [transcript]);
 
-  return { thinkingTrap, error, isLoading };
+  return { cognitiveDistortion, error, isLoading };
 }

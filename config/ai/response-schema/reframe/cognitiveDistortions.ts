@@ -1,9 +1,9 @@
 import { z } from 'zod';
-import { ThinkingTrapId } from '@/types/thinking-trap';
+import { CognitiveDistortionId } from '@/types/shared/cognitive-distortion-id';
 
 // NOTE: This list needs to be kept in sync with the ThinkingTrapId type in @/types/thinking-trap.ts
 // If you modify the list of thinking traps, update both places
-const ThinkingTrapEnum = z.enum([
+const CognitiveDistortionEnum = z.enum([
   'catastrophizing',
   'fortune-telling',
   'black-and-white',
@@ -16,8 +16,8 @@ const ThinkingTrapEnum = z.enum([
   'labelling',
   'personalisation',
   'blame',
-] as const satisfies readonly ThinkingTrapId[]);
+] as const satisfies readonly CognitiveDistortionId[]);
 
-export const ThinkingTrapsResponseSchema = z.object({
-  id: ThinkingTrapEnum,
+export const CognitiveDistortionsResponseSchema = z.object({
+  id: CognitiveDistortionEnum,
 });

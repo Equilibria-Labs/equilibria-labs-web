@@ -8,12 +8,12 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { Metadata } from 'next';
-import { ThinkingTrap } from '@/types/thinking-trap';
+import { CognitiveDistortion } from '@/types/shared/cognitive-distortion-id';
 import { JournalEntry } from '@/types/shared/thought-journal';
 import JournalList from '@/components/dialogue/thought-journal/JournalList';
 import ProgressSteps from '@/components/dialogue/thought-journal/ProgressSteps';
 import DefineWorry from '@/components/dialogue/thought-journal/DefineWorry';
-import ThinkingTrapSelector from '@/components/dialogue/thought-journal/ThinkingTrapSelector';
+import CognitiveDistortionSelector from '@/components/dialogue/thought-journal/CognitiveDistortionSelector';
 import BalanceThought from '@/components/dialogue/thought-journal/BalanceThought';
 import ContentPageHeader from '@/components/structure/ContentPageHeader';
 
@@ -40,8 +40,8 @@ export default function ThoughtJournal() {
     setStep(2);
   };
 
-  const handleTrapsSubmit = (traps: ThinkingTrap[]) => {
-    setCurrentEntry(prev => ({ ...prev, traps }));
+  const handleDistortionsSubmit = (distortions: CognitiveDistortion[]) => {
+    setCurrentEntry(prev => ({ ...prev, traps: distortions }));
     setStep(3);
   };
 
@@ -94,10 +94,10 @@ export default function ThoughtJournal() {
                 />
               )}
               {step === 2 && (
-                <ThinkingTrapSelector
+                <CognitiveDistortionSelector
                   worry={currentEntry.worry || ''}
-                  selectedTraps={currentEntry.traps || []}
-                  onSubmitAction={handleTrapsSubmit}
+                  selectedDistortions={currentEntry.traps || []}
+                  onSubmitAction={handleDistortionsSubmit}
                 />
               )}
               {step === 3 && (
@@ -124,8 +124,8 @@ export default function ThoughtJournal() {
                   what&apos;s bothering you.
                 </li>
                 <li>
-                  <strong>Identify Thinking Traps:</strong> Recognize patterns
-                  of distorted thinking.
+                  <strong>Identify Cognitive Distortions:</strong> Recognize
+                  patterns of distorted thinking.
                 </li>
                 <li>
                   <strong>Balance Thought:</strong> Rewrite your thought in a

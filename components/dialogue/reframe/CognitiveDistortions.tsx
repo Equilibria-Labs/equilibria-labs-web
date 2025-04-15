@@ -11,32 +11,32 @@ import TextLoader from '@/components/common/TextLoader';
 import { ChoiceRadioGroup } from '@/components/common/ChoiceRadioGroup';
 import { ChoiceValue } from '@/types';
 import Box from '@/components/structure/Box';
-import { ThinkingTrapId } from '@/types/thinking-trap';
-import { thinkingTraps } from '@/config/thinking-traps';
+import { CognitiveDistortionId } from '@/types/shared/cognitive-distortion-id';
+import { cognitiveDistortions } from '@/config/cognitive-distortions';
 
-interface ThinkingTrapsProps {
-  thinkingTrap: ThinkingTrapId | null;
+interface CognitiveDistortionsProps {
+  cognitiveDistortion: CognitiveDistortionId | null;
   error: string | null;
   isLoading: boolean;
   onAgreeDisagreeSelectAction: (selected: string) => void;
 }
 
-export default function ThinkingTraps({
-  thinkingTrap,
+export default function CognitiveDistortions({
+  cognitiveDistortion,
   error,
   isLoading,
   onAgreeDisagreeSelectAction,
-}: ThinkingTrapsProps) {
+}: CognitiveDistortionsProps) {
   if (error) {
     return <BodyText>Error: {error}</BodyText>;
   }
 
-  if (isLoading || !thinkingTrap) {
-    return <TextLoader text='Identifying thinking traps...' />;
+  if (isLoading || !cognitiveDistortion) {
+    return <TextLoader text='Identifying cognitive distortions...' />;
   }
 
-  const getThinkingTrap = (id: ThinkingTrapId) => {
-    return thinkingTraps.find(trap => trap.id === id);
+  const getCognitiveDistortion = (id: CognitiveDistortionId) => {
+    return cognitiveDistortions.find(distortion => distortion.id === id);
   };
 
   const choices = [
@@ -64,16 +64,16 @@ export default function ThinkingTraps({
     <Column hasLargeGap>
       <Box hasNoGap>
         <Heading className={`text-secondary`}>
-          {getThinkingTrap(thinkingTrap)?.name}
+          {getCognitiveDistortion(cognitiveDistortion)?.name}
         </Heading>
         <BodyTextLarge>
-          {getThinkingTrap(thinkingTrap)?.description}
+          {getCognitiveDistortion(cognitiveDistortion)?.description}
         </BodyTextLarge>
       </Box>
       <Column>
         <Heading className={`text-secondary`}>
           Do you think this is and example of{' '}
-          {getThinkingTrap(thinkingTrap)?.name}?
+          {getCognitiveDistortion(cognitiveDistortion)?.name}?
         </Heading>
         <ChoiceRadioGroup
           value={[]}

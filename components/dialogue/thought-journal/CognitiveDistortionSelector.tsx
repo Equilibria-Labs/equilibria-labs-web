@@ -9,35 +9,36 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
-import { type ThinkingTrap } from '@/types/thinking-trap';
-import { thinkingTraps } from '@/config/thinking-traps';
+import { type CognitiveDistortion } from '@/types/shared/cognitive-distortion-id';
+import { cognitiveDistortions } from '@/config/cognitive-distortions';
 import { cn } from '@/lib/utils';
 
-interface ThinkingTrapSelectorProps {
+interface CognitiveDistortionSelectorProps {
   worry: string;
-  selectedTraps: ThinkingTrap[];
-  onSubmitAction: (traps: ThinkingTrap[]) => void;
+  selectedDistortions: CognitiveDistortion[];
+  onSubmitAction: (distortions: CognitiveDistortion[]) => void;
 }
 
-export default function ThinkingTrapSelector({
+export default function CognitiveDistortionSelector({
   worry,
-  selectedTraps,
+  selectedDistortions,
   onSubmitAction,
-}: ThinkingTrapSelectorProps) {
-  const [traps, setTraps] = useState<ThinkingTrap[]>(selectedTraps);
-  const [showTrapsDialog, setShowTrapsDialog] = useState(false);
-  const [currentTrapIndex, setCurrentTrapIndex] = useState(0);
+}: CognitiveDistortionSelectorProps) {
+  const [distortions, setDistortions] =
+    useState<CognitiveDistortion[]>(selectedDistortions);
+  const [showDistortionsDialog, setShowDistortionsDialog] = useState(false);
+  const [currentDistortionIndex, setCurrentDistortionIndex] = useState(0);
 
-  const handleTrapToggle = (trap: ThinkingTrap) => {
-    if (traps.some(t => t.id === trap.id)) {
-      setTraps(traps.filter(t => t.id !== trap.id));
+  const handleDistortionToggle = (distortion: CognitiveDistortion) => {
+    if (distortions.some(d => d.id === distortion.id)) {
+      setDistortions(distortions.filter(d => d.id !== distortion.id));
     } else {
-      setTraps([...traps, trap]);
+      setDistortions([...distortions, distortion]);
     }
   };
 
   const handleSubmit = () => {
-    onSubmitAction(traps);
+    onSubmitAction(distortions);
   };
 
   return (
@@ -50,26 +51,26 @@ export default function ThinkingTrapSelector({
       </div>
 
       <div className='flex justify-center space-x-2 py-2'>
-        {thinkingTraps.slice(0, 3).map(trap => (
+        {cognitiveDistortions.slice(0, 3).map(distortion => (
           <button
-            key={trap.id}
+            key={distortion.id}
             onClick={() => {
-              setCurrentTrapIndex(
-                thinkingTraps.findIndex(t => t.id === trap.id)
+              setCurrentDistortionIndex(
+                cognitiveDistortions.findIndex(d => d.id === distortion.id)
               );
-              setShowTrapsDialog(true);
+              setShowDistortionsDialog(true);
             }}
             className='flex flex-col items-center'
           >
             <div
               className={cn(
                 'w-12 h-12 flex items-center justify-center rounded-full',
-                traps.some(t => t.id === trap.id)
+                distortions.some(d => d.id === distortion.id)
                   ? 'bg-violet-100'
                   : 'bg-gray-100'
               )}
             >
-              <trap.icon className='w-8 h-8 text-violet-500' />
+              <distortion.icon className='w-8 h-8 text-violet-500' />
             </div>
           </button>
         ))}
@@ -77,12 +78,12 @@ export default function ThinkingTrapSelector({
 
       <div className='flex justify-center'>
         <div className='flex space-x-1'>
-          {thinkingTraps.slice(0, 3).map((_, index) => (
+          {cognitiveDistortions.slice(0, 3).map((_, index) => (
             <div
               key={index}
               className={cn(
                 'w-2 h-2 rounded-full',
-                currentTrapIndex === index ? 'bg-blue-500' : 'bg-gray-300'
+                currentDistortionIndex === index ? 'bg-blue-500' : 'bg-gray-300'
               )}
             />
           ))}
@@ -90,21 +91,21 @@ export default function ThinkingTrapSelector({
       </div>
 
       <div className='space-y-4 mt-6'>
-        {traps.length > 0 ? (
-          traps.map(trap => (
+        {distortions.length > 0 ? (
+          distortions.map(distortion => (
             <Card
-              key={trap.id}
+              key={distortion.id}
               className={cn(
                 'p-4 relative overflow-hidden',
-                trap.id === 'catastrophizing' && 'bg-blue-100',
-                trap.id === 'fortune-telling' && 'bg-pink-100',
-                trap.id === 'black-and-white' && 'bg-violet-100'
+                distortion.id === 'catastrophizing' && 'bg-blue-100',
+                distortion.id === 'fortune-telling' && 'bg-pink-100',
+                distortion.id === 'black-and-white' && 'bg-violet-100'
               )}
             >
               <div className='mb-2'>
-                <h3 className='text-lg font-medium'>{trap.name}</h3>
+                <h3 className='text-lg font-medium'>{distortion.name}</h3>
               </div>
-              <p className='text-sm'>{trap.description}</p>
+              <p className='text-sm'>{distortion.description}</p>
 
               <div className='mt-4 grid grid-cols-2 gap-4'>
                 <div>
@@ -112,13 +113,13 @@ export default function ThinkingTrapSelector({
                     Unbalanced example
                   </h4>
                   <p className='text-sm bg-white/50 p-2 rounded'>
-                    {trap.unbalancedExample}
+                    {distortion.unbalancedExample}
                   </p>
                 </div>
                 <div>
                   <h4 className='text-sm font-medium mb-2'>Balanced example</h4>
                   <p className='text-sm bg-white/50 p-2 rounded'>
-                    {trap.balancedExample}
+                    {distortion.balancedExample}
                   </p>
                 </div>
               </div>
@@ -126,7 +127,7 @@ export default function ThinkingTrapSelector({
           ))
         ) : (
           <div className='text-center py-6 text-gray-500'>
-            Select thinking traps that apply to your worry
+            Select cognitive distortions that apply to your worry
           </div>
         )}
       </div>
@@ -140,35 +141,42 @@ export default function ThinkingTrapSelector({
         </Button>
       </div>
 
-      <Dialog open={showTrapsDialog} onOpenChange={setShowTrapsDialog}>
+      <Dialog
+        open={showDistortionsDialog}
+        onOpenChange={setShowDistortionsDialog}
+      >
         <DialogContent className='max-h-[80vh] overflow-y-auto'>
-          <DialogTitle className='text-blue-500'>Thinking Traps</DialogTitle>
+          <DialogTitle className='text-blue-500'>
+            Cognitive Distortions
+          </DialogTitle>
           <DialogDescription>
-            Thinking traps are distorted and unhelpful ways of thinking that
-            keep us feeling anxious. Here is a list of common thinking traps to
-            be aware of and avoid getting caught in:
+            Cognitive distortions are distorted and unhelpful ways of thinking
+            that keep us feeling anxious. Here is a list of common cognitive
+            distortions to be aware of and avoid getting caught in:
           </DialogDescription>
 
           <div className='space-y-6 mt-4'>
-            {thinkingTraps.map(trap => (
-              <div key={trap.id} className='flex items-start space-x-4'>
+            {cognitiveDistortions.map(distortion => (
+              <div key={distortion.id} className='flex items-start space-x-4'>
                 <div className='flex-shrink-0'>
-                  <trap.icon className='w-10 h-10 text-violet-500' />
+                  <distortion.icon className='w-10 h-10 text-violet-500' />
                 </div>
                 <div className='flex-1'>
-                  <h3 className='font-medium text-lg'>{trap.name}</h3>
-                  <p className='text-gray-600'>{trap.description}</p>
+                  <h3 className='font-medium text-lg'>{distortion.name}</h3>
+                  <p className='text-gray-600'>{distortion.description}</p>
                 </div>
                 <Button
                   variant='outline'
                   className={cn(
                     'flex-shrink-0',
-                    traps.some(t => t.id === trap.id) &&
+                    distortions.some(d => d.id === distortion.id) &&
                       'bg-violet-100 border-violet-300'
                   )}
-                  onClick={() => handleTrapToggle(trap)}
+                  onClick={() => handleDistortionToggle(distortion)}
                 >
-                  {traps.some(t => t.id === trap.id) ? 'Selected' : 'Select'}
+                  {distortions.some(d => d.id === distortion.id)
+                    ? 'Selected'
+                    : 'Select'}
                 </Button>
               </div>
             ))}
@@ -176,7 +184,7 @@ export default function ThinkingTrapSelector({
 
           <Button
             className='w-full mt-4'
-            onClick={() => setShowTrapsDialog(false)}
+            onClick={() => setShowDistortionsDialog(false)}
           >
             Okay, got it!
           </Button>

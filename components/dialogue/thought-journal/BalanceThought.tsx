@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowRight } from 'lucide-react';
-import { ThinkingTrap } from '@/types/thinking-trap';
+import { CognitiveDistortion } from '@/types/shared/cognitive-distortion-id';
 
 interface BalanceThoughtProps {
   worry: string;
-  traps: ThinkingTrap[];
+  traps: CognitiveDistortion[];
   initialRewrite: string;
   onSubmitAction: (rewrite: string) => void;
 }

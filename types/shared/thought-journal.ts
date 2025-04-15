@@ -1,9 +1,9 @@
-import { ThinkingTrap } from '@/types/thinking-trap';
+import { CognitiveDistortion } from '@/types/shared/cognitive-distortion-id';
 
-export type JournalEntry = {
+export interface JournalEntry {
   id: string;
-  date: Date;
   worry: string;
-  traps: ThinkingTrap[];
+  distortions: CognitiveDistortion[];
   rewrite: string;
-};
+  createdAt: string;
+}
