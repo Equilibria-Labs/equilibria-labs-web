@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Heading,
   BodyText,
@@ -13,20 +13,25 @@ import { ChoiceValue } from '@/types';
 import Box from '@/components/structure/Box';
 import { CognitiveDistortionId } from '@/types/shared/cognitive-distortion-id';
 import { cognitiveDistortions } from '@/config/cognitive-distortions';
+import SliderWithLabels from '@/components/common/SliderWithLabels';
+import { ExtentRating } from '@/types/shared/workbook';
+import { Button } from '@/components/ui/button';
 
 interface CognitiveDistortionsProps {
   cognitiveDistortion: CognitiveDistortionId | null;
   error: string | null;
   isLoading: boolean;
-  onAgreeDisagreeSelectAction: (selected: string) => void;
+  onCognitiveDistortionExtentRatingAction: (rating: ExtentRating) => void;
 }
 
 export default function CognitiveDistortions({
   cognitiveDistortion,
   error,
   isLoading,
-  onAgreeDisagreeSelectAction,
+  onCognitiveDistortionExtentRatingAction,
 }: CognitiveDistortionsProps) {
+  const [extentRating, setExtentRating] = useState<ExtentRating>(50);
+
   if (error) {
     return <BodyText>Error: {error}</BodyText>;
   }
@@ -39,29 +44,32 @@ export default function CognitiveDistortions({
     return cognitiveDistortions.find(distortion => distortion.id === id);
   };
 
-  const choices = [
-    {
-      choiceId: 'agree',
-      text: 'Agree',
-      value: { stringValue: 'agree' },
-      iconName: 'check' as const,
-    },
-    {
-      choiceId: 'disagree',
-      text: 'Disagree',
-      value: { stringValue: 'disagree' },
-      iconName: 'x' as const,
-    },
-  ];
-
-  const handleChange = (value: ChoiceValue) => {
-    if (value.stringValue) {
-      onAgreeDisagreeSelectAction(value.stringValue);
-    }
-  };
+  // const choices = [
+  //   {
+  //     choiceId: 'yes',
+  //     text: 'Yes',
+  //     value: { stringValue: 'yes' },
+  //     iconName: 'check' as const,
+  //   },
+  //   {
+  //     choiceId: 'no',
+  //     text: 'No',
+  //     value: { stringValue: 'no' },
+  //     iconName: 'x' as const,
+  //   },
+  //   {
+  //     choiceId: 'dont-know',
+  //     text: "Don't know",
+  //     value: { stringValue: 'dont-know' },
+  //     iconName: 'circleHelp' as const,
+  //   },
+  // ];
 
   return (
     <Column hasLargeGap>
+      <Heading className={`text-secondary`}>
+        Could this be {getCognitiveDistortion(cognitiveDistortion)?.name}?
+      </Heading>
       <Box hasNoGap>
         <Heading className={`text-secondary`}>
           {getCognitiveDistortion(cognitiveDistortion)?.name}
@@ -70,18 +78,37 @@ export default function CognitiveDistortions({
           {getCognitiveDistortion(cognitiveDistortion)?.description}
         </BodyTextLarge>
       </Box>
-      <Column>
-        <Heading className={`text-secondary`}>
-          Do you think this is and example of{' '}
-          {getCognitiveDistortion(cognitiveDistortion)?.name}?
-        </Heading>
-        <ChoiceRadioGroup
-          value={[]}
-          onChange={handleChange}
-          next={() => {}}
-          choices={choices}
-        />
-      </Column>
+      {/* <ChoiceRadioGroup
+        value={[]}
+        onChange={handleChange}
+        next={() => {}}
+        choices={choices}
+      /> */}
+      <SliderWithLabels
+        value={[extentRating]}
+        min={1}
+        max={100}
+        step={1}
+        onValueChange={(vals: number[]) => {
+          const newRating = vals[0];
+          setExtentRating(newRating);
+        }}
+        leftLabel='Not at all'
+        rightLabel='Completely'
+      />
+
+      <Button
+        variant='secondary'
+        size={'lg'}
+        isAlignedRight
+        isLoading={isLoading}
+        iconName='chevronRight'
+        onClick={() => {
+          onCognitiveDistortionExtentRatingAction(extentRating);
+        }}
+      >
+        Continue
+      </Button>
     </Column>
   );
 }

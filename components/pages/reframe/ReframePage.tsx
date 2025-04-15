@@ -2,9 +2,9 @@
 
 import { Metadata } from 'next';
 import { useState, useEffect } from 'react';
-import { WorkbookEntry, ReframeHelpfulness } from '@/types/shared/workbook';
+import { WorkbookEntry } from '@/types/shared/workbook';
 import ReframeConversation from '@/components/dialogue/reframe/ReframeConversation';
-import ReframeConversationSummary from '@/components/dialogue/reframe/ReframeConversationSummary';
+// import ReframeConversationSummary from '@/components/dialogue/reframe/ReframeConversationSummary';
 import CognitiveDistortions from '@/components/dialogue/reframe/CognitiveDistortions';
 import Box from '@/components/structure/Box';
 import Loading from '@/components/structure/Loading';
@@ -13,10 +13,11 @@ import { useReframeSummary } from '@/hooks/useReframeSummary';
 import { useCognitiveDistortions } from '@/hooks/useCognitiveDistortions';
 import { Suspense } from 'react';
 import { useRouter } from 'next/navigation';
-import ReframeThoughtBeliefRating from '@/components/dialogue/reframe/ReframeThoughtBeliefRating';
+import ThoughtBeliefRating from '@/components/dialogue/reframe/ThoughtBeliefRating';
 import { ChatTranscript } from '@/types/shared/chat-transcript';
 import SaveToWorkbook from '@/components/dialogue/reframe/SaveToWorkbook';
 import { AdaptiveResponse } from '@/types/shared/workbook';
+import { ExtentRating } from '@/types/shared/workbook';
 
 export const metadata: Metadata = {
   title: 'Reframe | Equilibria',
@@ -25,9 +26,9 @@ export const metadata: Metadata = {
 
 type ReframeStep =
   | 'reframe'
-  | 'thought-belief-rating'
-  | 'summary'
+  | 'initial-thought-belief-rating'
   | 'cognitive-distortions'
+  | 'reframed-thought-belief-rating'
   | 'save-to-workbook';
 
 function ReframeContent() {
@@ -74,8 +75,11 @@ function ReframeContent() {
     }
   }, [cognitiveDistortion]);
 
-  const handleCompletion = (finalState: WorkbookEntry) => {
-    console.log('Final workbook entry state:', finalState);
+  const handleSaveWorkbookEntry = (workbookEntry: WorkbookEntry) => {
+    console.log('Final workbook entry state:', workbookEntry);
+  };
+
+  const handleRedirect = () => {
     router.push('/?sheet=relief');
   };
 
@@ -85,10 +89,10 @@ function ReframeContent() {
       reframeTranscript: transcript,
       updatedAt: new Date().toISOString(),
     }));
-    setCurrentStep('thought-belief-rating');
+    setCurrentStep('initial-thought-belief-rating');
   };
 
-  const handleBeliefRatingSet = (rating: number) => {
+  const handleSummarisedThoughtBeliefRatingSet = (rating: number) => {
     setWorkbookEntryState(prev => ({
       ...prev,
       summarisedThoughtBeliefRating: rating,
@@ -97,26 +101,38 @@ function ReframeContent() {
     setCurrentStep('cognitive-distortions');
   };
 
-  const handleAgreeDisagreeSelect = (selected: string) => {
+  const handleCognitiveDistortionExtentRating = (rating: ExtentRating) => {
     setWorkbookEntryState(prev => ({
       ...prev,
-      cognitiveDistortionAgreedWithUser: selected === 'agree',
+      cognitiveDistortionExtentRating: rating,
       updatedAt: new Date().toISOString(),
     }));
-    setCurrentStep('summary');
+    setCurrentStep('reframed-thought-belief-rating');
   };
 
-  const handleHelpfulnessChange = (helpfulness: ReframeHelpfulness) => {
+  const handleReframedThoughtBeliefRatingSet = (rating: number) => {
     setWorkbookEntryState(prev => ({
       ...prev,
-      reframeHelpfulness: helpfulness,
+      reframedThoughtBeliefRating: rating,
       updatedAt: new Date().toISOString(),
     }));
     setCurrentStep('save-to-workbook');
   };
 
-  const handleSaveToWorkbook = () => {
-    handleCompletion(workbookEntryState);
+  // const handleHelpfulnessChange = (helpfulness: ReframeHelpfulness) => {
+  //   setWorkbookEntryState(prev => ({
+  //     ...prev,
+  //     reframeHelpfulness: helpfulness,
+  //     updatedAt: new Date().toISOString(),
+  //   }));
+  //   setCurrentStep('save-to-workbook');
+  // };
+
+  const handleSaveToWorkbook = (shouldSave: boolean) => {
+    if (shouldSave) {
+      handleSaveWorkbookEntry(workbookEntryState);
+    }
+    handleRedirect();
   };
 
   const renderCurrentStep = () => {
@@ -127,13 +143,13 @@ function ReframeContent() {
             onCompleteAction={handleCompleteReframeConversation}
           />
         );
-      case 'thought-belief-rating':
+      case 'initial-thought-belief-rating':
         return (
-          <ReframeThoughtBeliefRating
-            onBeliefRatingSetAction={handleBeliefRatingSet}
-            originalThought={workbookEntryState.reframeTranscript?.[0]?.content}
-            error={cognitiveDistortionError}
-            isLoading={cognitiveDistortionIsLoading}
+          <ThoughtBeliefRating
+            onBeliefRatingSetAction={handleSummarisedThoughtBeliefRatingSet}
+            thought={workbookEntryState.summarisedThought}
+            error={summaryError}
+            isLoading={summaryIsLoading}
           />
         );
       case 'cognitive-distortions':
@@ -142,25 +158,26 @@ function ReframeContent() {
             cognitiveDistortion={cognitiveDistortion?.id ?? null}
             error={cognitiveDistortionError}
             isLoading={cognitiveDistortionIsLoading}
-            onAgreeDisagreeSelectAction={handleAgreeDisagreeSelect}
+            onCognitiveDistortionExtentRatingAction={
+              handleCognitiveDistortionExtentRating
+            }
           />
         );
-      case 'summary':
+      case 'reframed-thought-belief-rating':
         return (
-          <ReframeConversationSummary
-            summary={summary}
+          <ThoughtBeliefRating
+            onBeliefRatingSetAction={handleReframedThoughtBeliefRatingSet}
+            thought={workbookEntryState.adaptiveResponse}
             error={summaryError}
             isLoading={summaryIsLoading}
-            onHelpfulnessChangeAction={(helpfulness: string) => {
-              handleHelpfulnessChange(helpfulness as ReframeHelpfulness);
-            }}
+            isReframed
           />
         );
       case 'save-to-workbook':
         return (
           <SaveToWorkbook
             reframeData={workbookEntryState}
-            onSaveAction={handleSaveToWorkbook}
+            onSaveAction={shouldSave => handleSaveToWorkbook(shouldSave)}
           />
         );
       default:

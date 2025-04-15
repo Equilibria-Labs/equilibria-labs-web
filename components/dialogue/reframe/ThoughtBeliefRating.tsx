@@ -13,16 +13,18 @@ import SliderWithLabels from '@/components/common/SliderWithLabels';
 import { Button } from '@/components/ui/button';
 
 interface ThoughtBeliefRatingProps {
-  originalThought?: string;
+  thought?: string;
+  isReframed?: boolean;
   error: string | null;
   isLoading: boolean;
   onBeliefRatingSetAction: (beliefRating: number) => void;
 }
 
 export default function ThoughtBeliefRating({
-  originalThought,
+  thought,
   error,
   isLoading,
+  isReframed,
   onBeliefRatingSetAction,
 }: ThoughtBeliefRatingProps) {
   const [value, setValue] = useState<number>(50);
@@ -30,15 +32,21 @@ export default function ThoughtBeliefRating({
     return <BodyText>Error: {error}</BodyText>;
   }
 
-  if (isLoading || !originalThought) {
+  if (isLoading || !thought) {
     return <TextLoader text='Paraphrasing original thought...' />;
   }
 
   return (
     <Column hasLargeGap>
       <Heading className={`text-secondary`}>
-        How strongly did you believe this thought?
+        {`How strongly ${isReframed ? `do you believe this` : `did you believe this`} ${isReframed ? 'reframed ' : ''}thought?`}
       </Heading>
+      <Box hasNoGap>
+        <Heading className={`text-secondary`}>
+          {isReframed ? 'Reframed thought' : 'Initial thought'}
+        </Heading>
+        <BodyTextLarge>{thought}</BodyTextLarge>
+      </Box>
       <SliderWithLabels
         value={[value]}
         min={1}
@@ -48,10 +56,6 @@ export default function ThoughtBeliefRating({
         leftLabel='Not at all'
         rightLabel='Completely'
       />
-      <Box hasNoGap>
-        <Heading className={`text-secondary`}>Initial thought</Heading>
-        <BodyTextLarge>{originalThought}</BodyTextLarge>
-      </Box>
       <Button
         variant='secondary'
         size={'lg'}

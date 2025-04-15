@@ -56,6 +56,7 @@ import {
   Frown,
   BedSingle,
   X,
+  CircleHelp,
 } from 'lucide-react';
 import { Choice as ChoiceType, ChoiceValue } from '@/types';
 
@@ -132,6 +133,7 @@ const CHOICE_ICONS = {
   // Check and cross icons
   check: Check,
   x: X,
+  circleHelp: CircleHelp,
 } as const;
 
 export type ChoiceIconName = keyof typeof CHOICE_ICONS;

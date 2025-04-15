@@ -1,14 +1,16 @@
 'use client';
 
 import React from 'react';
-import { BodyText, Title } from '@/components/common/Typography';
+import { BodyText, Heading } from '@/components/common/Typography';
 import Box from '@/components/structure/Box';
 import { Button } from '@/components/ui/button';
 import { WorkbookEntry } from '@/types/shared/workbook';
+import Column from '@/components/structure/Column';
+import Row from '@/components/structure/Row';
 
 interface SaveToWorkbookProps {
   reframeData: WorkbookEntry;
-  onSaveAction: () => void;
+  onSaveAction: (shouldSave: boolean) => void;
 }
 
 export default function SaveToWorkbook({
@@ -17,20 +19,30 @@ export default function SaveToWorkbook({
 }: SaveToWorkbookProps) {
   console.log(reframeData);
   return (
-    <Box>
-      <Title>Save Your Work</Title>
+    <Column hasLargeGap>
+      <Heading className={`text-secondary`}>Save this to your workbook</Heading>
       <BodyText>
-        Would you like to save this reframe exercise to your workbook? This will
-        help you track your progress and refer back to it later.
+        Add this to your work book so you'll be able to identify this kind of
+        thought more easily in future?
       </BodyText>
-      <Box className='mt-6 flex flex-col gap-4'>
-        <Button onClick={onSaveAction}>Save to Workbook</Button>
-        <Box className='mt-4 p-4 bg-muted rounded-lg overflow-auto'>
-          <pre className='whitespace-pre-wrap break-words'>
-            {JSON.stringify(reframeData, null, 2)}
-          </pre>
-        </Box>
-      </Box>
-    </Box>
+      <Row isFullWidth justify='space-between'>
+        <Button
+          variant='outline'
+          size={'lg'}
+          iconName='x'
+          onClick={() => onSaveAction(false)}
+        >
+          Forget
+        </Button>
+        <Button
+          variant='secondary'
+          size={'lg'}
+          iconName='check'
+          onClick={() => onSaveAction(true)}
+        >
+          Save to Workbook
+        </Button>
+      </Row>
+    </Column>
   );
 }

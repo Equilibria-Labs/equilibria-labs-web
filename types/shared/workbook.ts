@@ -5,7 +5,7 @@ export type SummarisedThought = string;
 
 export type AdaptiveResponse = string;
 
-export type ReframeHelpfulness = 'helpful' | 'neutral' | 'unhelpful';
+// export type ReframeHelpfulness = 'helpful' | 'neutral' | 'unhelpful';
 
 export type BeforeAfterRating = {
   before: number;
@@ -13,6 +13,8 @@ export type BeforeAfterRating = {
 };
 
 export type BeliefRating = number;
+
+export type ExtentRating = number;
 
 export type WorkbookEntry = {
   id: string;
@@ -23,9 +25,9 @@ export type WorkbookEntry = {
   summarisedThoughtBeliefRating?: BeliefRating;
   adaptiveResponse?: AdaptiveResponse;
   adaptiveResponseBeliefRating?: BeliefRating;
-  reframeHelpfulness?: ReframeHelpfulness;
+  // reframeHelpfulness?: ReframeHelpfulness;
   cognitiveDistortionId?: CognitiveDistortionId;
-  cognitiveDistortionAgreedWithUser?: boolean;
+  cognitiveDistortionExtentRating?: ExtentRating;
   emotion?: Emotion;
   specificEmotion?: SpecificEmotion;
   emotionRating?: BeforeAfterRating;
